@@ -52,7 +52,7 @@
 		<if>
 			<equals arg1="${liquibase.tunnel.enabled}" arg2="true" />
 			<then>
-				<echo>Using DSN : "jdbc:mysql://${db.tunnel.host}:${db.tunnel.port}/${current.db.name}"</echo>
+				<echo>Using DSN : "jdbc:mysql://${liquibase.tunnel.host}:${liquibase.tunnel.port}/${current.db.name}"</echo>
 				<updateDatabase changeLogFile="${liquibase.changelog}" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://${liquibase.tunnel.host}:${liquibase.tunnel.port}/${current.db.name}" username="${current.db.username}" password="${current.db.password}" promptOnNonLocalDatabase="false" dropFirst="false" classpathref="classpath" />
 			</then>
 			<else>
