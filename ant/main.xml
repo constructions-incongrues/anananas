@@ -10,6 +10,16 @@
 		</classpath>
 	</taskdef>
 
+	<!-- Targets can depend upon this one -->
+	<target name="setprofile">
+		<fail unless="profile" />
+		<exec executable="${basedir}/opt/ananas-build-toolkit/vendor/phpreprocessor/bin/phpreprocessor">
+			<arg line="--command=apply
+             --src=${source}
+             --properties=${basedir}/etc/${profile}/build.properties" />
+		</exec>
+	</target>
+	
 	<import file="misc.xml" />
 	<import file="ci.xml" />
 	<import file="liquibase.xml" />

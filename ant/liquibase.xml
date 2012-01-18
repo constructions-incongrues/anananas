@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project name="liquibase">
 
-	<target name="liquibase.config">
+	<target name="liquibase.config" depends="setprofile">
 		<echo>Configuring for database "${runtime.db.name}"</echo>
 		<script language="javascript">
 			<![CDATA[
@@ -35,7 +35,7 @@
 	</target>
 
 	<!-- Performs a database update -->
-	<target name="liquibase.migrate" description="Migrates all databases">
+	<target name="liquibase.migrate" description="Migrates all databases" depends="setprofile">
 		<foreach target="liquibase.migrate.do" param="liquibase.changelog">
 			<path>
 				<fileset dir="${liquibase.changelogs}" includes="*-master.xml" />

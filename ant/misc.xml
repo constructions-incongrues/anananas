@@ -9,8 +9,7 @@
 		</java>
 	</target>
 
-	<target name="configure" description="Configure a project for an exploitation environment">
-		<fail unless="profile" />
+	<target name="configure" description="Configure a project for an exploitation environment" depends="setprofile">
 		<exec executable="${basedir}/opt/ananas-build-toolkit/vendor/phpreprocessor/bin/phpreprocessor">
 			<arg line="--command=apply
              --src=${source}
