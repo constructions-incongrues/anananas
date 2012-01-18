@@ -1,0 +1,6 @@
+[submodule "phpreprocessor"]
+	path = phpreprocessor
+	url = git://github.com/ARAMISAUTO/phpreprocessor.git
+[submodule "vendor/phpreprocessor"]
+	path = vendor/phpreprocessor
+	url = git://github.com/ARAMISAUTO/phpreprocessor.git
