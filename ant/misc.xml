@@ -35,4 +35,7 @@
 			<arg line="doctrine:build --all-classes" />
 		</exec>
 	</target>
+	
+	<target name="deploy" description="Deploys latest changes to environment defined by profile" depends="liquibase.migrate,sync">
+	</target>
 </project>
