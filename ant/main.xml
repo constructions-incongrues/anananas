@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="main" default="help">
+	<!-- This file will be imported, we need to calculate basedir -->
+	<dirname property="toolkit.basedir" file="${ant.file.main}/.." />
+
+	<!-- ant-contrib -->
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+		<classpath>
+			<pathelement location="${toolkit.basedir}/vendor/ant-contrib/ant-contrib-1.0b3.jar" />
+		</classpath>
+	</taskdef>
+
+	<import file="misc.xml" />
+	<import file="ci.xml" />
+	<import file="liquibase.xml" />
+</project>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="misc">
+
+	<target name="help" description="Displays project's help">
+		<java classname="org.apache.tools.ant.Main">
+			<arg value="-buildfile" />
+			<arg value="${ant.file}" />
+			<arg value="-projecthelp" />
+		</java>
+	</target>
+
+	<target name="configure" description="Configure a project for an exploitation environment">
+		<fail unless="profile" />
+		<exec executable="${basedir}/opt/ananas-build-toolkit/vendor/phpreprocessor/bin/phpreprocessor">
+			<arg line="--command=apply
+             --src=${source}
+             --properties=${basedir}/etc/${profile}/build.properties" />
+		</exec>
+	</target>
+
+	<!-- This target depends on several targets to make sure that one does not send a wrongly configured project to some env -->
+	<target name="sync" description="(R)Sync your project files to a remote destination" depends="configure,orm">
+		<fail unless="profile" />
+		<loadfile srcfile="${basedir}/etc/${profile}/rsync.remote" property="rsync.remote" />
+		<exec executable="rsync">
+			<arg line="--cvs-exclude 
+              --exclude-from=${basedir}/etc/${profile}/rsync.exclude
+              --links
+              -agpvzc ${source}/ -e ssh ${rsync.remote}" />
+		</exec>
+	</target>
+
+	<target name="orm" description="Generates ORM classes needed for the project to work properly">
+		<exec executable="${source}/symfony">
+			<arg line="doctrine:build --all-classes" />
+		</exec>
+	</target>
+</project>
