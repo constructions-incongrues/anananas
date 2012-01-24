@@ -37,4 +37,18 @@
 	
 	<target name="deploy" description="Deploys latest changes to environment defined by profile" depends="liquibase.migrate,sync">
 	</target>
+	
+	<target name="init" description="Inits empty project">
+		<!-- Create directories -->
+		<mkdir dir="${basedir}/src" />
+		<mkdir dir="${basedir}/etc/liquibase/changelogs/" />
+		
+		<!-- Create sample profile -->
+		<copy todir="${basedir}/etc/reference">
+			<fileset dir="${basedir}/opt/ananas-build-toolkit/templates/profile/" includes="**/*" />
+		</copy>
+		
+		<!-- Create project build.xml file -->
+		<copy todir="${basedir}" file="${basedir}/opt/ananas-build-toolkit/templates/build.xml" />
+	</target>
 </project>
