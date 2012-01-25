@@ -18,7 +18,7 @@
 	</target>
 
 	<!-- This target depends on several targets to make sure that one does not send a wrongly configured project to some env -->
-	<target name="sync" description="(R)Sync your project files to a remote destination" depends="configure,orm">
+	<target name="sync" description="(R)Sync your project files to a remote destination" depends="configure">
 		<fail unless="profile" />
 		<loadfile srcfile="${basedir}/etc/${profile}/rsync.remote" property="rsync.remote" />
 		<exec executable="rsync">
