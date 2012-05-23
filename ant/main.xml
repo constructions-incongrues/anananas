@@ -14,14 +14,14 @@
 	<target name="setprofile">
 		<fail unless="profile" />
 
-		<!-- Toolkit common properties -->
-		<property file="${toolkit.basedir}/etc/default/build.properties" />
+		<!-- Configuration profile properties -->
+		<property file="etc/${profile}/build.properties" />
 
 		<!-- Team common properties -->
 		<property file="${toolkit.basedir}/etc/team/build.properties" />
 
-		<!-- Configuration profile properties -->
-		<property file="etc/${profile}/build.properties" />
+		<!-- Toolkit common properties -->
+		<property file="${toolkit.basedir}/etc/default/build.properties" />
 	</target>
 	
 	<import file="misc.xml" />
