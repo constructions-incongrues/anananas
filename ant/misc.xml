@@ -24,6 +24,7 @@
 			<arg line="--cvs-exclude 
               --exclude-from=${basedir}/etc/${profile}/rsync.exclude
               --links
+	      ${rsync.options}
               -agpvzc ${source}/ -e ssh ${remote.username}@${remote.host}:${remote.path.root}" />
 		</exec>
 	</target>
