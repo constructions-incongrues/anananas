@@ -39,16 +39,31 @@
 	</target>
 	
 	<target name="init" description="Inits empty project">
+		<fail unless="profile" />
+		<fail unless="toolkitDir" />
+
 		<!-- Create directories -->
 		<mkdir dir="${basedir}/src" />
 		<mkdir dir="${basedir}/etc/liquibase/changelogs/" />
 		
-		<!-- Create sample profile -->
-		<copy todir="${basedir}/etc/reference">
-			<fileset dir="${basedir}/opt/ananas-build-toolkit/templates/profile/" includes="**/*" />
+		<!-- Create team configuration profile -->
+		<copy todir="${basedir}/etc/team">
+			<fileset dir="${toolkitDir}/templates/profile/" includes="**/*" />
 		</copy>
+		<!-- Create local configuration profile -->
+		<copy todir="${basedir}/etc/${profile}">
+			<fileset dir="${toolkitDir}/templates/profile/" includes="**/*" />
+		</copy>
+
+		<!-- Backup existing build.properties file -->
+		<copy file="${basedir}/etc/${profile}/build.properties" tofile="${basedir}/etc/${profile}/build.properties.bak" />
+
+		<!-- Generate initial build.properties file from project sources -->
+		<exec executable="${toolkitDir}/vendor/phpreprocessor/bin/phpreprocessor" output="${basedir}/etc/${profile}/build.properties" logError="true">
+			<arg line="--command=extract --exclude-from=${toolkitDir}/etc/default/build.properties,${basedir}/etc/team/build.properties --src=${basedir}/src" />
+		</exec>
 		
 		<!-- Create project build.xml file -->
-		<copy todir="${basedir}" file="${basedir}/opt/ananas-build-toolkit/templates/build.xml" />
+		<copy todir="${basedir}" file="${toolkitDir}/templates/build.xml" />
 	</target>
 </project>

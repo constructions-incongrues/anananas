@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="PROJECT" default="help" basedir=".">
-	<import file="opt/ananas-build-toolkit/ant/main.xml" />
+<project name="com.aramisauto.v5" default="help" basedir=".">
+	<import file="vendor/ananas-build-toolkit/ant/main.xml" />
 </project>

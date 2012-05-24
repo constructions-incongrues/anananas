@@ -14,7 +14,7 @@
 	<target name="setprofile">
 		<fail unless="profile" />
 
-		<!-- Configuration profile properties -->
+		<!-- Local configuration profile properties -->
 		<property file="etc/${profile}/build.properties" />
 
 		<!-- Team common properties -->
@@ -25,6 +25,6 @@
 	</target>
 	
 	<import file="misc.xml" />
-	<import file="ci.xml" />
+	<import file="review.xml" />
 	<import file="liquibase.xml" />
 </project>
