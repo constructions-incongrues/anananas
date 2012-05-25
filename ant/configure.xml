@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="configure">
+	<target name="configure" description="Applies configuration profile to project sources" depends="configure.preprocess, configure.filesystem">
+	</target>
+
+	<target name="configure.preprocess" description="Prerocesses -dist files" depends="setprofile">
+		<exec executable="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor">
+			<arg line="--command=apply
+             --src=${source}
+             --properties=${basedir}/etc/${profile}/build.properties" />
+		</exec>
+	</target>
+
+	<target name="configure.filesystem" description="Creates directories and symlinks, sets permissions" depends="configure.filesystem.create-directories,configure.filesystem.create-symlinks,configure.filesystem.set-permissions	">
+	</target>
+
+	<target name="configure.filesystem.create-directories" depends="setprofile">
+        <script language="javascript">
+            <![CDATA[
+            	importClass(java.io.File);
+                var paths = project.getProperty('mkdir').split(',');
+                for (var i=0; i < paths.length; i++) {
+	                taskMkdir = project.createTask('mkdir');
+	                taskMkdir.setDir(new File(paths[i]));
+	                taskMkdir.perform();
+                }
+            ]]>
+        </script>
+	</target>
+
+	<target name="configure.filesystem.create-symlinks" depends="setprofile">
+        <propertyselector property="symlinks" delimiter="," match="symlink.(.+)" select="\1" />
+        <script language="javascript">
+            <![CDATA[
+                var ids = project.getProperty('symlinks');
+                if (ids != undefined) {
+                    ids = ids.split(',');
+                    for (var i = 0; i < ids.length; i++) {
+                        var symlinkSpec = project.getProperty('symlink.' + ids[i]).split(',');
+                        project.setProperty('symlink.current.target', symlinkSpec[0]);
+                        project.setProperty('symlink.current.name', symlinkSpec[1]);
+                        taskAntCall = project.createTask('antcall');
+                        taskAntCall.setTarget('configure.filesystem.create-symlink');
+                        taskAntCall.perform();
+                    }
+                }
+            ]]>
+        </script>
+	</target>
+
+	<target name="configure.filesystem.create-symlink">
+        <exec executable="ln" failonerror="false">
+            <arg value="-sfv" />
+            <arg value="${symlink.current.target}" />
+            <arg value="${symlink.current.name}" />
+        </exec>
+	</target>
+
+	<target name="configure.filesystem.set-permissions">
+        <propertyselector property="modes" delimiter="," match="chmod.(\d+)" select="\1" />
+        <script language="javascript">
+            <![CDATA[
+                importClass(java.io.File);
+                var modes = project.getProperty('modes');
+                if (modes != undefined) {
+                    modes = modes.split(',');
+                    for (var i = 0; i < 1; i++) {
+                        var mode = modes[i];
+                        var paths = project.getProperty('chmod.' + mode).split(',');
+                        for (var j = 0; j < paths.length; j++) {
+                            var path = paths[j];
+                            project.setProperty('path.current', path);
+                            project.setProperty('mode.current', mode);
+                            taskAntCall = project.createTask('antcall');
+                            taskAntCall.setTarget('configure.filesystem.chmod');
+                            taskAntCall.perform();
+                        }
+                    }
+                }
+            ]]>
+        </script>
+	</target>
+
+    <target name="configure.filesystem.chmod">
+        <chmod perm="${mode.current}" file="${path.current}" type="both" />
+    </target>
+</project>
