@@ -11,20 +11,22 @@
 	</taskdef>
 
 	<!-- Targets can depend upon this one -->
-	<target name="setprofile">
+	<target name="toolkit.setprofile">
 		<fail unless="profile" />
 
 		<!-- Local configuration profile properties -->
 		<property file="etc/${profile}/build.properties" />
 
 		<!-- Team common properties -->
-		<property file="${toolkit.basedir}/etc/team/build.properties" />
+		<property file="etc/team/build.properties" />
 
 		<!-- Toolkit common properties -->
 		<property file="${toolkit.basedir}/etc/default/build.properties" />
 	</target>
 	
-	<import file="misc.xml" />
-	<import file="review.xml" />
 	<import file="liquibase.xml" />
+	<import file="misc.xml" />
+	<!-- <import file="os.xml" /> -->
+	<import file="review.xml" />
+	<import file="symfony.xml" />
 </project>

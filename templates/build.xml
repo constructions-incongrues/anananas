@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="com.aramisauto.v5" default="help" basedir=".">
+<project name="my.project" default="help" basedir=".">
 	<import file="vendor/ananas-build-toolkit/ant/main.xml" />
+
+	<!-- This task can be used to override default profile loading behavior -->
+	<target name="setprofile" depends="toolkit.setprofile" />
 </project>
