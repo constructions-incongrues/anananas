@@ -9,14 +9,6 @@
 		</java>
 	</target>
 
-	<target name="configure" description="Configure a project for an exploitation environment" depends="setprofile">
-		<exec executable="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor">
-			<arg line="--command=apply
-             --src=${source}
-             --properties=${basedir}/etc/${profile}/build.properties" />
-		</exec>
-	</target>
-
 	<!-- This target depends on several targets to make sure that one does not send a wrongly configured project to some env -->
 	<target name="sync" description="(R)Sync your project files to a remote destination" depends="configure">
 		<fail unless="profile" />
@@ -40,8 +32,8 @@
 		<mkdir dir="${basedir}/src" />
 		<mkdir dir="${basedir}/etc/liquibase/changelogs/" />
 		
-		<!-- Create team configuration profile -->
-		<copy todir="${basedir}/etc/team">
+		<!-- Create common configuration profile -->
+		<copy todir="${basedir}/etc/common">
 			<fileset dir="${toolkitDir}/templates/profile/" includes="**/*" />
 		</copy>
 
@@ -59,13 +51,16 @@
 	<target name="init.properties" description="Creates a new property file for configuration profile">
 		<fail unless="profile" />
 		
+		<!-- Create profile directory -->
+		<mkdir dir="${basedir}/etc/${profile}" />
+
 		<!-- Backup existing build.properties file -->
 		<copy file="${basedir}/etc/${profile}/build.properties" tofile="${basedir}/etc/${profile}/build.properties.bak" />
 		<echo>Backuped existing property file to ${basedir}/etc/${profile}/build.properties.bak</echo>
 
 		<!-- Generate initial build.properties file from project sources -->
 		<exec executable="${toolkitDir}/vendor/phpreprocessor/bin/phpreprocessor" output="${basedir}/etc/${profile}/build.properties" logError="true">
-			<arg line="--command=extract --exclude-from=${toolkitDir}/etc/default/build.properties,${basedir}/etc/team/build.properties --src=${basedir}/src" />
+			<arg line="--command=extract --exclude-from=${toolkitDir}/etc/default/build.properties,${basedir}/etc/common/build.properties --src=${basedir}/src" />
 		</exec>
 		<echo>Extracted tokens from project sources into ${basedir}/etc/${profile}/build.properties</echo>
 	</target>
