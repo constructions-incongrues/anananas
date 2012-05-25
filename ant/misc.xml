@@ -32,7 +32,7 @@
 	<target name="deploy" description="Deploys latest changes to environment defined by profile" depends="liquibase.migrate,sync">
 	</target>
 	
-	<target name="init" description="Inits empty project">
+	<target name="init" description="Sets up project for usage with the toolkit">
 		<fail unless="profile" />
 		<fail unless="toolkitDir" />
 
@@ -44,20 +44,29 @@
 		<copy todir="${basedir}/etc/team">
 			<fileset dir="${toolkitDir}/templates/profile/" includes="**/*" />
 		</copy>
+
 		<!-- Create local configuration profile -->
 		<copy todir="${basedir}/etc/${profile}">
 			<fileset dir="${toolkitDir}/templates/profile/" includes="**/*" />
 		</copy>
 
+		<antcall target="init.properties" />
+		
+		<!-- Create project build.xml file -->
+		<copy todir="${basedir}" file="${toolkitDir}/templates/build.xml" />
+	</target>
+
+	<target name="init.properties" description="Creates a new property file for configuration profile">
+		<fail unless="profile" />
+		
 		<!-- Backup existing build.properties file -->
 		<copy file="${basedir}/etc/${profile}/build.properties" tofile="${basedir}/etc/${profile}/build.properties.bak" />
+		<echo>Backuped existing property file to ${basedir}/etc/${profile}/build.properties.bak</echo>
 
 		<!-- Generate initial build.properties file from project sources -->
 		<exec executable="${toolkitDir}/vendor/phpreprocessor/bin/phpreprocessor" output="${basedir}/etc/${profile}/build.properties" logError="true">
 			<arg line="--command=extract --exclude-from=${toolkitDir}/etc/default/build.properties,${basedir}/etc/team/build.properties --src=${basedir}/src" />
 		</exec>
-		
-		<!-- Create project build.xml file -->
-		<copy todir="${basedir}" file="${toolkitDir}/templates/build.xml" />
+		<echo>Extracted tokens from project sources into ${basedir}/etc/${profile}/build.properties</echo>
 	</target>
 </project>
