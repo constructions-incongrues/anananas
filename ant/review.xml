@@ -4,7 +4,7 @@
 <project name="review" basedir=".">
     <property name="source" value="src" />
 
-    <target name="clean" description="Clean up and create artifact directories">
+    <target name="review.clean" description="Clean up and create artifact directories">
         <delete dir="${basedir}/build/api" />
         <delete dir="${basedir}/build/code-browser" />
         <delete dir="${basedir}/build/coverage" />
@@ -39,14 +39,14 @@
         </copy>
     </target>
 
-    <target name="review.lint" description="Searches code for syntax errors" depends="clean, review.files">
+    <target name="review.lint" description="Searches code for syntax errors" depends="review.clean, review.files">
         <apply executable="php" failonerror="true">
             <arg value="-l" />
             <fileset dir="${basedir}/build/src" />
         </apply>
     </target>
 
-    <target name="review.phpmd" description="Runs PHPMD on files that needs review" depends="clean, review.files">
+    <target name="review.phpmd" description="Runs PHPMD on files that needs review" depends="review.clean, review.files">
         <exec executable="phpmd">
             <arg line="${basedir}/build/src
                     xml
@@ -55,14 +55,14 @@
         </exec>
     </target>
 
-    <target name="review.phpcpd" description="Runs copy / paste detection on files that needs review" depends="clean, review.files">
+    <target name="review.phpcpd" description="Runs copy / paste detection on files that needs review" depends="review.clean, review.files">
         <exec executable="phpcpd">
             <arg line="--log-pmd ${basedir}/build/logs/pmd-cpd.xml
                     ${basedir}/build/src" />
         </exec>
     </target>
 
-    <target name="review.phpcs" description="Runs Checkstyle on files that needs review" depends="setprofile,clean, review.files">
+    <target name="review.phpcs" description="Runs Checkstyle on files that needs review" depends="setprofile,review.clean, review.files">
         <exec executable="phpcs">
             <arg line="--report=checkstyle
                     --report-file=${basedir}/build/logs/checkstyle.xml
@@ -71,14 +71,14 @@
         </exec>
     </target>
 
-    <target name="review.hphpa" description="Runs HipHop static analysis on files that needs review" depends="clean, review.files">
+    <target name="review.hphpa" description="Runs HipHop static analysis on files that needs review" depends="review.clean, review.files">
         <exec executable="hphpa">
             <arg line="--checkstyle ${basedir}/build/logs/hphpa.xml
                     ${basedir}/build/src" />
         </exec>
     </target>
 
-    <target name="review.phrocco" description="Runs HipHop static analysis on files that needs review" depends="clean, review.files">
+    <target name="review.phrocco" description="Runs HipHop static analysis on files that needs review" depends="review.clean, review.files">
         <!-- We need this complicated call as phrocco uses short open tags -->
         <exec executable="/usr/bin/env" dir="${basedir}" os="Linux">
             <arg line="php -d 'short_open_tag=1' /usr/bin/phrocco -i build/src -o build/phrocco" />
