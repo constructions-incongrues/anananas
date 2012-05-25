@@ -38,10 +38,6 @@
 		</copy>
 
 		<!-- Create local configuration profile -->
-		<copy todir="${basedir}/etc/${profile}">
-			<fileset dir="${toolkitDir}/templates/profile/" includes="**/*" />
-		</copy>
-
 		<antcall target="init.properties" />
 		
 		<!-- Create project build.xml file -->
