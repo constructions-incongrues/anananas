@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="symfony">
+	<target name="symfony.orm" description="Generates ORM classes needed for the project to work properly">
+		<exec executable="${source}/symfony">
+			<arg line="doctrine:build --all-classes" />
+		</exec>
+	</target>
+</project>
