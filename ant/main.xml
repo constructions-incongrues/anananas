@@ -18,7 +18,7 @@
 		<property file="etc/${profile}/build.properties" />
 
 		<!-- Team common properties -->
-		<property file="etc/team/build.properties" />
+		<property file="etc/common/build.properties" />
 
 		<!-- Toolkit common properties -->
 		<property file="${toolkit.basedir}/etc/default/build.properties" />

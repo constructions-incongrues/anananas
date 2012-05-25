@@ -6,8 +6,8 @@
 	<target name="configure.preprocess" description="Prerocesses -dist files" depends="setprofile">
 		<exec executable="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor">
 			<arg line="--command=apply
-             --src=${source}
-             --properties=${basedir}/etc/${profile}/build.properties" />
+             --src=src
+             --properties=${toolkit.basedir}/etc/default/build.properties,${basedir}/etc/common/build.properties,${basedir}/etc/${profile}/build.properties" />
 		</exec>
 	</target>
 
@@ -18,11 +18,14 @@
         <script language="javascript">
             <![CDATA[
             	importClass(java.io.File);
-                var paths = project.getProperty('mkdir').split(',');
-                for (var i=0; i < paths.length; i++) {
-	                taskMkdir = project.createTask('mkdir');
-	                taskMkdir.setDir(new File(paths[i]));
-	                taskMkdir.perform();
+                var paths = project.getProperty('mkdir');
+                if (paths != undefined) {
+                    paths = paths.split(',');
+                    for (var i=0; i < paths.length; i++) {
+    	                taskMkdir = project.createTask('mkdir');
+    	                taskMkdir.setDir(new File(paths[i]));
+    	                taskMkdir.perform();
+                    }
                 }
             ]]>
         </script>

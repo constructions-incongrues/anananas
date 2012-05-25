@@ -10,20 +10,23 @@
 	</target>
 
 	<!-- This target depends on several targets to make sure that one does not send a wrongly configured project to some env -->
-	<target name="sync" description="(R)Sync your project files to a remote destination" depends="configure">
-		<fail unless="profile" />
+	<target name="sync" description="(R)Sync your project files to a remote destination" depends="setprofile">
+		<echo>Rsyncing to ${remote.username}@${remote.host}:${remote.path.root}</echo>
 		<exec executable="rsync">
 			<arg line="--cvs-exclude 
-              --exclude-from=${basedir}/etc/${profile}/rsync.exclude
+              --exclude-from=${basedir}/etc/common/rsync.exclude
               --links
 	      ${rsync.options}
-              -agpvzc ${source}/ -e ssh ${remote.username}@${remote.host}:${remote.path.root}" />
+              -agpvzc src/ -e ssh ${remote.username}@${remote.host}:${remote.path.root}" />
 		</exec>
 	</target>
 	
-	<target name="deploy" description="Deploys latest changes to environment defined by profile" depends="liquibase.migrate,sync">
+	<target name="deploy" description="Deploys latest changes to environment defined by profile" depends="configure,build,liquibase.migrate,sync">
 	</target>
 	
+	<target name="build" description="Builds project (ORM classes generation, etc)" depends="symfony.orm">
+	</target>
+
 	<target name="init" description="Sets up project for usage with the toolkit">
 		<fail unless="profile" />
 		<fail unless="toolkitDir" />
