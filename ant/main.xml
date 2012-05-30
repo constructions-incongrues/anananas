@@ -11,7 +11,7 @@
 	</taskdef>
 
 	<!-- Targets can depend upon this one -->
-	<target name="toolkit.setprofile">
+	<target name="setprofile">
 		<fail unless="profile" />
 
 		<!-- Local configuration profile properties -->

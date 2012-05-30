@@ -3,5 +3,5 @@
 	<import file="vendor/ananas-build-toolkit/ant/main.xml" />
 
 	<!-- This task can be used to override default profile loading behavior -->
-	<target name="setprofile" depends="toolkit.setprofile" />
+	<target name="setprofile" depends="main.setprofile" />
 </project>

@@ -54,7 +54,7 @@
 		<mkdir dir="${basedir}/etc/${profile}" />
 
 		<!-- Backup existing build.properties file -->
-		<copy file="${basedir}/etc/${profile}/build.properties" tofile="${basedir}/etc/${profile}/build.properties.bak" />
+		<copy file="${basedir}/etc/${profile}/build.properties" tofile="${basedir}/etc/${profile}/build.properties.bak" failonerror="false" />
 		<echo>Backuped existing property file to ${basedir}/etc/${profile}/build.properties.bak</echo>
 
 		<!-- Generate initial build.properties file from project sources -->
