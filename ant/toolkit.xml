@@ -9,6 +9,23 @@
 			<pathelement location="${toolkit.basedir}/vendor/ant-contrib/ant-contrib-1.0b3.jar" />
 		</classpath>
 	</taskdef>
+	
+	<target name="configure" description="Applies configuration profile to project sources" depends="configure.preprocess, configure.filesystem">
+	</target>
+
+	<target name="build" description="Builds project (ORM classes generation, etc)" depends="symfony.orm">
+	</target>
+
+	<target name="deploy" description="Deploys latest changes to environment defined by profile" depends="configure,build,test,liquibase.migrate,sync">
+	</target>
+
+	<target name="help" description="Displays project's help">
+		<java classname="org.apache.tools.ant.Main">
+			<arg value="-buildfile" />
+			<arg value="${ant.file}" />
+			<arg value="-projecthelp" />
+		</java>
+	</target>
 
 	<!-- Targets can depend upon this one -->
 	<target name="setprofile">
@@ -25,8 +42,9 @@
 	</target>
 	
 	<import file="configure.xml" />
+	<import file="init.xml" />
 	<import file="liquibase.xml" />
-	<import file="misc.xml" />
 	<import file="review.xml" />
 	<import file="symfony.xml" />
+	<import file="sync.xml" />
 </project>

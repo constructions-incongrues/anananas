@@ -1,31 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="misc">
-
-	<target name="help" description="Displays project's help">
-		<java classname="org.apache.tools.ant.Main">
-			<arg value="-buildfile" />
-			<arg value="${ant.file}" />
-			<arg value="-projecthelp" />
-		</java>
-	</target>
-
-	<!-- This target depends on several targets to make sure that one does not send a wrongly configured project to some env -->
-	<target name="sync" description="(R)Sync your project files to a remote destination" depends="setprofile">
-		<echo>Rsyncing to ${remote.username}@${remote.host}:${remote.path.root}</echo>
-		<exec executable="rsync">
-			<arg line="--cvs-exclude 
-              --exclude-from=${basedir}/etc/common/rsync.exclude
-              --links
-	      ${rsync.options}
-              -agpvzc src/ -e ssh ${remote.username}@${remote.host}:${remote.path.root}" />
-		</exec>
-	</target>
-	
-	<target name="deploy" description="Deploys latest changes to environment defined by profile" depends="configure,build,liquibase.migrate,sync">
-	</target>
-	
-	<target name="build" description="Builds project (ORM classes generation, etc)" depends="symfony.orm">
-	</target>
+<project name="init">
 
 	<target name="init" description="Sets up project for usage with the toolkit">
 		<fail unless="profile" />
@@ -63,4 +37,5 @@
 		</exec>
 		<echo>Extracted tokens from project sources into ${basedir}/etc/${profile}/build.properties</echo>
 	</target>
+
 </project>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="sync">
+	
+	<target name="sync" description="(R)Sync your project files to a remote destination" depends="setprofile">
+		<echo>Rsyncing to ${remote.username}@${remote.host}:${remote.path.root}</echo>
+		<exec executable="rsync">
+			<arg line="--cvs-exclude 
+              --exclude-from=${basedir}/etc/common/rsync.exclude
+              --links
+	      ${rsync.options}
+              -agpvzc src/ -e ssh ${remote.username}@${remote.host}:${remote.path.root}" />
+		</exec>
+	</target>
+	
+</project>

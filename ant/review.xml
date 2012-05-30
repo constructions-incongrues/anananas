@@ -23,7 +23,6 @@
     </target>
 
     <target name="review" description="Runs code quality checks on commited files." depends="setprofile,review.lint,review.phpmd,review.phpcpd,review.phpcs,review.phrocco">
-        <antcall target="review.browse" />
     </target>
 
     <target name="review.files.discover" unless="files" depends="setprofile">

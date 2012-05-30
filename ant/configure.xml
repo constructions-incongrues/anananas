@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="configure">
-	<target name="configure" description="Applies configuration profile to project sources" depends="configure.preprocess, configure.filesystem">
-	</target>
-
 	<target name="configure.preprocess" description="Prerocesses -dist files" depends="setprofile">
 		<exec executable="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor">
 			<arg line="--command=apply
