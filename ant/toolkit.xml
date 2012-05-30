@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="toolkit" default="help">
 	<!-- This file will be imported, we need to calculate basedir -->
-	<dirname property="toolkit.basedir" file="${ant.file.main}/.." />
+	<dirname property="toolkit.basedir" file="${ant.file.toolkit}/.." />
 
 	<!-- ant-contrib -->
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
