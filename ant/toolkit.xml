@@ -16,7 +16,7 @@
 	<target name="build" description="Builds project (ORM classes generation, etc)" depends="symfony.orm">
 	</target>
 
-	<target name="deploy" description="Deploys latest changes to environment defined by profile" depends="configure,build,test,liquibase.migrate,sync">
+	<target name="deploy" description="Deploys latest changes to environment defined by profile" depends="configure,build,liquibase.migrate,sync">
 	</target>
 
 	<target name="help" description="Displays project's help">
