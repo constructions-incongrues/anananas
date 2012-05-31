@@ -1,7 +1,7 @@
 The Ananas Build Toolkit
 ========================
 
-# Bootstrap
+## Bootstrap
 ```bash
 git submodule add git@github.com:contructions-incongrues/ananas-build-toolkit.git vendor/ananas-build-toolkit
 cd vendor/ananas-build-toolkit
