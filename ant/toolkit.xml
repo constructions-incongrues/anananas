@@ -29,7 +29,9 @@
 
 	<!-- Targets can depend upon this one -->
 	<target name="setprofile">
-		<fail unless="profile" />
+		<!-- Guess profile -->
+		<exec outputproperty="profile" logError="true" executable="whoami" />
+		<echo message="Using profile : ${profile}" />
 
 		<!-- Local configuration profile properties -->
 		<property file="etc/${profile}/build.properties" />
