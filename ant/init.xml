@@ -9,9 +9,9 @@
 		<mkdir dir="${basedir}/etc/liquibase/changelogs/" />
 		
 		<!-- Create common configuration profile -->
-		<copy todir="${basedir}/etc/common">
-			<fileset dir="${toolkit.basedir}/templates/profile/" includes="**/*" />
-		</copy>
+		<mkdir dir="${basedir}/etc/common" />
+		<copy file="${toolkit.basedir}/templates/profile/build.properties" todir="${basedir}/etc/common" overwrite="false" />
+		<copy file="${toolkit.basedir}/templates/profile/rsync.exclude" todir="${basedir}/etc/common" overwrite="false" />
 
 		<!-- Create local configuration profile -->
 		<antcall target="init.properties" />
