@@ -32,7 +32,7 @@
 
 		<!-- Generate initial build.properties file from project sources -->
 		<exec executable="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor" output="${basedir}/etc/${profile}/build.properties" logError="true">
-			<arg line="--command=extract --exclude-from=${toolkit.basedir}/etc/default/build.properties,${basedir}/etc/common/build.properties --src=${basedir}/src" />
+			<arg line="--command=extract --exclude-from=${toolkit.basedir}/etc/default/build.properties,${basedir}/etc/common/build.properties --src=${basedir}/src --merge-with=${basedir}/etc/${profile}/build.properties" />
 		</exec>
 		<echo>Extracted tokens from project sources into ${basedir}/etc/${profile}/build.properties</echo>
 	</target>
