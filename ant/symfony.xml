@@ -7,13 +7,13 @@
 	</target>
 
 	<target name="symfony.12.orm" if="${symfony.version12}">
-		<exec executable="src/symfony">
+		<exec executable="${symfony.executable}">
 			<arg line="doctrine:build-model" />
 		</exec>
 	</target>
 
 	<target name="symfony.14.orm" if="${symfony.version14}">
-		<exec executable="src/symfony">
+		<exec executable="${symfony.executable}">
 			<arg line="doctrine:build --all-classes" />
 		</exec>
 	</target>
