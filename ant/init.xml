@@ -23,8 +23,8 @@
 	<target name="init.properties" description="Creates a new property file for configuration profile">
 		<fail unless="profile" />
 		
-		<!-- Create profile directory -->
-		<mkdir dir="${basedir}/etc/${profile}" />
+		<!-- Create profile directory and property file if it does not exist -->
+		<touch file="${basedir}/etc/${profile}/build.properties" mkdirs="true" />
 
 		<!-- Backup existing build.properties file -->
 		<copy file="${basedir}/etc/${profile}/build.properties" tofile="${basedir}/etc/${profile}/build.properties.bak" failonerror="false" />
