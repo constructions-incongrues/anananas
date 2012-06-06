@@ -82,6 +82,6 @@
 	</target>
 
     <target name="configure.filesystem.chmod">
-        <chmod perm="${mode.current}" file="${path.current}" type="both" />
+        <chmod perm="${mode.current}" file="${path.current}" type="both" verbose="true"/>
     </target>
 </project>
