@@ -28,7 +28,7 @@
     <target name="review.files.discover" unless="files" depends="setprofile">
         <exec executable="sh" outputproperty="files">
             <arg value="-c" />
-            <arg value="${AramisBuildToolkit.basedir}/bin/git-needsreview -b ${review.branch} -f ${review.filter} | xargs | sed 's/ /,/g'" />
+            <arg value="${toolkit.basedir}/bin/git-needsreview -b ${review.branch} -f ${review.filter} | xargs | sed 's/ /,/g'" />
         </exec>
     </target>
 

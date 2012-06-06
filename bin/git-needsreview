@@ -1,0 +1,64 @@
+#!/bin/bash
+
+# Options default values
+branch="origin/master"
+filterRegex='^.*\.php$'
+
+# Functions
+function usage 
+{
+	echo "Lists files from commits that have not be merged into target branch."
+	echo
+	echo "USAGE: git-needsreview [-b BRANCH] [-f REGEX]"
+	echo
+	echo "OPTIONS:"
+	echo "  -b BRANCH Target branch (default: $branch)"
+	echo "  -f REGEX Regex filter (default: $filterRegex)"
+}
+
+function listFiles
+{
+	# Function parameters
+	branch=$1
+	filterRegex=$2
+	
+	filesNeedReview=""
+	for commitId in `git cherry -v $branch | cut -d ' ' -f 2 | xargs`
+	do	
+		files=`git diff --name-only $commitId $commitId~1`
+		for file in $files
+		do
+			if [ -f $file ]
+			then
+				filesNeedReview="${filesNeedReview}
+${file}"
+			fi
+		done
+	done
+	
+	echo $filesNeedReview | tr " " "\n" | sort -u | uniq -u | grep $filterRegex
+}
+
+# Parse options
+while getopts ':hf:b:' opt
+do
+	case $opt in
+		f)
+			filterRegex=${OPTARG}
+			;;
+		b)
+			branch=$OPTARG
+			;;
+		h)
+			usage
+			;;
+		\?)
+			usage
+			;;
+	esac
+done
+
+# List files
+listFiles $branch $filterRegex
+
+exit 0
