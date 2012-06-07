@@ -11,7 +11,7 @@ git submodule add git@github.com:contructions-incongrues/ananas-build-toolkit.gi
 cd vendor/ananas-build-toolkit
 git submodule update --init --recursive
 cd -
-ant -f vendor/ananas-build-toolkit/modules/toolkit/module.xml -Dbasedir=. -Dprofile=$USER init
+ant -f vendor/ananas-build-toolkit/modules/toolkit/module.xml -Dbasedir=. -Dprofile=$USER toolkit.init
 ```
 
 #### Présentation du cycle de travail proposé par le toolkit

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="my.project" default="help" basedir=".">
-	<!-- Import default modules -->
+	<!-- Initialize toolkit -->
 	<import file="vendor/ananas-build-toolkit/modules/toolkit/module.xml" />
 
 	<!-- Import additional modules -->
@@ -16,7 +16,8 @@
 		<!-- <property file="${toolkit.basedir}/modules/review/build.properties" /> -->
 		<!-- <property file="${toolkit.basedir}/modules/symfony1/build.properties" /> -->
 
-		<!-- Toolkit common properties -->
+		<!-- Default modules properties -->
+		<property file="${toolkit.basedir}/modules/rsync/build.properties" />
 		<property file="${toolkit.basedir}/modules/toolkit/build.properties" />
 	</target>
 
