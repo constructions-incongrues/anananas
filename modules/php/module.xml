@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="@module.name@">
+	<!-- toolkit phase : phase -->
+	<target name="@module.name@.targetname" description="Target description" depends="setprofile">
+	</target>
+</project>

@@ -34,6 +34,7 @@ Les modules contiennent leur propre documentation :
 * [development](https://github.com/contructions-incongrues/ananas-build-toolkit/tree/master/modules/development)
 * [filesystem](https://github.com/contructions-incongrues/ananas-build-toolkit/tree/master/modules/filesystem)
 * [liquibase](https://github.com/contructions-incongrues/ananas-build-toolkit/tree/master/modules/liquibase)
+* [php](https://github.com/contructions-incongrues/ananas-build-toolkit/tree/master/modules/php)
 * [properties](https://github.com/contructions-incongrues/ananas-build-toolkit/tree/master/modules/properties)
 * [review](https://github.com/contructions-incongrues/ananas-build-toolkit/tree/master/modules/review)
 * [rsync](https://github.com/contructions-incongrues/ananas-build-toolkit/tree/master/modules/rsync)
@@ -44,20 +45,27 @@ Les modules contiennent leur propre documentation :
 
 ## TODO
 
-* [] [agnocism] third party module related helpers should not be bundled by default
+* [] [agnocism] third party module related helpers should not be bundled by default (better bootstrap.module them)
+* [] [development] find an easier way to activate modules
 * [] [doc] write project presentation
 * [] [doc] document each module : usage, directives
 * [] [doc] create a logo for the projet
 * [] [filesystem] make all targets more verbose
 * [] [filesystem] implement chown task
 * [] [filesystem] fix bug with multiple chmod modes
-* [] [modules] add "php" module for handling PHP runtime configuration
+* [-] [modules] add "php" module for handling PHP runtime configuration
+* [-] [php] php executable path must be configurable
+* [] [properties] task for designating deprecated properties
 * [] [review] rename "review" target to "review.php"
+* [] [review] rename bootstrap.review to review.bootstrap
 * [] [review] also include uncommited files to review
 * [] [review] add phpcs.additional_options directive (with -n activated by default)
 * [] [sync] rename remote.host directive to remote.hostname
 * [] [sync] rename remote.* to sync.*
 * [] [sync] enable multiple sync destinations
+
+## DONE
+
 * [x] [agnocism] implement "module" concept
 * [x] [agnocism] language related modules should not be enabled by default
 * [x] [configure] move filesystem related tasks to filesystem module

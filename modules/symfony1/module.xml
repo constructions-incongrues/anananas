@@ -8,14 +8,14 @@
 	</target>
 
 	<target name="symfony1.12.orm" if="${symfony1.version12}">
-		<exec executable="${symfony1.executable}">
-			<arg line="doctrine:build-model" />
+		<exec executable="${php.executable}">
+			<arg line="${symfony1.executable} doctrine:build-model" />
 		</exec>
 	</target>
 
 	<target name="symfony1.14.orm" if="${symfony1.version14}">
-		<exec executable="${symfony1.executable}">
-			<arg line="doctrine:build --all-classes" />
+		<exec executable="${php.executable}">
+			<arg line="${symfony1.executable} doctrine:build --all-classes" />
 		</exec>
 	</target>
 </project>

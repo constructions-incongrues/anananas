@@ -3,10 +3,11 @@
 	<!-- Preprocesses -dist files -->
 	<!-- toolkit phase : configure -->
 	<target name="properties.apply" depends="setprofile,properties.list-properties-files">
-		<exec executable="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor">
-			<arg line="--command=apply
-             --src=src
-             --properties=${properties.files},${basedir}/etc/common/build.properties,${basedir}/etc/${profile}/build.properties" />
+		<exec executable="${php.executable}">
+			<arg line="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor
+				--command=apply
+             	--src=src
+             	--properties=${properties.files},${basedir}/etc/common/build.properties,${basedir}/etc/${profile}/build.properties" />
 		</exec>
 	</target>
 
@@ -18,8 +19,12 @@
 		<echo>Backuped existing property file to ${basedir}/etc/${profile}/build.properties.bak</echo>
 
 		<!-- Generate initial build.properties file from project sources -->
-		<exec executable="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor" output="${basedir}/etc/${profile}/build.properties" logError="true">
-			<arg line="--command=extract --exclude-from=${properties.files},${basedir}/etc/common/build.properties --src=${basedir}/src --merge-with=${basedir}/etc/${profile}/build.properties" />
+		<exec executable="${php.executable}" output="${basedir}/etc/${profile}/build.properties" logError="true">
+			<arg line="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor 
+				--command=extract 
+				--exclude-from=${properties.files},${basedir}/etc/common/build.properties 
+				--src=${basedir}/src 
+				--merge-with=${basedir}/etc/${profile}/build.properties" />
 		</exec>
 		<echo>Extracted tokens from project sources into ${basedir}/etc/${profile}/build.properties</echo>
 	</target>
