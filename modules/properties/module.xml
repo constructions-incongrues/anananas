@@ -11,6 +11,7 @@
 	</target>
 
 	<!-- Updates profile build properties -->
+	<!-- toolkit phase : configure -->
 	<target name="properties.update" depends="setprofile,properties.list-properties-files,toolkit.create-profile">
 		<!-- Backup existing build.properties file -->
 		<copy file="${basedir}/etc/${profile}/build.properties" tofile="${basedir}/etc/${profile}/build.properties.bak" failonerror="false" />

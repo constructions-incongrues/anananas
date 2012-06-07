@@ -32,6 +32,7 @@ Directives de configuration :
 ## TODO
 
 * [] [agnocism] third party module related helpers should not be bundled by default
+* [] [doc] write project presentation
 * [] [doc] document each module : usage, directives
 * [] [doc] create a logo for the projet
 * [] [filesystem] make all targets more verbose
@@ -42,8 +43,8 @@ Directives de configuration :
 * [] [review] also include uncommited files to review
 * [] [review] add phpcs.additional_options directive (with -n activated by default)
 * [] [sync] rename remote.host directive to remote.hostname
-* [] [sync] enable multiple remotes
 * [] [sync] rename remote.* to sync.*
+* [] [sync] enable multiple sync destinations
 * [x] [agnocism] implement "module" concept
 * [x] [agnocism] language related modules should not be enabled by default
 * [x] [configure] move filesystem related tasks to filesystem module
