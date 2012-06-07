@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="@project.name@" default="help" basedir=".">
 	<!-- Initialize toolkit -->
-	<import file="${toolkit.basedir}/modules/toolkit/module.xml" />
+	<import file="vendor/ananas-build-toolkit/modules/toolkit/module.xml" />
 
 	<!-- Import additional modules here -->
 
