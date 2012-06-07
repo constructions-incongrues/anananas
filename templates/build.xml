@@ -1,7 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="my.project" default="help" basedir=".">
-	<import file="vendor/ananas-build-toolkit/ant/toolkit.xml" />
+	<!-- Import default modules -->
+	<import file="vendor/ananas-build-toolkit/modules/toolkit/module.xml" />
 
-	<!-- This task can be used to override default profile loading behavior -->
-	<target name="setprofile" depends="toolkit.setprofile" />
+	<!-- Import additional modules -->
+	<!-- <import file="${toolkit.basedir}/modules/composer/module.xml" /> -->
+	<!-- <import file="${toolkit.basedir}/modules/liquibase/module.xml" /> -->
+	<!-- <import file="${toolkit.basedir}/modules/review/module.xml" /> -->
+	<!-- <import file="${toolkit.basedir}/modules/symfony1/module.xml" /> -->
+
+	<target name="setprofile" depends="toolkit.setprofile">
+		<!-- Insert additional modules properties files here -->
+		<!-- <property file="${toolkit.basedir}/modules/composer/build.properties" /> -->
+		<!-- <property file="${toolkit.basedir}/modules/liquibase/build.properties" /> -->
+		<!-- <property file="${toolkit.basedir}/modules/review/build.properties" /> -->
+		<!-- <property file="${toolkit.basedir}/modules/symfony1/build.properties" /> -->
+
+		<!-- Toolkit common properties -->
+		<property file="${toolkit.basedir}/modules/toolkit/build.properties" />
+	</target>
+
+	<!-- Main toolkit phases. Add module targets as needed -->
+	<target name="configure" description="Applies configuration profile to project sources" depends="configure.preprocess, configure.filesystem" />
+
+	<target name="build" description="Builds project (ORM classes generation, etc)" depends="" />
+
+	<target name="review" description="Runs code quality analysis on uncommited and unmerged files" depends="" />
+
+	<target name="migrate" description="Applies datastore modifications" depends="" />
+
+	<target name="sync" description="Synchronizes code with remote server(s)" depends="rsync.sync" />
 </project>

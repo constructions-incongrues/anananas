@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="sync">
+<project name="rsync">
 	
-	<target name="sync" description="(R)Sync your project files to a remote destination" depends="setprofile">
+	<!-- Syncs your project files to a remote destination -->
+	<!-- toolkit phase : sync -->
+	<target name="rsync.sync" depends="setprofile">
+		<!-- Sanity checks -->
+		<fail unless="remote.username" />
+		<fail unless="remote.host" />
+		<fail unless="remote.path.root" />
+
 		<echo>Rsyncing to ${remote.username}@${remote.host}:${remote.path.root}</echo>
 		<echo>rsync additional options : ${rsync.options}</echo> 
+		
 		<exec executable="rsync">
 			<arg line="--cvs-exclude 
               --exclude-from=${basedir}/etc/common/rsync.exclude

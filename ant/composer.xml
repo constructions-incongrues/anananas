@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project name="composer">
-	<target name="composer.update" description="Updates dependencies managed by composer" if="${composer.enabled}" depends="setprofile">
-		<exec dir="src" executable="composer.phar" failOnError="true" resolveexecutable="true">
-			<arg line="update" />
-		</exec>
-	</target>
-</project>

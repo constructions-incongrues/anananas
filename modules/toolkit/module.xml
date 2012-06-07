@@ -1,30 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="toolkit" default="help">
-	<!-- This file will be imported, we need to calculate basedir -->
-	<dirname property="toolkit.basedir" file="${ant.file.toolkit}/.." />
+	<!-- Store toolkit base directory for later use -->
+	<dirname property="toolkit.basedir" file="${ant.file.toolkit}/../.." />
 
-	<!-- ant-contrib -->
+	<!-- Enable ant-contrib (@see http://ant-contrib.sourceforge.net) -->
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
 		<classpath>
 			<pathelement location="${toolkit.basedir}/vendor/ant-contrib/ant-contrib-1.0b3.jar" />
 		</classpath>
 	</taskdef>
-	
-	<target name="configure" description="Applies configuration profile to project sources" depends="configure.preprocess, configure.filesystem">
-	</target>
-
-	<target name="build" description="Builds project (ORM classes generation, etc)" depends="composer.update,symfony.orm">
-	</target>
-
-	<target name="deploy" description="Deploys latest changes to environment defined by profile" depends="configure,build,liquibase.migrate,sync">
-	</target>
 
 	<target name="help" description="Displays project's help">
+		<echo>Ananas Build Toolkit : Usage</echo>
 		<java classname="org.apache.tools.ant.Main">
 			<arg value="-buildfile" />
 			<arg value="${ant.file}" />
 			<arg value="-projecthelp" />
 		</java>
+		<echo>More documentation can obtained at https://github.com/contructions-incongrues/ananas-build-toolkit</echo>
 	</target>
 
 	<!-- Targets can depend upon this one -->
@@ -38,16 +31,10 @@
 
 		<!-- Team common properties -->
 		<property file="etc/common/build.properties" />
-
-		<!-- Toolkit common properties -->
-		<property file="${toolkit.basedir}/etc/default/build.properties" />
 	</target>
 	
-	<import file="composer.xml" />
-	<import file="configure.xml" />
-	<import file="init.xml" />
-	<import file="liquibase.xml" />
-	<import file="review.xml" />
-	<import file="symfony.xml" />
-	<import file="sync.xml" />
+	<!-- Import default modules -->
+	<import file="${toolkit.basedir}/modules/configure/module.xml" />
+	<import file="${toolkit.basedir}/modules/init/module.xml" />
+	<import file="${toolkit.basedir}/modules/rsync/module.xml" />
 </project>
