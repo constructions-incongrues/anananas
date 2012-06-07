@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="symfony1">
-
 	<!-- toolkit phase : build -->
 	<target name="symfony1.orm" description="Generates ORM classes needed for the project to work properly">
 		<antcall target="symfony1.12.orm" />
@@ -8,13 +7,13 @@
 	</target>
 
 	<target name="symfony1.12.orm" if="${symfony1.version12}">
-		<exec executable="${php.executable}">
+		<exec executable="${php.executable}" failonerror="true">
 			<arg line="${symfony1.executable} doctrine:build-model" />
 		</exec>
 	</target>
 
 	<target name="symfony1.14.orm" if="${symfony1.version14}">
-		<exec executable="${php.executable}">
+		<exec executable="${php.executable}" failonerror="true">
 			<arg line="${symfony1.executable} doctrine:build --all-classes" />
 		</exec>
 	</target>
