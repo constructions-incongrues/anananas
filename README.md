@@ -4,8 +4,6 @@
 
 L'Ananas Build Toolkit est un framework de configuration et de déploiement de projet informatique.
 
-Il se base sur Ant.
-
 Ces principaux intérêts sont :
 
  * Installation aidée
@@ -14,6 +12,8 @@ Ces principaux intérêts sont :
  * Gestion efficace de profils de configuration multiples
  * Libre et gratuit
  * Modulaire et extensible
+
+Il est basé sur [Ant](http://ant.apache.org) et [PHPreprocessor](https://github.com/ARAMISAUTO/phpreprocessor).
 
 ## Présentation du cycle de travail proposé par le toolkit
 
