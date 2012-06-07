@@ -31,10 +31,6 @@ Directives de configuration :
 
 ## TODO
 
-* [x] [agnocism] implement "module" concept
-* [x] [agnocism] language related modules should not be enabled by default
-* [x] [symfony] rename symfony module to symfony1
-* [x] [toolkit] toolkit should me a module too, exposing default configuration (and init tasks ?)
 * [] [agnocism] third party module related helpers should not be bundled by default
 * [] [toolkit] move init targets to toolkit module
 * [] [review] rename "review" target to "review.php"
@@ -49,3 +45,7 @@ Directives de configuration :
 * [] [sync] rename remote.* to sync.*
 * [] [modules] add "php" module for handling PHP runtime configuration
 * [] [doc] create a logo for the projet
+* [x] [agnocism] implement "module" concept
+* [x] [agnocism] language related modules should not be enabled by default
+* [x] [symfony] rename symfony module to symfony1
+* [x] [toolkit] toolkit should me a module too, exposing default configuration (and init tasks ?)
