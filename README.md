@@ -17,13 +17,17 @@ Il est basé sur [Ant](http://ant.apache.org) et [PHPreprocessor](https://github
 
 ## Présentation du cycle de travail proposé par le toolkit
 
-Le toolkit identifie cinq grandes phases dans l'exploitation d'un projet informatique :
+Le toolkit identifie cinq grandes phases dans l'exploitation d'un projet.
 
- * Configuration
- * Construction
- * Analyse
- * Migration
- * Synchronisation
+ ### Configuration
+
+ ### Construction
+ 
+ ### Analyse
+
+ ### Migration
+ 
+ ### Synchronisation
 
 ## Fonctionnement de la configuration en cascade
 
@@ -40,9 +44,9 @@ git submodule add git@github.com:contructions-incongrues/ananas-build-toolkit.gi
 # Récupération des sous-modules du toolkit
 cd vendor/ananas-build-toolkit
 git submodule update --init --recursive
-cd -
 
 # Initialisation du projet : création du fichier de build et des profils de configuration
+cd -
 ant -f vendor/ananas-build-toolkit/modules/toolkit/module.xml -Dbasedir=. toolkit.init
 ```
 
@@ -76,6 +80,7 @@ Il suffit d'importer le projet ant du module dans le fichier ```build.xml``` du 
 * [] [filesystem] implement chown task
 * [] [filesystem] fix bug with multiple chmod modes
 * [] [properties] task for designating deprecated properties
+* [] [properties] also show non-valued properties in local configuration profile
 * [] [review] rename "review" target to "php.review"
 * [] [review] rename bootstrap.review to review.bootstrap
 * [] [review] also include uncommited files to review
