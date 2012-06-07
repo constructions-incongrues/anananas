@@ -1,11 +1,11 @@
 #### Module : @module.name@
 
-Présentation du module.
+TODO : Présentation du module.
 
 ##### Installation
 
-Ajoutez les lignes suivantes à votre fichier ```build.xml```, aux endroits indiqués :
-
+Ajoutez les lignes suivantes au fichier ```build.xml``` du projet, aux endroits indiqués :
+   
 Après l'import du module toolkit :
  ```xml
  <import file="${toolkit.basedir}/modules/@module.name@/module.xml" />
@@ -16,12 +16,13 @@ Dans la *target* ```setprofile``` :
 <property file="${toolkit.basedir}/modules/@module.name@/build.properties" />
 ```
 
-##### Directives de configuration
+Si besoin, surchargez les directives de configuration par défaut du module dans votre profil de configuration.
 
-* **@module.name@.directive.1** (défaut : val) : description
-* **@module.name@.directive.2** (défaut : val) : description
+##### TODO : Directives de configuration
 
-##### Tâches
+* **@module.name@.directivename** (défaut : *valeur*) : description
 
-* **@module.name@.task.1** : (toolkit phase : *phase*) : description
-* **@module.name@.task.2** : (toolkit phase : *phase*) : description
+##### TODO : Les tâches et leurs paramètres
+
+* **@module.name@.taskname** : (toolkit phase : *configure|build|review|migrate|sync*) : description
+    * **parameter.name** (défaut : valeur) : description
