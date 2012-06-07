@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="properties" default="help">
+	<!-- toolkit phase : configure -->
+	<target name="properties.apply" description="Prerocesses -dist files" depends="setprofile,properties.list-properties-files">
+		<exec executable="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor">
+			<arg line="--command=apply
+             --src=src
+             --properties=${properties.files},${basedir}/etc/common/build.properties,${basedir}/etc/${profile}/build.properties" />
+		</exec>
+	</target>
+
+	<target name="properties.update" description="Updates profile build properties" depends="setprofile,properties.list-properties-files,toolkit.create-profile">
+		<!-- Backup existing build.properties file -->
+		<copy file="${basedir}/etc/${profile}/build.properties" tofile="${basedir}/etc/${profile}/build.properties.bak" failonerror="false" />
+		<echo>Backuped existing property file to ${basedir}/etc/${profile}/build.properties.bak</echo>
+
+		<!-- Generate initial build.properties file from project sources -->
+		<exec executable="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor" output="${basedir}/etc/${profile}/build.properties" logError="true">
+			<arg line="--command=extract --exclude-from=${properties.files},${basedir}/etc/common/build.properties --src=${basedir}/src --merge-with=${basedir}/etc/${profile}/build.properties" />
+		</exec>
+		<echo>Extracted tokens from project sources into ${basedir}/etc/${profile}/build.properties</echo>
+	</target>
+
+	<target name="properties.list-properties-files">
+		<fileset id="files" dir="${toolkit.basedir}" includes="**/build.properties" />
+		<pathconvert dirsep="/" pathsep="," property="properties.files" refid="files"/>
+	</target>
+</project>

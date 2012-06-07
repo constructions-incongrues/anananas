@@ -35,8 +35,6 @@ Directives de configuration :
 * [] [review] rename "review" target to "review.php"
 * [] [doc] document each module : usage, directives
 * [] [review] add phpcs.additional_options directive (with -n activated by default)
-* [] [properties] move preprocessing targets to dedicated module. properties.update, properties.apply
-* [] [init] review init targets
 * [] [sync] rename remote.host directive to remote.hostname
 * [] [init] make it possible to specify project name at runtime
 * [] [review] also include uncommited files to review
@@ -44,6 +42,10 @@ Directives de configuration :
 * [] [sync] rename remote.* to sync.*
 * [] [modules] add "php" module for handling PHP runtime configuration
 * [] [doc] create a logo for the projet
+* [] [filesystem] make all targets more verbose
+* [x] [init] review init targets
+* [x] [configure] move filesystem related tasks to filesystem module
+* [x] [properties] move preprocessing targets to dedicated module. properties.update, properties.apply
 * [x] [agnocism] implement "module" concept
 * [x] [agnocism] language related modules should not be enabled by default
 * [x] [symfony] rename symfony module to symfony1

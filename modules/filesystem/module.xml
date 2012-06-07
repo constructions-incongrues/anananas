@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="configure">
-	<target name="configure.preprocess" description="Prerocesses -dist files" depends="setprofile">
-		<exec executable="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor">
-			<arg line="--command=apply
-             --src=src
-             --properties=${toolkit.basedir}/etc/default/build.properties,${basedir}/etc/common/build.properties,${basedir}/etc/${profile}/build.properties" />
-		</exec>
+<project name="filesystem">
+
+	<target name="filesystem.configure" description="Creates directories and symlinks, sets permissions" depends="filesystem.create-directories,filesystem.create-symlinks,filesystem.set-permissions	">
 	</target>
 
-	<target name="configure.filesystem" description="Creates directories and symlinks, sets permissions" depends="configure.filesystem.create-directories,configure.filesystem.create-symlinks,configure.filesystem.set-permissions	">
-	</target>
-
-	<target name="configure.filesystem.create-directories" depends="setprofile">
+	<target name="filesystem.create-directories" depends="setprofile">
         <script language="javascript">
             <![CDATA[
             	importClass(java.io.File);
@@ -28,7 +21,7 @@
         </script>
 	</target>
 
-	<target name="configure.filesystem.create-symlinks" depends="setprofile">
+	<target name="filesystem.create-symlinks" depends="setprofile">
         <propertyselector property="symlinks" delimiter="," match="symlink.(.+)" select="\1" />
         <script language="javascript">
             <![CDATA[
@@ -40,7 +33,7 @@
                         project.setProperty('symlink.current.target', symlinkSpec[0]);
                         project.setProperty('symlink.current.name', symlinkSpec[1]);
                         taskAntCall = project.createTask('antcall');
-                        taskAntCall.setTarget('configure.filesystem.create-symlink');
+                        taskAntCall.setTarget('filesystem.create-symlink');
                         taskAntCall.perform();
                     }
                 }
@@ -48,7 +41,7 @@
         </script>
 	</target>
 
-	<target name="configure.filesystem.create-symlink">
+	<target name="filesystem.create-symlink">
         <exec executable="ln" failonerror="false">
             <arg value="-sfv" />
             <arg value="${symlink.current.target}" />
@@ -56,7 +49,7 @@
         </exec>
 	</target>
 
-	<target name="configure.filesystem.set-permissions">
+	<target name="filesystem.set-permissions">
         <propertyselector property="modes" delimiter="," match="chmod.(\d+)" select="\1" />
         <script language="javascript">
             <![CDATA[
@@ -72,7 +65,7 @@
                             project.setProperty('path.current', path);
                             project.setProperty('mode.current', mode);
                             taskAntCall = project.createTask('antcall');
-                            taskAntCall.setTarget('configure.filesystem.chmod');
+                            taskAntCall.setTarget('filesystem.chmod');
                             taskAntCall.perform();
                         }
                     }
@@ -81,7 +74,7 @@
         </script>
 	</target>
 
-    <target name="configure.filesystem.chmod">
+    <target name="filesystem.chmod">
         <chmod perm="${mode.current}" file="${path.current}" type="both" verbose="true"/>
     </target>
 </project>
