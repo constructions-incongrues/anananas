@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="@project.name@" default="help" basedir=".">
 	<!-- Initialize toolkit -->
-	<import file="vendor/ananas-build-toolkit/modules/toolkit/module.xml" />
+	<import file="${toolkit.basedir}/modules/toolkit/module.xml" />
 
-	<!-- Import additional modules -->
-	<!-- <import file="${toolkit.basedir}/modules/composer/module.xml" /> -->
-	<!-- <import file="${toolkit.basedir}/modules/liquibase/module.xml" /> -->
-	<!-- <import file="${toolkit.basedir}/modules/review/module.xml" /> -->
-	<!-- <import file="${toolkit.basedir}/modules/symfony1/module.xml" /> -->
+	<!-- Import additional modules here -->
 
 	<target name="setprofile" depends="toolkit.setprofile">
 		<!-- Insert additional modules properties files here -->
-		<!-- <property file="${toolkit.basedir}/modules/composer/build.properties" /> -->
-		<!-- <property file="${toolkit.basedir}/modules/liquibase/build.properties" /> -->
-		<!-- <property file="${toolkit.basedir}/modules/review/build.properties" /> -->
-		<!-- <property file="${toolkit.basedir}/modules/symfony1/build.properties" /> -->
 
 		<!-- Default modules properties -->
 		<property file="${toolkit.basedir}/modules/rsync/build.properties" />

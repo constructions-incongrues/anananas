@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!-- Composer (http://getcomposer.org) module -->
 <project name="composer">
 	<!-- toolkit phase : build -->
 	<target name="composer.update" description="Updates dependencies managed by composer" depends="setprofile">

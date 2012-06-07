@@ -34,6 +34,7 @@
 
 	<target name="toolkit.init" description="Sets up project for usage with the toolkit">
 		<fail unless="profile" />
+		<fail unless="project.name" />
 
 		<!-- Create directories -->
 		<mkdir dir="${basedir}/src" />
@@ -51,6 +52,7 @@
 		<copy file="${basedir}/build.xml" tofile="${basedir}/build.xml.bak" failonerror="false" overwrite="true" />
 		<echo>Backuped existing build file to ${basedir}/build.xml.bak</echo>
 		<copy file="${toolkit.basedir}/templates/build.xml" todir="${basedir}" overwrite="true" />
+		<replace file="${basedir}/build.xml" token="@project.name@" value="${project.name}" />
 	</target>
 
 	<!-- Creates a new property file for configuration profile -->

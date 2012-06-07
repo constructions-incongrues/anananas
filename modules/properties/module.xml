@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="properties" default="help">
+	<!-- Preprocesses -dist files -->
 	<!-- toolkit phase : configure -->
-	<target name="properties.apply" description="Prerocesses -dist files" depends="setprofile,properties.list-properties-files">
+	<target name="properties.apply" depends="setprofile,properties.list-properties-files">
 		<exec executable="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor">
 			<arg line="--command=apply
              --src=src
@@ -9,7 +10,8 @@
 		</exec>
 	</target>
 
-	<target name="properties.update" description="Updates profile build properties" depends="setprofile,properties.list-properties-files,toolkit.create-profile">
+	<!-- Updates profile build properties -->
+	<target name="properties.update" depends="setprofile,properties.list-properties-files,toolkit.create-profile">
 		<!-- Backup existing build.properties file -->
 		<copy file="${basedir}/etc/${profile}/build.properties" tofile="${basedir}/etc/${profile}/build.properties.bak" failonerror="false" />
 		<echo>Backuped existing property file to ${basedir}/etc/${profile}/build.properties.bak</echo>

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="filesystem">
 
-	<target name="filesystem.configure" description="Creates directories and symlinks, sets permissions" depends="filesystem.create-directories,filesystem.create-symlinks,filesystem.set-permissions	">
+    <!-- Creates directories and symlinks, sets permissions -->
+    <!-- toolkit phase : configure -->
+	<target name="filesystem.configure" depends="filesystem.create-directories,filesystem.create-symlinks,filesystem.set-permissions">
 	</target>
 
 	<target name="filesystem.create-directories" depends="setprofile">
