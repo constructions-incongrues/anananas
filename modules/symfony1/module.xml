@@ -6,13 +6,13 @@
 		<antcall target="symfony1.14.orm" />
 	</target>
 
-	<target name="symfony1.12.orm" if="${symfony1.version12}" failOnError="true">
+	<target name="symfony1.12.orm" if="${symfony1.version12}" failonerror="true">
 		<exec executable="${php.executable}">
 			<arg line="${symfony1.executable} doctrine:build-model" />
 		</exec>
 	</target>
 
-	<target name="symfony1.14.orm" if="${symfony1.version14}" failOnError="true">
+	<target name="symfony1.14.orm" if="${symfony1.version14}" failonerror="true">
 		<exec executable="${php.executable}">
 			<arg line="${symfony1.executable} doctrine:build --all-classes" />
 		</exec>
