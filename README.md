@@ -31,20 +31,21 @@ Directives de configuration :
 
 ## TODO
 
-* [agnocism] implement "module" concept
-* [agnocism] third party module related helpers should not be bundled by default
-* [agnocism] language related modules should not be enabled by default
-* [review] rename "review" target to "review.php"
-* [doc] document each module : usage, directives
-* [review] add phpcs.additional_options directive (with -n activated by default)
-* [properties] move preprocessing targets to dedicated module. properties.update, properties.apply
-* [init] review init targets
-* [sync] rename remote.host directive to remote.hostname
-* [symfony] rename symfony module to symfony1
-* [init] make it possible to specify project name at runtime
-* [review] also include uncommited files to review
-* [sync] enable multiple remotes
-* [sync] rename remote.* to sync.*
-* [toolkit] toolkit should me a module too, exposing default configuration (and init tasks ?)
-* [modules] add "php" module for handling PHP runtime configuration
-* [doc] create a logo for the projet
+* [x] [agnocism] implement "module" concept
+* [x] [agnocism] language related modules should not be enabled by default
+* [x] [symfony] rename symfony module to symfony1
+* [x] [toolkit] toolkit should me a module too, exposing default configuration (and init tasks ?)
+* [] [agnocism] third party module related helpers should not be bundled by default
+* [] [toolkit] move init targets to toolkit module
+* [] [review] rename "review" target to "review.php"
+* [] [doc] document each module : usage, directives
+* [] [review] add phpcs.additional_options directive (with -n activated by default)
+* [] [properties] move preprocessing targets to dedicated module. properties.update, properties.apply
+* [] [init] review init targets
+* [] [sync] rename remote.host directive to remote.hostname
+* [] [init] make it possible to specify project name at runtime
+* [] [review] also include uncommited files to review
+* [] [sync] enable multiple remotes
+* [] [sync] rename remote.* to sync.*
+* [] [modules] add "php" module for handling PHP runtime configuration
+* [] [doc] create a logo for the projet
