@@ -48,9 +48,9 @@
 		<antcall target="properties.update" />
 		
 		<!-- Create project build.xml file -->
-		<copy file="${basedir}/build.xml" tofile="${basedir}/build.xml.bak" failonerror="false" />
+		<copy file="${basedir}/build.xml" tofile="${basedir}/build.xml.bak" failonerror="false" overwrite="true" />
 		<echo>Backuped existing build file to ${basedir}/build.xml.bak</echo>
-		<copy todir="${basedir}" file="${toolkit.basedir}/templates/build.xml" />
+		<copy file="${toolkit.basedir}/templates/build.xml" todir="${basedir}" overwrite="true" />
 	</target>
 
 	<!-- Creates a new property file for configuration profile -->
