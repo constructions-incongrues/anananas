@@ -2,7 +2,7 @@
 
 ## Présentation du projet
 
-L'Ananas Build Toolkit est un framework de configuration et de déploiement de projet informatique.
+L'Ananas Build Toolkit est un framework de configuration et de déploiement de projet logiciel.
 
 Ces principaux intérêts sont :
 
