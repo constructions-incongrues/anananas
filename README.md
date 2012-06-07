@@ -2,7 +2,28 @@
 
 ## Présentation du projet
 
+L'Ananas Build Toolkit est un framework de configuration et de déploiement de projet informatique.
+
+Il se base sur Ant.
+
+Ces principaux intérêts sont :
+
+ * Installation aidée
+ * Agnosticité au(x) langage(s) de programmation utilisés au sein du projet
+ * Cycle de travail simple et rapide à prendre en main
+ * Gestion efficace de profils de configuration multiples
+ * Libre et gratuit
+ * Modulaire et extensible
+
 ## Présentation du cycle de travail proposé par le toolkit
+
+Le toolkit identifie cinq grandes phases dans l'exploitation d'un projet informatique :
+
+ * Configuration
+ * Construction
+ * Analyse
+ * Migration
+ * Synchronisation
 
 ## Fonctionnement de la configuration en cascade
 
@@ -13,22 +34,23 @@
 À la racine du projet :
 
 ```bash
+# Récupération des sources du toolkit
 git submodule add git@github.com:contructions-incongrues/ananas-build-toolkit.git vendor/ananas-build-toolkit
+
+# Récupération des sous-modules du toolkit
 cd vendor/ananas-build-toolkit
 git submodule update --init --recursive
 cd -
+
+# Initialisation du projet : création du fichier de build et des profils de configuration
 ant -f vendor/ananas-build-toolkit/modules/toolkit/module.xml -Dbasedir=. toolkit.init
 ```
 
 Cette opération télécharge les sources du toolkit et crée un profil de configuration à votre nom dans le répertoire etc/.
 
-### Activation d'un module
+### Installation et utilisation des modules
 
-Il suffit d'importer le projet ant du module dans le fichier ```build.xml``` du projet. L'opération est décrite précisément dans la documentation de chacun des modules.
-
-### Documentation des modules
-
-Les modules contiennent leur propre documentation :
+Il suffit d'importer le projet ant du module dans le fichier ```build.xml``` du projet. L'opération est décrite précisément dans la documentation de chacun des modules :
 
 * [composer](https://github.com/contructions-incongrues/ananas-build-toolkit/tree/master/modules/composer)
 * [development](https://github.com/contructions-incongrues/ananas-build-toolkit/tree/master/modules/development)
@@ -53,10 +75,8 @@ Les modules contiennent leur propre documentation :
 * [] [filesystem] make all targets more verbose
 * [] [filesystem] implement chown task
 * [] [filesystem] fix bug with multiple chmod modes
-* [-] [modules] add "php" module for handling PHP runtime configuration
-* [-] [php] php executable path must be configurable
 * [] [properties] task for designating deprecated properties
-* [] [review] rename "review" target to "review.php"
+* [] [review] rename "review" target to "php.review"
 * [] [review] rename bootstrap.review to review.bootstrap
 * [] [review] also include uncommited files to review
 * [] [review] add phpcs.additional_options directive (with -n activated by default)
@@ -72,6 +92,8 @@ Les modules contiennent leur propre documentation :
 * [x] [development] task for generating module skeleton
 * [x] [init] make it possible to specify project name at runtime
 * [x] [init] review init targets
+* [x] [modules] add "php" module for handling PHP runtime configuration
+* [x] [php] php executable path must be configurable
 * [x] [properties] move preprocessing targets to dedicated module. properties.update, properties.apply
 * [x] [symfony] rename symfony module to symfony1
 * [x] [toolkit] toolkit should me a module too, exposing default configuration (and init tasks ?)
