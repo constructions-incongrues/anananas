@@ -1,10 +1,8 @@
-##### Module : development
+#### Module : development
 
 Présentation du module.
 
-* Activé par défaut : **non**
-
-###### Installation
+##### Installation
 
 Ajoutez les lignes suivantes à votre fichier ```build.xml```, aux endroits indiqués :
 
@@ -18,12 +16,12 @@ Dans la *target* ```setprofile``` :
 <property file="${toolkit.basedir}/modules/development/build.properties" />
 ```
 
-###### Directives de configuration
+##### Directives de configuration
 
-* development.directive.1 (valeur par défaut : val) : description
-* development.directive.2 (valeur par défaut : val) : description
+* **development.directive.1** (défaut : val) : description
+* **development.directive.2** (défaut : val) : description
 
-###### Tâches
+##### Tâches
 
-* development.task.1 : (toolkit phase : phase) : description
-* development.task.2 : (toolkit phase : phase) : description
+* **development.task.1** : (toolkit phase : *phase*) : description
+* **development.task.2** : (toolkit phase : *phase*) : description

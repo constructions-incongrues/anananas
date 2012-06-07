@@ -1,12 +1,10 @@
-##### Module : composer
+#### Module : composer
 
-Ce module permet d'interagir avec Composer, le gestionnaire de dépendances PHP (http://getcomposer.org.
+Ce module permet d'interagir avec Composer, le gestionnaire de dépendances PHP (http://getcomposer.org).
 
 **Attention :** ce module ne fournit pas Composer en lui-même, il revient à l'utilisateur de l'installer.
 
-* Activé par défaut : **non**
-
-###### Installation
+##### Installation
 
 Ajoutez les lignes suivantes à votre fichier ```build.xml```, aux endroits indiqués :
 
@@ -20,11 +18,11 @@ Dans la *target* ```setprofile``` :
 <property file="${toolkit.basedir}/modules/composer/build.properties" />
 ```
 
-###### Directives de configuration
+##### Directives de configuration
 
-* composer.executable (valeur par défaut : src/composer.phar) : chemin vers le fichier composer.phar
+* **composer.executable** (défaut : src/composer.phar) : chemin vers le fichier composer.phar
 
-###### Tâches
+##### Tâches
 
-* composer.update : (toolkit phase : build) : Lance la mise à jour des dépendances. cf. http://getcomposer.org/doc/01-basic-usage.md#installing-dependencies
+* **composer.update** : (toolkit phase : *build*) : Lance la mise à jour des dépendances. cf. http://getcomposer.org/doc/01-basic-usage.md#installing-dependencies
 

@@ -1,10 +1,8 @@
-##### Module : liquibase
+#### Module : liquibase
 
 Présentation du module.
 
-* Activé par défaut : **non**
-
-###### Installation
+##### Installation
 
 Ajoutez les lignes suivantes à votre fichier ```build.xml```, aux endroits indiqués :
 
@@ -18,12 +16,12 @@ Dans la *target* ```setprofile``` :
 <property file="${toolkit.basedir}/modules/liquibase/build.properties" />
 ```
 
-###### Directives de configuration
+##### Directives de configuration
 
-* liquibase.directive.1 (valeur par défaut : val) : description
-* liquibase.directive.2 (valeur par défaut : val) : description
+* **liquibase.directive.1** (défaut : val) : description
+* **liquibase.directive.2** (défaut : val) : description
 
-###### Tâches
+##### Tâches
 
-* liquibase.task.1 : (toolkit phase : phase) : description
-* liquibase.task.2 : (toolkit phase : phase) : description
+* **liquibase.task.1** : (toolkit phase : *phase*) : description
+* **liquibase.task.2** : (toolkit phase : *phase*) : description

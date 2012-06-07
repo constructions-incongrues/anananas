@@ -1,10 +1,8 @@
-##### Module : properties
+#### Module : properties
 
 Présentation du module.
 
-* Activé par défaut : **non**
-
-###### Installation
+##### Installation
 
 Ajoutez les lignes suivantes à votre fichier ```build.xml```, aux endroits indiqués :
 
@@ -18,12 +16,12 @@ Dans la *target* ```setprofile``` :
 <property file="${toolkit.basedir}/modules/properties/build.properties" />
 ```
 
-###### Directives de configuration
+##### Directives de configuration
 
-* properties.directive.1 (valeur par défaut : val) : description
-* properties.directive.2 (valeur par défaut : val) : description
+* **properties.directive.1** (défaut : val) : description
+* **properties.directive.2** (défaut : val) : description
 
-###### Tâches
+##### Tâches
 
-* properties.task.1 : (toolkit phase : phase) : description
-* properties.task.2 : (toolkit phase : phase) : description
+* **properties.task.1** : (toolkit phase : *phase*) : description
+* **properties.task.2** : (toolkit phase : *phase*) : description
