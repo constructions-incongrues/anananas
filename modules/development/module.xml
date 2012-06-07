@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="development">
+	<target name="development.generate.module" description="Generates a stub module" depends="setprofile">
+		<!-- Sanity checks -->
+		<fail unless="module.name" />
+
+		<!-- Create stub module -->
+		<copy todir="${toolkit.basedir}/modules/${module.name}" overwrite="false">
+			<fileset dir="${toolkit.basedir}/templates/module" />
+		</copy>
+		<replace dir="${toolkit.basedir}/modules/${module.name}/" includes="*" excludes="**/module.xml" token="@module.name@" value="${module.name}" summary="true" />
+	</target>
+</project>
