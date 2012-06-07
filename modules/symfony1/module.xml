@@ -7,12 +7,14 @@
 	</target>
 
 	<target name="symfony1.12.orm" if="${symfony1.version12}">
+		<property file="${toolkit.basedir}/modules/php/build.properties" />
 		<exec executable="${php.executable}" failonerror="true">
 			<arg line="${symfony1.executable} doctrine:build-model" />
 		</exec>
 	</target>
 
 	<target name="symfony1.14.orm" if="${symfony1.version14}">
+		<property file="${toolkit.basedir}/modules/php/build.properties" />
 		<exec executable="${php.executable}" failonerror="true">
 			<arg line="${symfony1.executable} doctrine:build --all-classes" />
 		</exec>

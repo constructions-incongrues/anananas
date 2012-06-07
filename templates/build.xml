@@ -3,8 +3,7 @@
 	<!-- Initialize toolkit -->
 	<import file="vendor/ananas-build-toolkit/modules/toolkit/module.xml" />
 
-	<!-- Default modules. php module is required by properties module -->
-	<import file="vendor/ananas-build-toolkit/modules/php/module.xml" />
+	<!-- Default modules -->
 	<import file="vendor/ananas-build-toolkit/modules/properties/module.xml" />
 	<import file="vendor/ananas-build-toolkit/modules/rsync/module.xml" />
 
@@ -15,9 +14,8 @@
 		<!-- Insert additional modules properties files here -->
 		<!-- <property file="${toolkit.basedir}/modules/MODULENAME/build.properties" /> -->
 
-		<!-- Default modules properties. php module is required by properties module -->
+		<!-- Default modules properties -->
 		<property file="${toolkit.basedir}/modules/properties/build.properties" />
-		<property file="${toolkit.basedir}/modules/php/build.properties" />
 		<property file="${toolkit.basedir}/modules/rsync/build.properties" />
 		<property file="${toolkit.basedir}/modules/toolkit/build.properties" />
 	</target>

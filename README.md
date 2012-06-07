@@ -98,3 +98,4 @@ Il suffit d'importer le projet ant du module dans le fichier ```build.xml``` du 
 * [x] [symfony] rename symfony module to symfony1
 * [x] [toolkit] toolkit should me a module too, exposing default configuration (and init tasks ?)
 * [x] [toolkit] move init targets to toolkit module
+* [x] [toolkit] toolkit.init fails on ${php.executable} not found
