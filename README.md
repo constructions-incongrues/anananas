@@ -2,24 +2,37 @@
 
 ## Présentation du projet
 
-L'Ananas Build Toolkit est un framework de configuration et de déploiement de projet informatique.
+L'Ananas Build Toolkit est un framework de configuration et de déploiement de projet logiciel.
 
 Ces principaux intérêts sont :
 
  * Installation aidée
- * Agnosticité au(x) langage(s) de programmation utilisés au sein du projet
+ * Indifférent au(x) langage(s) de programmation utilisé(s) au sein du projet
  * Cycle de travail simple et rapide à prendre en main
  * Gestion efficace de profils de configuration multiples
- * Libre et gratuit
  * Modulaire et extensible
+ * Libre et gratuit
 
-Il est basé sur [Ant](http://ant.apache.org) et [PHPreprocessor](https://github.com/ARAMISAUTO/phpreprocessor).
+Il est basé sur [Ant](http://ant.apache.org) et [PHPreprocessor](https://github.com/constructions-incongrues/phpreprocessor).
 
 ## Présentation du cycle de travail proposé par le toolkit
 
-Le toolkit identifie cinq grandes phases dans l'exploitation d'un projet.
+Le toolkit segmente l'exploitation d'un projet en cinq phases.
 
  ### Configuration
+
+Les caractéristiques du système de configuration offert par le toolkit sont les suivantes :
+
+ * une séparation stricte du code source et de la configuration du projet
+ * un mécanisme d'application de la configuration complètement indifférent aux solutions techniques utilisées par le projet (langage, framework, etc)
+
+La phase de configuration sert donc à appliquer un profil de configuration au projet dans l'attente de le déployer vers l'environnement d'exploitation correspondant.
+
+Cette phase de configuration est déclenchée par la commande suivante :
+
+```bash
+ant configure -Dprofile=NOM_DU_PROFIL
+```
 
  ### Construction
  
