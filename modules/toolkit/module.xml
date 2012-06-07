@@ -17,7 +17,7 @@
 			<arg value="${ant.file}" />
 			<arg value="-projecthelp" />
 		</java>
-		<echo>More documentation can obtained at https://github.com/contructions-incongrues/ananas-build-toolkit</echo>
+		<echo>More documentation can obtained at https://github.com/constructions-incongrues/ananas-build-toolkit</echo>
 	</target>
 
 	<target name="setprofile">

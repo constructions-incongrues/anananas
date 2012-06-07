@@ -39,7 +39,7 @@ Le toolkit identifie cinq grandes phases dans l'exploitation d'un projet.
 
 ```bash
 # Récupération des sources du toolkit
-git submodule add git@github.com:contructions-incongrues/ananas-build-toolkit.git vendor/ananas-build-toolkit
+git submodule add git@github.com:constructions-incongrues/ananas-build-toolkit.git vendor/ananas-build-toolkit
 
 # Récupération des sous-modules du toolkit
 cd vendor/ananas-build-toolkit
@@ -56,16 +56,16 @@ Cette opération télécharge les sources du toolkit et crée un profil de confi
 
 Il suffit d'importer le projet ant du module dans le fichier ```build.xml``` du projet. L'opération est décrite précisément dans la documentation de chacun des modules :
 
-* [composer](https://github.com/contructions-incongrues/ananas-build-toolkit/tree/master/modules/composer)
-* [development](https://github.com/contructions-incongrues/ananas-build-toolkit/tree/master/modules/development)
-* [filesystem](https://github.com/contructions-incongrues/ananas-build-toolkit/tree/master/modules/filesystem)
-* [liquibase](https://github.com/contructions-incongrues/ananas-build-toolkit/tree/master/modules/liquibase)
-* [php](https://github.com/contructions-incongrues/ananas-build-toolkit/tree/master/modules/php)
-* [properties](https://github.com/contructions-incongrues/ananas-build-toolkit/tree/master/modules/properties)
-* [review](https://github.com/contructions-incongrues/ananas-build-toolkit/tree/master/modules/review)
-* [rsync](https://github.com/contructions-incongrues/ananas-build-toolkit/tree/master/modules/rsync)
-* [symfony1](https://github.com/contructions-incongrues/ananas-build-toolkit/tree/master/modules/symfony1)
-* [toolkit](https://github.com/contructions-incongrues/ananas-build-toolkit/tree/master/modules/toolkit)
+* [composer](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/composer)
+* [development](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/development)
+* [filesystem](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/filesystem)
+* [liquibase](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/liquibase)
+* [php](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/php)
+* [properties](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/properties)
+* [review](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/review)
+* [rsync](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/rsync)
+* [symfony1](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/symfony1)
+* [toolkit](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/toolkit)
 
 ### Création d'un nouveau module
 
