@@ -1,6 +1,8 @@
 ##### Module : composer
 
-Présentation du module.
+Ce module permet d'interagir avec Composer, le gestionnaire de dépendances PHP (http://getcomposer.org.
+
+**Attention :** ce module ne fournit pas Composer en lui-même, il revient à l'utilisateur de l'installer.
 
 * Activé par défaut : **non**
 
@@ -20,10 +22,9 @@ Dans la *target* ```setprofile``` :
 
 ###### Directives de configuration
 
-* composer.directive.1 (valeur par défaut : val) : description
-* composer.directive.2 (valeur par défaut : val) : description
+* composer.executable (valeur par défaut : src/composer.phar) : chemin vers le fichier composer.phar
 
 ###### Tâches
 
-* composer.task.1 : (toolkit phase : phase) : description
-* composer.task.2 : (toolkit phase : phase) : description
+* composer.update : (toolkit phase : build) : Lance la mise à jour des dépendances. cf. http://getcomposer.org/doc/01-basic-usage.md#installing-dependencies
+
