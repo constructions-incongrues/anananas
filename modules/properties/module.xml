@@ -3,7 +3,7 @@
 	<!-- Preprocesses -dist files -->
 	<!-- toolkit phase : configure -->
 	<target name="properties.apply" depends="setprofile,properties.list-properties-files">
-		<exec executable="${php.executable}">
+		<exec executable="${php.executable}" failonerror="true">
 			<arg line="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor
 				--command=apply
              	--src=src
@@ -19,7 +19,7 @@
 		<echo>Backuped existing property file to ${basedir}/etc/${profile}/build.properties.bak</echo>
 
 		<!-- Generate initial build.properties file from project sources -->
-		<exec executable="${php.executable}" output="${basedir}/etc/${profile}/build.properties" logError="true">
+		<exec executable="${php.executable}" output="${basedir}/etc/${profile}/build.properties" logError="true" failonerror="true">
 			<arg line="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor 
 				--command=extract 
 				--exclude-from=${properties.files},${basedir}/etc/common/build.properties 
