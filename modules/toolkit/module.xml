@@ -33,11 +33,18 @@
 	</target>
 
 	<target name="toolkit.init" description="Sets up project for usage with the toolkit">
-		<fail unless="profile" />
-		<fail unless="project.name" />
+		<!-- Guess profile -->
+		<exec outputproperty="profile" logError="true" executable="whoami" />
+		<echo message="Using profile : ${profile}" />
+
+		<!-- Guess project name -->
+		<exec outputproperty="project.name" logError="true" executable="basename">
+			<arg line="${user.dir}" />
+		</exec>
+		<echo message="Using project.name : ${project.name}" />
 
 		<!-- Create directories -->
-		<mkdir dir="${basedir}/src" />
+		<mkdir dir="${basedir}/src/" />
 		<mkdir dir="${basedir}/etc/liquibase/changelogs/" />
 		
 		<!-- Create common configuration profile -->
