@@ -5,7 +5,7 @@
 		<fail unless="module.name" />
 
 		<!-- Create stub module -->
-		<copy todir="${toolkit.basedir}/modules/${module.name}" overwrite="false">
+		<copy todir="${toolkit.basedir}/modules/${module.name}" overwrite="false" verbose="true">
 			<fileset dir="${toolkit.basedir}/templates/module" />
 		</copy>
 		<replace dir="${toolkit.basedir}/modules/${module.name}/" includes="*" excludes="**/module.xml" token="@module.name@" value="${module.name}" summary="true" />

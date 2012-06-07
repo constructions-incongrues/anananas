@@ -2,9 +2,15 @@
 
 ## Présentation du projet
 
-### Documentation pour les utilisateurs
+## Présentation du cycle de travail proposé par le toolkit
 
-#### Initialisation
+## Fonctionnement de la configuration en cascade
+
+## Utilisation
+
+### Installation et initialisation au sein d'un projet
+
+À la racine du projet :
 
 ```bash
 git submodule add git@github.com:contructions-incongrues/ananas-build-toolkit.git vendor/ananas-build-toolkit
@@ -14,20 +20,27 @@ cd -
 ant -f vendor/ananas-build-toolkit/modules/toolkit/module.xml -Dbasedir=. -Dprofile=$USER toolkit.init
 ```
 
-#### Présentation du cycle de travail proposé par le toolkit
+Cette opération télécharge les sources du toolkit et crée un profil de configuration à votre nom dans le répertoire etc/.
 
-#### Fonctionnement de la configuration en cascade
+### Activation d'un module
 
-#### Modules disponibles
+Il suffit d'importer le projet ant du module dans le fichier ```build.xml``` du projet. L'opération est décrite précisément dans la documentation de chacun des modules.
 
-##### rsync
-Ce module fournit une interface avec Rsync pour synchroniser les sources d'un projet avec des serveurs distants.
+### Documentation des modules
 
-Activé par défaut : oui
-Tâches : 
-Directives de configuration : 
+Les modules contiennent leur propre documentation :
 
-#### Création d'un module tiers
+* [composer](https://github.com/contructions-incongrues/ananas-build-toolkit/tree/master/modules/composer)
+* [development](https://github.com/contructions-incongrues/ananas-build-toolkit/tree/master/modules/development)
+* [filesystem](https://github.com/contructions-incongrues/ananas-build-toolkit/tree/master/modules/filesystem)
+* [liquibase](https://github.com/contructions-incongrues/ananas-build-toolkit/tree/master/modules/liquibase)
+* [properties](https://github.com/contructions-incongrues/ananas-build-toolkit/tree/master/modules/properties)
+* [review](https://github.com/contructions-incongrues/ananas-build-toolkit/tree/master/modules/review)
+* [rsync](https://github.com/contructions-incongrues/ananas-build-toolkit/tree/master/modules/rsync)
+* [symfony1](https://github.com/contructions-incongrues/ananas-build-toolkit/tree/master/modules/symfony1)
+* [toolkit](https://github.com/contructions-incongrues/ananas-build-toolkit/tree/master/modules/toolkit)
+
+### Création d'un nouveau module
 
 ## TODO
 
