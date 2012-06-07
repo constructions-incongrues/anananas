@@ -35,6 +35,22 @@ ant configure -Dprofile=NOM_DU_PROFIL
 ```
 
 ### Construction
+
+La phase de construction permet de :
+
+ * récupérer et installer les dépendances du projet
+ * générer tout le code qui doit l'être automatiquement (classes d'ORM, etc)
+
+L'Ananas Build Toolkit met à disposition des modules spécialisés :
+
+ * [composer](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/composer), qui permet de gérer les dépendances d'un projet à l'aide [Composer](http://getcomposer.org)
+ * [symfony1](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/symfony1), qui permet de générer les différents artefacts requis par un projet symfony (des version 1.2 à 1.4)
+
+Elle est déclenchée par la commande suivante :
+
+```bash
+ant build -Dprofile=NOM_DU_PROFIL
+```
  
 ### Analyse
 
