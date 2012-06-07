@@ -67,7 +67,7 @@
 		<fail unless="profile" />
 		
 		<!-- Create profile directory and property file if it does not exist -->
-		<touch file="${basedir}/etc/${profile}/build.properties" mkdirs="true" />
+		<touch file="${basedir}/etc/${profile}/build.properties" mkdirs="true" verbose="true" />
 	</target>
 
 	<!-- Import default modules -->
