@@ -19,7 +19,7 @@ Il est basé sur [Ant](http://ant.apache.org) et [PHPreprocessor](https://github
 
 Le toolkit segmente l'exploitation d'un projet en cinq phases.
 
- ### Configuration
+### Configuration
 
 Les caractéristiques du système de configuration offert par le toolkit sont les suivantes :
 
@@ -34,13 +34,13 @@ Cette phase de configuration est déclenchée par la commande suivante :
 ant configure -Dprofile=NOM_DU_PROFIL
 ```
 
- ### Construction
+### Construction
  
- ### Analyse
+### Analyse
 
- ### Migration
+### Migration
  
- ### Synchronisation
+### Synchronisation
 
 ## Fonctionnement de la configuration en cascade
 
