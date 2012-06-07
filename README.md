@@ -32,7 +32,6 @@ Directives de configuration :
 ## TODO
 
 * [] [agnocism] third party module related helpers should not be bundled by default
-* [] [toolkit] move init targets to toolkit module
 * [] [review] rename "review" target to "review.php"
 * [] [doc] document each module : usage, directives
 * [] [review] add phpcs.additional_options directive (with -n activated by default)
@@ -49,3 +48,4 @@ Directives de configuration :
 * [x] [agnocism] language related modules should not be enabled by default
 * [x] [symfony] rename symfony module to symfony1
 * [x] [toolkit] toolkit should me a module too, exposing default configuration (and init tasks ?)
+* [x] [toolkit] move init targets to toolkit module
