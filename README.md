@@ -54,6 +54,8 @@ ant build -Dprofile=NOM_DU_PROFIL
  
 ### Analyse
 
+
+
 ### Migration
  
 ### Synchronisation
@@ -62,7 +64,9 @@ ant build -Dprofile=NOM_DU_PROFIL
 
 ## Utilisation
 
-### Installation et initialisation au sein d'un projet
+### Installation et initialisation d'un projet vide
+
+### Installation et initialisation au sein d'un projet existant
 
 À la racine du projet :
 
@@ -91,7 +95,6 @@ Il suffit d'importer le projet ant du module dans le fichier ```build.xml``` du 
 * [liquibase](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/liquibase)
 * [php](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/php)
 * [properties](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/properties)
-* [review](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/review)
 * [rsync](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/rsync)
 * [symfony1](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/symfony1)
 * [toolkit](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/toolkit)
@@ -100,7 +103,7 @@ Il suffit d'importer le projet ant du module dans le fichier ```build.xml``` du 
 
 ## TODO
 
-* [] [agnocism] third party module related helpers should not be bundled by default (better bootstrap.module them)
+* [] [agnostism] third party module related helpers should not be bundled by default (better bootstrap.module them)
 * [] [development] find an easier way to activate modules
 * [] [doc] write project presentation
 * [] [doc] document each module : usage, directives
@@ -110,8 +113,6 @@ Il suffit d'importer le projet ant du module dans le fichier ```build.xml``` du 
 * [] [filesystem] fix bug with multiple chmod modes
 * [] [properties] task for designating deprecated properties
 * [] [properties] also show non-valued properties in local configuration profile
-* [] [review] rename "review" target to "php.review"
-* [] [review] rename bootstrap.review to review.bootstrap
 * [] [review] also include uncommited files to review
 * [] [review] add phpcs.additional_options directive (with -n activated by default)
 * [] [sync] rename remote.host directive to remote.hostname
@@ -120,8 +121,8 @@ Il suffit d'importer le projet ant du module dans le fichier ```build.xml``` du 
 
 ## DONE
 
-* [x] [agnocism] implement "module" concept
-* [x] [agnocism] language related modules should not be enabled by default
+* [x] [agnostism] implement "module" concept
+* [x] [agnostism] language related modules should not be enabled by default
 * [x] [configure] move filesystem related tasks to filesystem module
 * [x] [development] task for generating module skeleton
 * [x] [init] make it possible to specify project name at runtime
@@ -129,6 +130,8 @@ Il suffit d'importer le projet ant du module dans le fichier ```build.xml``` du 
 * [x] [modules] add "php" module for handling PHP runtime configuration
 * [x] [php] php executable path must be configurable
 * [x] [properties] move preprocessing targets to dedicated module. properties.update, properties.apply
+* [x] [review] move review code to php module
+* [x] [review] rename bootstrap.review to review.bootstrap
 * [x] [symfony] rename symfony module to symfony1
 * [x] [toolkit] toolkit should me a module too, exposing default configuration (and init tasks ?)
 * [x] [toolkit] move init targets to toolkit module
