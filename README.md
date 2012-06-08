@@ -90,7 +90,6 @@ Cette opération télécharge les sources du toolkit et crée un profil de confi
 Il suffit d'importer le projet ant du module dans le fichier ```build.xml``` du projet. L'opération est décrite précisément dans la documentation de chacun des modules :
 
 * [composer](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/composer)
-* [toolkit-sdk](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/toolkit-sdk)
 * [filesystem](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/filesystem)
 * [liquibase](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/liquibase)
 * [php](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/php)
@@ -98,6 +97,7 @@ Il suffit d'importer le projet ant du module dans le fichier ```build.xml``` du 
 * [rsync](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/rsync)
 * [symfony1](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/symfony1)
 * [toolkit](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/toolkit)
+* [toolkit-sdk](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/toolkit-sdk)
 
 ### Création d'un nouveau module
 
