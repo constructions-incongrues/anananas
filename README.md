@@ -6,7 +6,7 @@ L'Ananas Build Toolkit est un framework de configuration et de déploiement de p
 
 Ces principaux intérêts sont :
 
- * Installation aidée
+ * Installation aisée
  * Indifférent au(x) langage(s) de programmation utilisé(s) au sein du projet
  * Cycle de travail simple et rapide à prendre en main
  * Gestion efficace de profils de configuration multiples
@@ -90,7 +90,7 @@ Cette opération télécharge les sources du toolkit et crée un profil de confi
 Il suffit d'importer le projet ant du module dans le fichier ```build.xml``` du projet. L'opération est décrite précisément dans la documentation de chacun des modules :
 
 * [composer](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/composer)
-* [development](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/development)
+* [toolkit-sdk](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/toolkit-sdk)
 * [filesystem](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/filesystem)
 * [liquibase](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/liquibase)
 * [php](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/php)
@@ -104,7 +104,7 @@ Il suffit d'importer le projet ant du module dans le fichier ```build.xml``` du 
 ## TODO
 
 * [] [agnostism] third party module related helpers should not be bundled by default (better bootstrap.module them)
-* [] [development] find an easier way to activate modules
+* [] [toolkit-sdk] find an easier way to activate modules
 * [] [doc] write project presentation
 * [] [doc] document each module : usage, directives
 * [] [doc] create a logo for the projet
@@ -124,6 +124,7 @@ Il suffit d'importer le projet ant du module dans le fichier ```build.xml``` du 
 * [x] [agnostism] language related modules should not be enabled by default
 * [x] [configure] move filesystem related tasks to filesystem module
 * [x] [development] task for generating module skeleton
+* [x] [development] rename "development" module to "toolkit-sdk"
 * [x] [init] make it possible to specify project name at runtime
 * [x] [init] review init targets
 * [x] [modules] add "php" module for handling PHP runtime configuration
