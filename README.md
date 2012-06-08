@@ -114,7 +114,6 @@ Il suffit d'importer le projet ant du module dans le fichier ```build.xml``` du 
 * [] [properties] task for designating deprecated properties
 * [] [properties] also show non-valued properties in local configuration profile
 * [] [review] also include uncommited files to review
-* [] [review] add phpcs.additional_options directive (with -n activated by default)
 * [] [sync] rename remote.host directive to remote.hostname
 * [] [sync] rename remote.* to sync.*
 * [] [sync] enable multiple sync destinations
@@ -132,6 +131,7 @@ Il suffit d'importer le projet ant du module dans le fichier ```build.xml``` du 
 * [x] [properties] move preprocessing targets to dedicated module. properties.update, properties.apply
 * [x] [review] move review code to php module
 * [x] [review] rename bootstrap.review to review.bootstrap
+* [x] [review] add phpcs.additional_options directive (with -n activated by default)
 * [x] [symfony] rename symfony module to symfony1
 * [x] [toolkit] toolkit should me a module too, exposing default configuration (and init tasks ?)
 * [x] [toolkit] move init targets to toolkit module
