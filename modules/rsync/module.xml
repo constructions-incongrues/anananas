@@ -12,7 +12,7 @@
 		<echo>Rsyncing to ${remote.username}@${remote.host}:${remote.path.root}</echo>
 		<echo>rsync additional options : ${rsync.options}</echo> 
 		
-		<exec executable="rsync">
+		<exec executable="rsync" failonerror="true">
 			<arg line="--cvs-exclude 
               --exclude-from=${basedir}/etc/common/rsync.exclude
               --links
