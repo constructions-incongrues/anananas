@@ -1,6 +1,168 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="@module.name@">
-	<!-- toolkit phase : phase -->
-	<target name="@module.name@.targetname" description="Target description" depends="setprofile">
-	</target>
+<project name="php">
+	<!-- Cleans up and create artifact directories -->
+    <target name="php.review.clean">
+        <delete dir="${basedir}/build/api" />
+        <delete dir="${basedir}/build/code-browser" />
+        <delete dir="${basedir}/build/coverage" />
+        <delete dir="${basedir}/build/logs" />
+        <delete dir="${basedir}/build/pdepend" />
+        <delete dir="${basedir}/build/phrocco" />
+        <delete dir="${basedir}/build/src" />
+
+        <mkdir dir="${basedir}/build/api" />
+        <mkdir dir="${basedir}/build/code-browser" />
+        <mkdir dir="${basedir}/build/coverage" />
+        <mkdir dir="${basedir}/build/logs" />
+        <mkdir dir="${basedir}/build/pdepend" />
+        <mkdir dir="${basedir}/build/phrocco" />
+        <mkdir dir="${basedir}/build/src" />
+    </target>
+
+    <!-- Runs PHP code quality checks on commited files -->
+    <target name="php.review" depends="setprofile,php.review.lint,php.review.phpmd,php.review.phpcpd,php.review.phpcs,php.review.phrocco">
+    </target>
+
+    <!-- Discovers files that have been recently modified -->
+    <target name="php.review.files.discover" unless="files" depends="setprofile">
+        <exec executable="sh" outputproperty="files">
+            <arg value="-c" />
+            <arg value="${toolkit.basedir}/bin/git-needsreview -b ${php.review.branch} -f ${php.review.filter} | xargs | sed 's/ /,/g'" />
+        </exec>
+    </target>
+
+    <!-- Finds which files must be reviewed -->
+    <target name="php.review.files" depends="setprofile, php.review.files.discover">
+        <copy todir="${basedir}/build/src">
+            <fileset dir="${basedir}" includes="${files}" excludes="${php.review.exclude}" />
+        </copy>
+    </target>
+
+    <!-- Searches code for syntax errors -->
+    <target name="php.review.lint" depends="php.review.clean, php.review.files">
+        <apply executable="php" failonerror="true">
+            <arg value="-l" />
+            <fileset dir="${basedir}/build/src" />
+        </apply>
+    </target>
+
+    <!-- Runs PHPMD on files that needs review -->
+    <target name="php.review.phpmd" depends="php.review.clean, php.review.files">
+        <exec executable="phpmd">
+            <arg line="${basedir}/build/src
+                    xml
+                    codesize,design,naming,unusedcode
+                    --reportfile ${basedir}/build/logs/pmd.xml" />
+        </exec>
+    </target>
+
+    <!-- Runs copy / paste detection on files that needs review -->
+    <target name="php.review.phpcpd" depends="php.review.clean, php.review.files">
+        <exec executable="phpcpd">
+            <arg line="--log-pmd ${basedir}/build/logs/pmd-cpd.xml
+                    ${basedir}/build/src" />
+        </exec>
+    </target>
+
+    <!-- Runs Checkstyle on files that needs review -->
+    <target name="php.review.phpcs" depends="setprofile,php.review.clean, php.review.files">
+        <exec executable="phpcs">
+            <arg line="--report=checkstyle
+                    --report-file=${basedir}/build/logs/checkstyle.xml
+                    --standard=${php.review.phpcs.standard}
+                    ${basedir}/build/src" />
+        </exec>
+    </target>
+
+    <!-- Runs HipHop static analysis on files that needs review -->
+    <target name="php.review.hphpa" depends="php.review.clean, php.review.files">
+        <exec executable="hphpa">
+            <arg line="--checkstyle ${basedir}/build/logs/hphpa.xml
+                    ${basedir}/build/src" />
+        </exec>
+    </target>
+
+    <!-- Runs HipHop static analysis on files that needs review -->
+    <target name="php.review.phrocco" depends="php.review.clean, php.review.files">
+        <!-- We need this complicated call as phrocco uses short open tags -->
+        <exec executable="/usr/bin/env" dir="${basedir}" os="Linux">
+            <arg line="php -d 'short_open_tag=1' /usr/bin/phrocco -i build/src -o build/phrocco" />
+        </exec>
+        <exec executable="/usr/bin/env" dir="${basedir}" os="Mac OS X">
+            <arg line="php -d 'short_open_tag=1' /opt/local/bin/phrocco -i build/src -o build/phrocco" />
+        </exec>
+    </target>
+
+    <!-- Aggregate tool output with PHP_CodeBrowser -->
+    <target name="php.review.phpcb">
+        <exec executable="phpcb">
+            <arg line="--log ${basedir}/build/logs
+                       --output ${basedir}/build/code-browser" />
+        </exec>
+    </target>
+
+    <!-- Generates a browsable view of review warnings -->
+    <target name="php.review.browse" depends="setprofile">
+        <antcall target="php.review.phpcb" />
+        <exec executable="${php.review.phpcb.browser}" os="Linux">
+            <arg line="${php.review.build.url}/code-browser/index.html ${php.review.build.url}/phrocco" />
+        </exec>
+        <exec executable="open" os="Mac OS X">
+            <arg line="-a ${php.review.phpcb.browser} ${php.review.build.url}/code-browser/index.html ${php.review.build.url}/phrocco" />
+       </exec>
+    </target>
+
+    <!-- Installs dependencies required by the review target -->
+    <target name="review.php.bootstrap">
+        <!-- Upgrade PEAR to latest version -->
+        <exec executable="pear">
+            <arg line="upgrade pear/pear" />
+        </exec>
+
+        <!-- Discover channels -->
+        <exec executable="pear">
+            <arg line="channel-discover pear.phpunit.de" />
+        </exec>
+        <exec executable="pear">
+            <arg line="channel-discover pear.phpmd.org" />
+        </exec>
+        <exec executable="pear">
+            <arg line="channel-discover pear.pdepend.org" />
+        </exec>
+        <exec executable="pear">
+            <arg line="channel-discover oneblackbear.pearfarm.org" />
+        </exec>
+        <exec executable="pear">
+            <arg line="channel-discover components.ez.no" />
+        </exec>
+
+        <!-- Install packages -->
+        <exec executable="pear">
+            <arg line="install -a phpunit/PHP_CodeBrowser-beta" />
+        </exec>
+        <exec executable="pear">
+            <arg line="install -a phpunit/phpcpd" />
+        </exec>
+        <exec executable="pear">
+            <arg line="install -a phpunit/phploc" />
+        </exec>
+        <exec executable="pear">
+            <arg line="install -a phpunit/hphpa" />
+        </exec>
+        <exec executable="pear">
+            <arg line="install -a phpmd/PHP_PMD" />
+        </exec>
+        <exec executable="pear">
+            <arg line="install -a pdepend/PHP_Depend-beta" />
+        </exec>
+        <exec executable="pear">
+            <arg line="install -a pear/PHP_CodeSniffer" />
+        </exec>
+        <exec executable="pear">
+            <arg line="install -a pear/PhpDocumentor" />
+        </exec>
+        <exec executable="pear">
+            <arg line="install -a oneblackbear/phrocco-0.2.5" />
+        </exec>
+    </target>
 </project>

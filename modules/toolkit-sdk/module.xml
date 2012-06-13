@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="development">
-	<target name="development.generate.module" description="Generates a stub module" depends="setprofile">
+<project name="toolkit-sdk">
+	<target name="toolkit-sdk.generate.module" description="Generates a stub module" depends="setprofile">
 		<!-- Sanity checks -->
 		<fail unless="module.name" />
 

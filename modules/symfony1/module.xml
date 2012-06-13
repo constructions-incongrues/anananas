@@ -6,13 +6,15 @@
 		<antcall target="symfony1.14.orm" />
 	</target>
 
-	<target name="symfony1.12.orm" if="${symfony1.version12}">
+	<target name="symfony1.12.orm" if="${symfony1.version12}" depends="setprofile">
+		<property file="${toolkit.basedir}/modules/php/build.properties" />
 		<exec executable="${php.executable}" failonerror="true">
 			<arg line="${symfony1.executable} doctrine:build-model" />
 		</exec>
 	</target>
 
-	<target name="symfony1.14.orm" if="${symfony1.version14}">
+	<target name="symfony1.14.orm" if="${symfony1.version14}" depends="setprofile">
+		<property file="${toolkit.basedir}/modules/php/build.properties" />
 		<exec executable="${php.executable}" failonerror="true">
 			<arg line="${symfony1.executable} doctrine:build --all-classes" />
 		</exec>
