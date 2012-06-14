@@ -5,12 +5,12 @@
 	<target name="configure" />
 	<target name="build" />
 	<target name="review" />
-	<target name="migrate" />
+	<target name="migrate" depends="migrate.databases" />
 	<target name="sync" />
 
 	<!-- toolkit phase : build -->
 	<target name="migrate.databases" description="Migrates all databases">
-		<foreach target="migrate.do" param="liquibase.changelog">
+		<foreach target="migrate.do" param="liquibase.changelog" inheritall="true">
 			<path>
 				<fileset dir="${project.dirs.base}/${liquibase.changelogs}" includes="*-master.xml" />
 			</path>
@@ -19,7 +19,8 @@
 
 	<target name="migrate.do">
 		<propertyregex property="runtime.db.name" input="${liquibase.changelog}" regexp="(\w+)-master.xml" select="\1" />
-		<antcall target="migrate.database" />
+
+		<antcall target="migrate.database" inheritall="true" />
 	</target>
 
 	<target name="migrate.database" description="Migrates a database" depends="config,init">
