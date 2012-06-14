@@ -45,23 +45,23 @@
 
 	<!-- Mandatory targets -->
 	<target name="configure" description="Applies configuration profile to project sources">
-		<iterate target="configure" paths="${toolkit.modules.paths}" />
+		<iterate target="configure" basedir="${toolkit.basedir}" paths="${toolkit.modules.paths}" />
 	</target>
 
 	<target name="build" description="Builds project (ORM classes generation, etc)">
-		<iterate target="build" paths="${toolkit.modules.paths}" />
+		<iterate target="build" basedir="${toolkit.basedir}" paths="${toolkit.modules.paths}" />
 	</target>
 
 	<target name="review" description="Runs code quality analysis on uncommited and unmerged files">
-		<iterate target="review" paths="${toolkit.modules.paths}" />
+		<iterate target="review" basedir="${toolkit.basedir}" paths="${toolkit.modules.paths}" />
 	</target>
 
 	<target name="migrate" description="Handles data structure and values modifications">
-		<iterate target="migrate" paths="${toolkit.modules.paths}" />
+		<iterate target="migrate" basedir="${toolkit.basedir}" paths="${toolkit.modules.paths}" />
 	</target>
 
 	<target name="sync" description="Synchronizes code with remote server(s)">
-		<iterate target="sync" paths="${toolkit.modules.paths}" />
+		<iterate target="sync" basedir="${toolkit.basedir}" paths="${toolkit.modules.paths}" />
 	</target>
 
 	<target name="deploy" description="Configures, builds, migrates and syncs project" depends="configure,build,migrate,sync" />
