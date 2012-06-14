@@ -47,7 +47,7 @@
 	</target>
 
 	<target name="create-symlink">
-        <exec executable="ln" failonerror="false">
+        <exec executable="ln" failonerror="false" dir="${project.dirs.base}">
             <arg value="-sfv" />
             <arg value="${symlink.current.target}" />
             <arg value="${symlink.current.name}" />
@@ -81,6 +81,6 @@
 
     <target name="chmod">
         <echo>Applying mode ${mode.current} to path ${path.current}</echo>
-        <chmod perm="${mode.current}" file="${path.current}" type="both" />
+        <chmod perm="${mode.current}" file="${project.dirs.base}/${path.current}" type="both" />
     </target>
 </project>
