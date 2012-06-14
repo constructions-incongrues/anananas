@@ -1,30 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="php">
+    <!-- Mandatory targets -->
+    <target name="configure" />
+    <target name="build" />
+    <target name="review" depends="review.lint,review.phpmd,review.phpcpd,review.phpcs,review.phrocco" />
+    <target name="migrate" />
+    <target name="sync" />
+
 	<!-- Cleans up and create artifact directories -->
-    <target name="php.review.clean">
-        <delete dir="${basedir}/build/api" />
-        <delete dir="${basedir}/build/code-browser" />
-        <delete dir="${basedir}/build/coverage" />
-        <delete dir="${basedir}/build/logs" />
-        <delete dir="${basedir}/build/pdepend" />
-        <delete dir="${basedir}/build/phrocco" />
-        <delete dir="${basedir}/build/src" />
+    <target name="review.clean">
+        <delete dir="${project.dirs.base}/build/api" />
+        <delete dir="${project.dirs.base}/build/code-browser" />
+        <delete dir="${project.dirs.base}/build/coverage" />
+        <delete dir="${project.dirs.base}/build/logs" />
+        <delete dir="${project.dirs.base}/build/pdepend" />
+        <delete dir="${project.dirs.base}/build/phrocco" />
+        <delete dir="${project.dirs.base}/build/src" />
 
-        <mkdir dir="${basedir}/build/api" />
-        <mkdir dir="${basedir}/build/code-browser" />
-        <mkdir dir="${basedir}/build/coverage" />
-        <mkdir dir="${basedir}/build/logs" />
-        <mkdir dir="${basedir}/build/pdepend" />
-        <mkdir dir="${basedir}/build/phrocco" />
-        <mkdir dir="${basedir}/build/src" />
-    </target>
-
-    <!-- Runs PHP code quality checks on commited files -->
-    <target name="php.review" depends="setprofile,php.review.lint,php.review.phpmd,php.review.phpcpd,php.review.phpcs,php.review.phrocco">
+        <mkdir dir="${project.dirs.base}/build/api" />
+        <mkdir dir="${project.dirs.base}/build/code-browser" />
+        <mkdir dir="${project.dirs.base}/build/coverage" />
+        <mkdir dir="${project.dirs.base}/build/logs" />
+        <mkdir dir="${project.dirs.base}/build/pdepend" />
+        <mkdir dir="${project.dirs.base}/build/phrocco" />
+        <mkdir dir="${project.dirs.base}/build/src" />
     </target>
 
     <!-- Discovers files that have been recently modified -->
-    <target name="php.review.files.discover" unless="files" depends="setprofile">
+    <target name="review.files.discover" unless="files">
         <exec executable="sh" outputproperty="files">
             <arg value="-c" />
             <arg value="${toolkit.basedir}/bin/git-needsreview -b ${php.review.branch} -f ${php.review.filter} | xargs | sed 's/ /,/g'" />
@@ -32,78 +35,78 @@
     </target>
 
     <!-- Finds which files must be reviewed -->
-    <target name="php.review.files" depends="setprofile, php.review.files.discover">
-        <copy todir="${basedir}/build/src">
-            <fileset dir="${basedir}" includes="${files}" excludes="${php.review.exclude}" />
+    <target name="review.files" depends="review.files.discover">
+        <copy todir="${project.dirs.base}/build/src">
+            <fileset dir="${project.dirs.base}" includes="${files}" excludes="${php.review.exclude}" />
         </copy>
     </target>
 
     <!-- Searches code for syntax errors -->
-    <target name="php.review.lint" depends="php.review.clean, php.review.files">
+    <target name="review.lint" depends="review.clean, review.files">
         <apply executable="php" failonerror="true">
             <arg value="-l" />
-            <fileset dir="${basedir}/build/src" />
+            <fileset dir="${project.dirs.base}/build/src" />
         </apply>
     </target>
 
     <!-- Runs PHPMD on files that needs review -->
-    <target name="php.review.phpmd" depends="php.review.clean, php.review.files">
+    <target name="review.phpmd" depends="review.clean, review.files">
         <exec executable="phpmd">
-            <arg line="${basedir}/build/src
+            <arg line="${project.dirs.base}/build/src
                     xml
                     codesize,design,naming,unusedcode
-                    --reportfile ${basedir}/build/logs/pmd.xml" />
+                    --reportfile ${project.dirs.base}/build/logs/pmd.xml" />
         </exec>
     </target>
 
     <!-- Runs copy / paste detection on files that needs review -->
-    <target name="php.review.phpcpd" depends="php.review.clean, php.review.files">
+    <target name="review.phpcpd" depends="review.clean, review.files">
         <exec executable="phpcpd">
-            <arg line="--log-pmd ${basedir}/build/logs/pmd-cpd.xml
-                    ${basedir}/build/src" />
+            <arg line="--log-pmd ${project.dirs.base}/build/logs/pmd-cpd.xml
+                    ${project.dirs.base}/build/src" />
         </exec>
     </target>
 
     <!-- Runs Checkstyle on files that needs review -->
-    <target name="php.review.phpcs" depends="setprofile,php.review.clean, php.review.files">
+    <target name="review.phpcs" depends="review.clean, review.files">
         <exec executable="phpcs">
             <arg line="--report=checkstyle
-                    --report-file=${basedir}/build/logs/checkstyle.xml
+                    --report-file=${project.dirs.base}/build/logs/checkstyle.xml
                     --standard=${php.review.phpcs.standard}
-                    ${basedir}/build/src" />
+                    ${project.dirs.base}/build/src" />
         </exec>
     </target>
 
     <!-- Runs HipHop static analysis on files that needs review -->
-    <target name="php.review.hphpa" depends="php.review.clean, php.review.files">
+    <target name="review.hphpa" depends="review.clean, review.files">
         <exec executable="hphpa">
-            <arg line="--checkstyle ${basedir}/build/logs/hphpa.xml
-                    ${basedir}/build/src" />
+            <arg line="--checkstyle ${project.dirs.base}/build/logs/hphpa.xml
+                    ${project.dirs.base}/build/src" />
         </exec>
     </target>
 
     <!-- Runs HipHop static analysis on files that needs review -->
-    <target name="php.review.phrocco" depends="php.review.clean, php.review.files">
+    <target name="review.phrocco" depends="review.clean, review.files">
         <!-- We need this complicated call as phrocco uses short open tags -->
-        <exec executable="/usr/bin/env" dir="${basedir}" os="Linux">
+        <exec executable="/usr/bin/env" dir="${project.dirs.base}" os="Linux">
             <arg line="php -d 'short_open_tag=1' /usr/bin/phrocco -i build/src -o build/phrocco" />
         </exec>
-        <exec executable="/usr/bin/env" dir="${basedir}" os="Mac OS X">
+        <exec executable="/usr/bin/env" dir="${project.dirs.base}" os="Mac OS X">
             <arg line="php -d 'short_open_tag=1' /opt/local/bin/phrocco -i build/src -o build/phrocco" />
         </exec>
     </target>
 
     <!-- Aggregate tool output with PHP_CodeBrowser -->
-    <target name="php.review.phpcb">
+    <target name="review.phpcb">
         <exec executable="phpcb">
-            <arg line="--log ${basedir}/build/logs
-                       --output ${basedir}/build/code-browser" />
+            <arg line="--log ${project.dirs.base}/build/logs
+                       --output ${project.dirs.base}/build/code-browser" />
         </exec>
     </target>
 
     <!-- Generates a browsable view of review warnings -->
-    <target name="php.review.browse" depends="setprofile">
-        <antcall target="php.review.phpcb" />
+    <target name="review.browse">
+        <antcall target="review.phpcb" />
         <exec executable="${php.review.phpcb.browser}" os="Linux">
             <arg line="${php.review.build.url}/code-browser/index.html ${php.review.build.url}/phrocco" />
         </exec>
@@ -113,7 +116,7 @@
     </target>
 
     <!-- Installs dependencies required by the review target -->
-    <target name="review.php.bootstrap">
+    <target name="review.bootstrap">
         <!-- Upgrade PEAR to latest version -->
         <exec executable="pear">
             <arg line="upgrade pear/pear" />

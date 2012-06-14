@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="filesystem">
 
-    <!-- Creates directories and symlinks, sets permissions -->
-    <!-- toolkit phase : configure -->
-	<target name="filesystem.configure" depends="filesystem.create-directories,filesystem.create-symlinks,filesystem.set-permissions">
-	</target>
+    <!-- Mandatory targets -->
+    <target name="configure" depends="create-directories,create-symlinks,set-permissions" />
+    <target name="build" />
+    <target name="review" />
+    <target name="migrate" />
+    <target name="sync" />
 
-	<target name="filesystem.create-directories" depends="setprofile">
+    <!-- Creates directories and symlinks, sets permissions -->
+	<target name="create-directories">
         <script language="javascript">
             <![CDATA[
             	importClass(java.io.File);
@@ -23,7 +26,7 @@
         </script>
 	</target>
 
-	<target name="filesystem.create-symlinks" depends="setprofile">
+	<target name="create-symlinks">
         <propertyselector property="symlinks" delimiter="," match="symlink.(.+)" select="\1" />
         <script language="javascript">
             <![CDATA[
@@ -35,7 +38,7 @@
                         project.setProperty('symlink.current.target', symlinkSpec[0]);
                         project.setProperty('symlink.current.name', symlinkSpec[1]);
                         taskAntCall = project.createTask('antcall');
-                        taskAntCall.setTarget('filesystem.create-symlink');
+                        taskAntCall.setTarget('create-symlink');
                         taskAntCall.perform();
                     }
                 }
@@ -43,7 +46,7 @@
         </script>
 	</target>
 
-	<target name="filesystem.create-symlink">
+	<target name="create-symlink">
         <exec executable="ln" failonerror="false">
             <arg value="-sfv" />
             <arg value="${symlink.current.target}" />
@@ -51,7 +54,7 @@
         </exec>
 	</target>
 
-	<target name="filesystem.set-permissions">
+	<target name="set-permissions">
         <propertyselector property="modes" delimiter="," match="chmod.(\d+)" select="\1" />
         <script language="javascript">
             <![CDATA[
@@ -67,7 +70,7 @@
                             project.setProperty('path.current', path);
                             project.setProperty('mode.current', mode);
                             taskAntCall = project.createTask('antcall');
-                            taskAntCall.setTarget('filesystem.chmod');
+                            taskAntCall.setTarget('chmod');
                             taskAntCall.perform();
                         }
                     }
@@ -76,7 +79,7 @@
         </script>
 	</target>
 
-    <target name="filesystem.chmod">
+    <target name="chmod">
         <echo>Applying mode ${mode.current} to path ${path.current}</echo>
         <chmod perm="${mode.current}" file="${path.current}" type="both" />
     </target>

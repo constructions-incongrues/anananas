@@ -104,7 +104,6 @@ Il suffit d'importer le projet ant du module dans le fichier ```build.xml``` du 
 ## TODO
 
 * [] [agnostism] third party module related helpers should not be bundled by default (better bootstrap.module them)
-* [] [toolkit-sdk] find an easier way to activate modules
 * [] [doc] write project presentation
 * [] [doc] document each module : usage, directives
 * [] [doc] create a logo for the projet
@@ -137,3 +136,5 @@ Il suffit d'importer le projet ant du module dans le fichier ```build.xml``` du 
 * [x] [toolkit] toolkit should me a module too, exposing default configuration (and init tasks ?)
 * [x] [toolkit] move init targets to toolkit module
 * [x] [toolkit] toolkit.init fails on ${php.executable} not found
+* [x] [toolkit-sdk] find an easier way to activate modules
+

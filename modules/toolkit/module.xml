@@ -3,12 +3,68 @@
 	<!-- Store toolkit base directory for later use -->
 	<dirname property="toolkit.basedir" file="${ant.file.toolkit}/../.." />
 
+	<!-- Project sources directory -->
+	<property name="project.dirs.base" value="${basedir}" />
+	<property name="project.dirs.src" value="${project.dirs.base}/src" />
+
 	<!-- Enable ant-contrib (@see http://ant-contrib.sourceforge.net) -->
-	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+	<taskdef resource="net/sf/antcontrib/antlib.xml">
 		<classpath>
 			<pathelement location="${toolkit.basedir}/vendor/ant-contrib/ant-contrib-1.0b3.jar" />
 		</classpath>
 	</taskdef>
+
+	<!-- Setup toolkit depending on configuration profile -->
+	<!-- Guess profile -->
+	<exec outputproperty="profile" logError="true" executable="whoami" />
+	<echo message="Using profile : ${profile}" />
+
+	<!-- Local configuration profile properties -->
+	<property file="etc/${profile}/build.properties" />
+
+	<!-- Team common properties -->
+	<property file="etc/common/build.properties" />
+
+	<!-- Toolkit default properties -->
+	<property file="${toolkit.basedir}/modules/toolkit/build.properties" />
+
+	<!-- Import helpers -->
+	<import file="${toolkit.basedir}/modules/toolkit/helpers.xml" />
+
+	<!-- Load modules -->
+	<for list="${toolkit.modules}" param="module">
+		<sequential>
+			<echo>Importing module : @{module}</echo>
+			<import file="${toolkit.basedir}/modules/@{module}/module.xml" />
+			<property file="${toolkit.basedir}/modules/@{module}/build.properties" />
+		</sequential>
+	</for>
+
+	<!-- Generate list of paths to modules project files -->
+	<expandModulesPaths modules="${toolkit.modules}" />
+
+	<!-- Mandatory targets -->
+	<target name="configure" description="Applies configuration profile to project sources">
+		<iterate target="configure" basedir="${toolkit.basedir}" paths="${toolkit.modules.paths}" />
+	</target>
+
+	<target name="build" description="Builds project (ORM classes generation, etc)">
+		<iterate target="build" basedir="${toolkit.basedir}" paths="${toolkit.modules.paths}" />
+	</target>
+
+	<target name="review" description="Runs code quality analysis on uncommited and unmerged files">
+		<iterate target="review" basedir="${toolkit.basedir}" paths="${toolkit.modules.paths}" />
+	</target>
+
+	<target name="migrate" description="Handles data structure and values modifications">
+		<iterate target="migrate" basedir="${toolkit.basedir}" paths="${toolkit.modules.paths}" />
+	</target>
+
+	<target name="sync" description="Synchronizes code with remote server(s)">
+		<iterate target="sync" basedir="${toolkit.basedir}" paths="${toolkit.modules.paths}" />
+	</target>
+
+	<target name="deploy" description="Configures, builds, migrates and syncs project" depends="configure,build,migrate,sync" />
 
 	<target name="help" description="Displays project's help">
 		<echo>Ananas Build Toolkit : Usage</echo>
@@ -20,23 +76,11 @@
 		<echo>More documentation can obtained at https://github.com/constructions-incongrues/ananas-build-toolkit</echo>
 	</target>
 
-	<target name="setprofile">
-		<!-- Guess profile -->
-		<exec outputproperty="profile" logError="true" executable="whoami" />
-		<echo message="Using profile : ${profile}" />
-
-		<!-- Local configuration profile properties -->
-		<property file="etc/${profile}/build.properties" />
-
-		<!-- Team common properties -->
-		<property file="etc/common/build.properties" />
+	<target name="toolkit.setprofile">
+		<echo>This target is deprecated, please remove any dependency to it in your project's build file.</echo>
 	</target>
 
 	<target name="toolkit.init" description="Sets up project for usage with the toolkit">
-		<!-- Guess profile -->
-		<exec outputproperty="profile" logError="true" executable="whoami" />
-		<echo message="Using profile : ${profile}" />
-
 		<!-- Guess project name -->
 		<exec outputproperty="project.name" logError="true" executable="basename">
 			<arg line="${user.dir}" />
@@ -63,15 +107,10 @@
 	</target>
 
 	<!-- Creates a new property file for configuration profile -->
-	<target name="toolkit.create-profile">
+	<target name="create-profile">
 		<fail unless="profile" />
 		
 		<!-- Create profile directory and property file if it does not exist -->
 		<touch file="${basedir}/etc/${profile}/build.properties" mkdirs="true" verbose="true" />
 	</target>
-
-	<!-- Import default modules -->
-	<import file="${toolkit.basedir}/modules/filesystem/module.xml" />
-	<import file="${toolkit.basedir}/modules/rsync/module.xml" />
-	<import file="${toolkit.basedir}/modules/properties/module.xml" />
 </project>

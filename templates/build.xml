@@ -2,34 +2,4 @@
 <project name="@project.name@" default="help" basedir=".">
 	<!-- Initialize toolkit -->
 	<import file="vendor/ananas-build-toolkit/modules/toolkit/module.xml" />
-
-	<!-- Default modules -->
-	<import file="vendor/ananas-build-toolkit/modules/properties/module.xml" />
-	<import file="vendor/ananas-build-toolkit/modules/rsync/module.xml" />
-
-	<!-- Import additional modules here -->
-	<!-- <import file="vendor/ananas-build-toolkit/modules/MODULENAME/module.xml" /> -->
-
-	<target name="setprofile" depends="toolkit.setprofile">
-		<!-- Insert additional modules properties files here -->
-		<!-- <property file="${toolkit.basedir}/modules/MODULENAME/build.properties" /> -->
-
-		<!-- Default modules properties -->
-		<property file="${toolkit.basedir}/modules/properties/build.properties" />
-		<property file="${toolkit.basedir}/modules/rsync/build.properties" />
-		<property file="${toolkit.basedir}/modules/toolkit/build.properties" />
-	</target>
-
-	<!-- Main toolkit phases. Add module targets as needed -->
-	<target name="configure" description="Applies configuration profile to project sources" depends="properties.apply, filesystem.configure" />
-
-	<target name="build" description="Builds project (ORM classes generation, etc)" depends="" />
-
-	<target name="review" description="Runs code quality analysis on uncommited and unmerged files" depends="" />
-
-	<target name="migrate" description="Applies datastore modifications" depends="" />
-
-	<target name="sync" description="Synchronizes code with remote server(s)" depends="rsync.sync" />
-
-	<target name="deploy" description="Configures, builds, migrates and syncs project" depends="setprofile,configure,build,migrate,sync" />
 </project>

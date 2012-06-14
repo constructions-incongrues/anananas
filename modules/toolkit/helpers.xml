@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="toolkit.helpers" default="help">
+	<!-- Generates list of paths to module.xml files in toolkit.modules.paths property -->
+	<scriptdef name="expandModulesPaths" language="javascript">
+		<attribute name="modules" />
+<![CDATA[
+var modules = attributes.get('modules').split(',');
+var modulesPaths = [];
+for (var i = 0; i < modules.length; i++) {
+	modulesPaths.push('modules/'+modules[i]+'/module.xml');
+}
+modulesPaths = modulesPaths.join(',');
+project.setNewProperty('toolkit.modules.paths', modulesPaths);
+]]>
+	</scriptdef>
+
+	<!-- Iterates of project files and calls given target -->
+    <macrodef name="iterate">
+        <attribute name="target" />
+        <attribute name="basedir" />
+        <attribute name="paths" />
+        <sequential>
+            <subant target="@{target}" inheritall="true">
+                <fileset dir="@{basedir}" includes="@{paths}" />
+            </subant>
+        </sequential>
+    </macrodef>
+</project>

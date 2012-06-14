@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="toolkit-sdk">
-	<target name="toolkit-sdk.generate.module" description="Generates a stub module" depends="setprofile">
+	<!-- Mandatory targets -->
+	<target name="configure" />
+	<target name="build" />
+	<target name="review" />
+	<target name="migrate" />
+	<target name="sync" />
+
+	<target name="generate.module" description="Generates a stub module">
 		<!-- Sanity checks -->
 		<fail unless="module.name" />
 
