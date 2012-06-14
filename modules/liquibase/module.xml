@@ -56,10 +56,10 @@
 	<!-- Initializes liquibase environment -->
 	<target name="init">
 		<path id="classpath">
-			<fileset dir="${toolkit.basedir}/vendor/liquibase">
+			<fileset dir="vendor/liquibase">
 				<include name="liquibase.jar" />
 			</fileset>
-			<fileset dir="${toolkit.basedir}/vendor/liquibase/drivers/mysql-connector-java">
+			<fileset dir="vendor/liquibase/drivers/mysql-connector-java">
 				<include name="**/*.jar" />
 			</fileset>
 		</path>
