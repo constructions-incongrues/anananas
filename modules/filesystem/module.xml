@@ -27,7 +27,7 @@
 	</target>
 
 	<target name="create-symlinks">
-        <propertyselector property="symlinks" delimiter="," match="symlink.(.+)" select="\1" />
+        <propertyselector property="symlinks" delimiter="," match="^symlink.(.+)" select="\1" />
         <script language="javascript">
             <![CDATA[
                 var ids = project.getProperty('symlinks');
