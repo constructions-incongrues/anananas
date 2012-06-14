@@ -12,7 +12,7 @@
 	<target name="migrate.databases" description="Migrates all databases">
 		<foreach target="migrate.do" param="liquibase.changelog">
 			<path>
-				<fileset dir="${liquibase.changelogs}" includes="*-master.xml" />
+				<fileset dir="${project.dirs.base}/etc/${liquibase.changelogs}" includes="*-master.xml" />
 			</path>
 		</foreach>
 	</target>
