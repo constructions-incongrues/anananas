@@ -3,9 +3,9 @@
 
 	<!-- Mandatory targets -->
 	<target name="configure" />
-	<target name="build" depends="migrate.databases" />
+	<target name="build" />
 	<target name="review" />
-	<target name="migrate" />
+	<target name="migrate" depends="migrate.databases" />
 	<target name="sync" />
 
 	<!-- toolkit phase : build -->
