@@ -20,7 +20,7 @@
 		
 		<exec executable="rsync" failonerror="true">
 			<arg line="--cvs-exclude 
-              --exclude-from=${basedir}/etc/common/rsync.exclude
+              --exclude-from=${project.dirs.base}/etc/common/rsync.exclude
               --links
 	      ${rsync.options}
               -agpvzc src/ -e ssh ${remote.username}@${remote.host}:${remote.path.root}" />
