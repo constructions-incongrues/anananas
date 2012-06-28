@@ -43,7 +43,7 @@
 
     <!-- Searches code for syntax errors -->
     <target name="review.lint" depends="review.clean, review.files">
-        <apply executable="php" failonerror="true">
+        <apply executable="${php.executable}" failonerror="true">
             <arg value="-l" />
             <fileset dir="${project.dirs.base}/build/src" />
         </apply>
