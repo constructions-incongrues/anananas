@@ -9,7 +9,7 @@
 
 	<!-- toolkit phase : build -->
 	<target name="update" description="Updates dependencies managed by composer">
-		<exec dir="${project.dirs.src}" executable="${composer.executable}" failOnError="true" resolveexecutable="true">
+		<exec dir="${project.dirs.base}" executable="${composer.executable}" failOnError="true" resolveexecutable="true">
 			<arg line="update" />
 		</exec>
 	</target>
