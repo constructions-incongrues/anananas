@@ -1,3 +1,0 @@
-[submodule "vendor/phpreprocessor"]
-	path = vendor/phpreprocessor
-	url = git://github.com/constructions-incongrues/phpreprocessor.git
