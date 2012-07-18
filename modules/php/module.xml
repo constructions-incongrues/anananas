@@ -27,11 +27,11 @@
     </target>
 
     <!-- Discovers files that have been recently modified -->
-    <target name="review.files.discover" unless="files">
-        <exec executable="sh" outputproperty="files">
-            <arg value="-c" />
-            <arg value="${toolkit.basedir}/bin/git-needsreview -b ${php.review.branch} -f ${php.review.filter} | xargs | sed 's/ /,/g'" />
+    <target name="review.files.discover">
+        <exec executable="${toolkit.basedir}/bin/git-needsreview" outputproperty="files">
+            <arg line="-b ${php.review.branch} -f ${php.review.filter} -d ${project.dirs.base}" />
         </exec>
+        <echo>${files}</echo>
     </target>
 
     <!-- Finds which files must be reviewed -->
