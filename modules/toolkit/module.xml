@@ -49,8 +49,6 @@
 	</for>
 
 	<!-- Generate list of paths to modules project files -->
-	<echo>${toolkit.modules}</echo>
-	<echo>${toolkit.modules.external}</echo>
 	<expandModulesPaths native="${toolkit.modules}" external="${toolkit.modules.external}" />
 
 	<!-- Mandatory targets -->
