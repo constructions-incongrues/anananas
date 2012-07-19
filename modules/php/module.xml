@@ -46,7 +46,9 @@
     <target name="review.lint" depends="review.clean, review.files">
         <apply executable="${php.executable}" failonerror="true">
             <arg value="-l" />
-            <fileset dir="${project.dirs.base}/build/src" />
+            <fileset dir="${project.dirs.base}/build/src">
+                <include name="**/*.php"/>
+            </fileset>
         </apply>
     </target>
 
