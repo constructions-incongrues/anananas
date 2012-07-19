@@ -116,6 +116,7 @@ Il suffit d'importer le projet ant du module dans le fichier ```build.xml``` du 
 * [] [sync] rename remote.host directive to remote.hostname
 * [] [sync] rename remote.* to sync.*
 * [] [sync] enable multiple sync destinations
+* [] [toolkit] implement list-profiles target
 
 ## DONE
 

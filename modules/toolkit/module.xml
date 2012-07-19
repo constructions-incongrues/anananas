@@ -44,6 +44,10 @@
 	<expandModulesPaths modules="${toolkit.modules}" />
 
 	<!-- Mandatory targets -->
+	<target name="resolve" description="Updates project dependencies">
+		<iterate target="resolve" basedir="${toolkit.basedir}" paths="${toolkit.modules.paths}" />
+	</target>
+
 	<target name="configure" description="Applies configuration profile to project sources">
 		<iterate target="configure" basedir="${toolkit.basedir}" paths="${toolkit.modules.paths}" />
 	</target>
@@ -64,7 +68,7 @@
 		<iterate target="sync" basedir="${toolkit.basedir}" paths="${toolkit.modules.paths}" />
 	</target>
 
-	<target name="deploy" description="Configures, builds, migrates and syncs project" depends="configure,build,migrate,sync" />
+	<target name="deploy" description="Configures, builds, migrates and syncs project" depends="resolve,configure,build,migrate,sync" />
 
 	<target name="help" description="Displays project's help">
 		<echo>Ananas Build Toolkit : Usage</echo>
@@ -80,13 +84,7 @@
 		<echo>This target is deprecated, please remove any dependency to it in your project's build file.</echo>
 	</target>
 
-	<target name="toolkit.init" description="Sets up project for usage with the toolkit">
-		<!-- Guess project name -->
-		<exec outputproperty="project.name" logError="true" executable="basename">
-			<arg line="${user.dir}" />
-		</exec>
-		<echo message="Using project.name : ${project.name}" />
-
+	<target name="toolkit.init" description="Sets up project for usage with the toolkit" depends="toolkit.create-profile">
 		<!-- Create directories -->
 		<mkdir dir="${basedir}/src/" />
 		<mkdir dir="${basedir}/etc/liquibase/changelogs/" />
@@ -96,9 +94,12 @@
 		<copy file="${toolkit.basedir}/templates/profile/build.properties" todir="${basedir}/etc/common" overwrite="false" />
 		<copy file="${toolkit.basedir}/templates/profile/rsync.exclude" todir="${basedir}/etc/common" overwrite="false" />
 
-		<!-- Create local configuration profile -->
+		<!-- Create or update common configuration profile -->
+		<antcall target="properties.init" />
+
+		<!-- Create or update local configuration profile -->
 		<antcall target="properties.update" />
-		
+
 		<!-- Create project build.xml file -->
 		<copy file="${basedir}/build.xml" tofile="${basedir}/build.xml.bak" failonerror="false" overwrite="true" />
 		<echo>Backuped existing build file to ${basedir}/build.xml.bak</echo>
@@ -107,9 +108,7 @@
 	</target>
 
 	<!-- Creates a new property file for configuration profile -->
-	<target name="create-profile">
-		<fail unless="profile" />
-		
+	<target name="toolkit.create-profile">
 		<!-- Create profile directory and property file if it does not exist -->
 		<touch file="${basedir}/etc/${profile}/build.properties" mkdirs="true" verbose="true" />
 	</target>

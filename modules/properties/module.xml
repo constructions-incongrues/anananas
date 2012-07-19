@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="properties" default="help">
 	<!-- Mandatory targets -->
+	<target name="resolve" />
 	<target name="configure" depends="apply" />
 	<target name="build" />
 	<target name="review" />
@@ -20,22 +21,35 @@
 	</target>
 
 	<!-- Updates profile build properties -->
-	<!-- toolkit phase : configure -->
+	<target name="init" depends="list-properties-files">
+		<!-- Backup existing build.properties file -->
+		<copy file="${project.dirs.base}/etc/${profile}/build.properties" tofile="${project.dirs.base}/etc/${profile}/build.properties.bak" failonerror="false" />
+
+		<!-- Generate common build.properties file from project sources -->
+		<property file="${toolkit.basedir}/modules/php/build.properties" />
+		<exec executable="${php.executable}" output="${project.dirs.base}/etc/common/build.properties" logError="true" failonerror="true">
+			<arg line="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor 
+				--command=extract 
+				--exclude-from=${properties.files}
+				--src=${project.dirs.src}
+				--merge-with=${project.dirs.base}/etc/common/build.properties" />
+		</exec>
+	</target>
+
+	<!-- Updates profile build properties -->
 	<target name="update" depends="list-properties-files">
 		<!-- Backup existing build.properties file -->
 		<copy file="${project.dirs.base}/etc/${profile}/build.properties" tofile="${project.dirs.base}/etc/${profile}/build.properties.bak" failonerror="false" />
-		<echo>Backuped existing property file to ${project.dirs.base}/etc/${profile}/build.properties.bak</echo>
 
-		<!-- Generate initial build.properties file from project sources -->
+		<!-- Generate common build.properties file from project sources -->
 		<property file="${toolkit.basedir}/modules/php/build.properties" />
 		<exec executable="${php.executable}" output="${project.dirs.base}/etc/${profile}/build.properties" logError="true" failonerror="true">
 			<arg line="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor 
 				--command=extract 
-				--exclude-from=${properties.files},${project.dirs.base}/etc/common/build.properties 
+				--exclude-from=${properties.files},${project.dirs.base}/etc/common/build.properties
 				--src=${project.dirs.src}
 				--merge-with=${project.dirs.base}/etc/${profile}/build.properties" />
 		</exec>
-		<echo>Extracted tokens from project sources into ${project.dirs.base}/etc/${profile}/build.properties</echo>
 	</target>
 
 	<target name="list-properties-files">

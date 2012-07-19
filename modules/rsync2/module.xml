@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="rsync">	
+<project name="rsync2">	
 	<!-- Mandatory targets -->
 	<target name="resolve" />
 	<target name="configure" />
@@ -24,7 +24,7 @@
               --exclude-from=${project.dirs.base}/etc/common/rsync.exclude
               --links
 	      ${rsync.options}
-              -agpvzc ${project.dirs.src}/ -e ssh ${remote.username}@${remote.host}:${remote.path.root}" />
+              -agpvzc ${project.dirs.base}/ -e ssh ${remote.username}@${remote.host}:${remote.path.root}" />
 		</exec>
 	</target>
 	
