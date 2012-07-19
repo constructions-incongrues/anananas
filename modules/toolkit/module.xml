@@ -80,7 +80,7 @@
 		<echo>This target is deprecated, please remove any dependency to it in your project's build file.</echo>
 	</target>
 
-	<target name="toolkit.init" description="Sets up project for usage with the toolkit">
+	<target name="toolkit.init" description="Sets up project for usage with the toolkit" depends="toolkit.create-profile">
 		<!-- Create directories -->
 		<mkdir dir="${basedir}/src/" />
 		<mkdir dir="${basedir}/etc/liquibase/changelogs/" />
