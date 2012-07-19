@@ -88,11 +88,11 @@
     <!-- Runs HipHop static analysis on files that needs review -->
     <target name="review.phrocco" depends="review.clean, review.files">
         <!-- We need this complicated call as phrocco uses short open tags -->
-        <exec executable="/usr/bin/env" dir="${project.dirs.base}" os="Linux">
-            <arg line="php -d 'short_open_tag=1' /usr/bin/phrocco -i build/src -o build/phrocco" />
+        <exec executable="${php.executable}" dir="${project.dirs.base}" os="Linux">
+            <arg line="-d 'short_open_tag=1' /usr/bin/phrocco -i build/src -o build/phrocco" />
         </exec>
-        <exec executable="/usr/bin/env" dir="${project.dirs.base}" os="Mac OS X">
-            <arg line="php -d 'short_open_tag=1' /opt/local/bin/phrocco -i build/src -o build/phrocco" />
+        <exec executable="${php.executable}" dir="${project.dirs.base}" os="Mac OS X">
+            <arg line="-d 'short_open_tag=1' /opt/local/bin/phrocco -i build/src -o build/phrocco" />
         </exec>
     </target>
 
@@ -113,6 +113,12 @@
         <exec executable="open" os="Mac OS X">
             <arg line="-a ${php.review.phpcb.browser} ${php.review.build.url}/code-browser/index.html ${php.review.build.url}/phrocco" />
        </exec>
+    </target>
+
+    <target name="review.fix">
+        <exec executable="${php.executable}">
+            <arg line="${toolkit.basedir}/modules/php/vendor/php-cs-fixer.phar fix --level=${php.review.php-cs-fixer.level} ${php.review.php-cs-fixer.additional_options} ${project.dirs.base}/src" />
+        </exec>
     </target>
 
     <!-- Installs dependencies required by the review target -->
