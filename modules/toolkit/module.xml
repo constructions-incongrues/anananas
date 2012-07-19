@@ -52,6 +52,10 @@
 	<expandModulesPaths native="${toolkit.modules}" external="${toolkit.modules.external}" />
 
 	<!-- Mandatory targets -->
+	<target name="bootstrap" description="Boostraps project" depends="toolkit.init">
+		<iterate target="bootstrap" basedir="${project.dirs.base}" paths="${toolkit.modules.paths}" />
+	</target>
+
 	<target name="resolve" description="Updates project dependencies">
 		<iterate target="resolve" basedir="${project.dirs.base}" paths="${toolkit.modules.paths}" />
 	</target>
@@ -93,20 +97,10 @@
 	</target>
 
 	<target name="toolkit.init" description="Sets up project for usage with the toolkit" depends="toolkit.create-profile">
-		<!-- Create directories -->
-		<mkdir dir="${basedir}/src/" />
-		<mkdir dir="${basedir}/etc/liquibase/changelogs/" />
-		
 		<!-- Create common configuration profile -->
 		<mkdir dir="${basedir}/etc/common" />
 		<copy file="${toolkit.basedir}/templates/profile/build.properties" todir="${basedir}/etc/common" overwrite="false" />
 		<copy file="${toolkit.basedir}/templates/profile/rsync.exclude" todir="${basedir}/etc/common" overwrite="false" />
-
-		<!-- Create or update common configuration profile -->
-		<antcall target="properties.init" />
-
-		<!-- Create or update local configuration profile -->
-		<antcall target="properties.update" />
 
 		<!-- Create project build.xml file -->
 		<copy file="${basedir}/build.xml" tofile="${basedir}/build.xml.bak" failonerror="false" overwrite="true" />

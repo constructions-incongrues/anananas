@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="composer">
 	<!-- Mandatory targets -->
+	<target name="bootstrap" />
 	<target name="resolve" depends="composer-update" />
 	<target name="configure" />
 	<target name="build" />

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="symfony1">
 	<!-- Mandatory targets -->
+	<target name="bootstrap" />
 	<target name="resolve" />
 	<target name="configure" />
 	<target name="build" depends="orm" />

@@ -2,6 +2,7 @@
 <project name="filesystem">
 
     <!-- Mandatory targets -->
+    <target name="bootstrap" />
     <target name="resolve" />
     <target name="configure" depends="create-directories,create-symlinks,set-permissions" />
     <target name="build" />
