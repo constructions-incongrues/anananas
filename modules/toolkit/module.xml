@@ -40,32 +40,42 @@
 		</sequential>
 	</for>
 
+	<for list="${toolkit.modules.external}" param="module">
+		<sequential>
+			<echo>Importing module : @{module}</echo>
+			<import file="${project.dirs.base}/@{module}/module.xml" />
+			<property file="${project.dirs.base}/@{module}/build.properties" />
+		</sequential>
+	</for>
+
 	<!-- Generate list of paths to modules project files -->
-	<expandModulesPaths modules="${toolkit.modules}" />
+	<echo>${toolkit.modules}</echo>
+	<echo>${toolkit.modules.external}</echo>
+	<expandModulesPaths native="${toolkit.modules}" external="${toolkit.modules.external}" />
 
 	<!-- Mandatory targets -->
 	<target name="resolve" description="Updates project dependencies">
-		<iterate target="resolve" basedir="${toolkit.basedir}" paths="${toolkit.modules.paths}" />
+		<iterate target="resolve" basedir="${project.dirs.base}" paths="${toolkit.modules.paths}" />
 	</target>
 
 	<target name="configure" description="Applies configuration profile to project sources">
-		<iterate target="configure" basedir="${toolkit.basedir}" paths="${toolkit.modules.paths}" />
+		<iterate target="configure" basedir="${project.dirs.base}" paths="${toolkit.modules.paths}" />
 	</target>
 
 	<target name="build" description="Builds project (ORM classes generation, etc)">
-		<iterate target="build" basedir="${toolkit.basedir}" paths="${toolkit.modules.paths}" />
+		<iterate target="build" basedir="${project.dirs.base}" paths="${toolkit.modules.paths}" />
 	</target>
 
 	<target name="review" description="Runs code quality analysis on uncommited and unmerged files">
-		<iterate target="review" basedir="${toolkit.basedir}" paths="${toolkit.modules.paths}" />
+		<iterate target="review" basedir="${project.dirs.base}" paths="${toolkit.modules.paths}" />
 	</target>
 
 	<target name="migrate" description="Handles data structure and values modifications">
-		<iterate target="migrate" basedir="${toolkit.basedir}" paths="${toolkit.modules.paths}" />
+		<iterate target="migrate" basedir="${project.dirs.base}" paths="${toolkit.modules.paths}" />
 	</target>
 
 	<target name="sync" description="Synchronizes code with remote server(s)">
-		<iterate target="sync" basedir="${toolkit.basedir}" paths="${toolkit.modules.paths}" />
+		<iterate target="sync" basedir="${project.dirs.base}" paths="${toolkit.modules.paths}" />
 	</target>
 
 	<target name="deploy" description="Configures, builds, migrates and syncs project" depends="resolve,configure,build,migrate,sync" />
