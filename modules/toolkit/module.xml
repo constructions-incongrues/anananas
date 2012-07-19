@@ -44,6 +44,10 @@
 	<expandModulesPaths modules="${toolkit.modules}" />
 
 	<!-- Mandatory targets -->
+	<target name="resolve" description="Updates project dependencies">
+		<iterate target="resolve" basedir="${toolkit.basedir}" paths="${toolkit.modules.paths}" />
+	</target>
+
 	<target name="configure" description="Applies configuration profile to project sources">
 		<iterate target="configure" basedir="${toolkit.basedir}" paths="${toolkit.modules.paths}" />
 	</target>

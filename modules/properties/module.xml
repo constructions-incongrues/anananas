@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="properties" default="help">
 	<!-- Mandatory targets -->
+	<target name="resolve" />
 	<target name="configure" depends="apply" />
 	<target name="build" />
 	<target name="review" />

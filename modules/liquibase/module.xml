@@ -2,6 +2,7 @@
 <project name="liquibase">
 
 	<!-- Mandatory targets -->
+	<target name="resolve" />
 	<target name="configure" />
 	<target name="build" />
 	<target name="review" />
