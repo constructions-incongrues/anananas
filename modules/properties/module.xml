@@ -2,7 +2,7 @@
 <project name="properties" default="help">
 	<!-- Mandatory targets -->
 	<target name="bootstrap" depends="update-common" />
-	<target name="resolve" />
+	<target name="resolve" depends="update-common,update-profile" />
 	<target name="configure" depends="apply" />
 	<target name="build" />
 	<target name="review" />
@@ -10,7 +10,6 @@
 	<target name="sync" />
 
 	<!-- Preprocesses -dist files -->
-	<!-- toolkit phase : configure -->
 	<target name="apply" depends="list-properties-files">
 		<property file="${toolkit.basedir}/modules/php/build.properties" />
 		<exec executable="${php.executable}" failonerror="true">
