@@ -38,7 +38,7 @@
 	</target>
 
 	<!-- Updates profile build properties -->
-	<target name="update-profile" depends="list-properties-files">
+	<target name="update-profile" depends="create-profile,list-properties-files">
 		<!-- Backup existing build.properties file -->
 		<copy file="${project.dirs.base}/etc/${profile}/build.properties" tofile="${project.dirs.base}/etc/${profile}/build.properties.bak" failonerror="false" />
 
@@ -51,6 +51,12 @@
 				--src=${project.dirs.src}
 				--merge-with=${project.dirs.base}/etc/${profile}/build.properties" />
 		</exec>
+	</target>
+	
+	<!-- Creates a new property file for configuration profile -->
+	<target name="create-profile">
+		<!-- Create profile directory and property file if it does not exist -->
+		<touch file="${basedir}/etc/${profile}/build.properties" mkdirs="true" verbose="true" />
 	</target>
 
 	<target name="list-properties-files">
