@@ -26,17 +26,6 @@ class PHPreprocessor
 		// Extract tokens
 		$tokens = $this->_extractTokensFromFiles($files);
 
-		// Compute merge properties
-		if (isset($options['merge-with'])) {
-			if (!is_readable($options['merge-with'])) {
-				throw new \InvalidArgumentException(sprintf('File %s is not readable', $options['merge-with']));
-			}
-			$errorReporting = error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
-			$mergeWith = parse_ini_file($options['merge-with']);
-			error_reporting($errorReporting);
-			$tokens = array_merge($tokens, $mergeWith);
-		}
-
 		// Exclude tokens
 		if (isset($options['exclude-from'])) {
 			$files = explode(',', $options['exclude-from']);
@@ -56,6 +45,17 @@ class PHPreprocessor
 					}
 				}
 			}
+		}
+
+		// Compute merge properties
+		if (isset($options['merge-with'])) {
+			if (!is_readable($options['merge-with'])) {
+				throw new \InvalidArgumentException(sprintf('File %s is not readable', $options['merge-with']));
+			}
+			$errorReporting = error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
+			$mergeWith = parse_ini_file($options['merge-with']);
+			error_reporting($errorReporting);
+			$tokens = array_merge($tokens, $mergeWith);
 		}
 
 		// Output results
