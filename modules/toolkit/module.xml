@@ -92,15 +92,12 @@
 		<echo>More documentation can obtained at https://github.com/constructions-incongrues/ananas-build-toolkit</echo>
 	</target>
 
-	<target name="toolkit.setprofile">
-		<echo>This target is deprecated, please remove any dependency to it in your project's build file.</echo>
-	</target>
-
-	<target name="toolkit.init" description="Sets up project for usage with the toolkit" depends="toolkit.create-profile">
+	<target name="toolkit.init" description="Sets up project for usage with the toolkit">
 		<!-- Create common configuration profile -->
 		<mkdir dir="${basedir}/etc/common" />
-		<copy file="${toolkit.basedir}/templates/profile/build.properties" todir="${basedir}/etc/common" overwrite="false" />
-		<copy file="${toolkit.basedir}/templates/profile/rsync.exclude" todir="${basedir}/etc/common" overwrite="false" />
+		
+		<!-- Guess project name from project's root directory -->
+		<basename file="${project.dirs.base}" property="project.name" />
 
 		<!-- Create project build.xml file -->
 		<copy file="${basedir}/build.xml" tofile="${basedir}/build.xml.bak" failonerror="false" overwrite="true" />
@@ -109,9 +106,4 @@
 		<replace file="${basedir}/build.xml" token="@project.name@" value="${project.name}" />
 	</target>
 
-	<!-- Creates a new property file for configuration profile -->
-	<target name="toolkit.create-profile">
-		<!-- Create profile directory and property file if it does not exist -->
-		<touch file="${basedir}/etc/${profile}/build.properties" mkdirs="true" verbose="true" />
-	</target>
 </project>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="properties" default="help">
 	<!-- Mandatory targets -->
-	<target name="bootstrap" depends="init,update" />
+	<target name="bootstrap" depends="update-common" />
 	<target name="resolve" />
 	<target name="configure" depends="apply" />
 	<target name="build" />
@@ -22,7 +22,7 @@
 	</target>
 
 	<!-- Updates profile build properties -->
-	<target name="init" depends="list-properties-files">
+	<target name="update-common" depends="list-properties-files">
 		<!-- Backup existing build.properties file -->
 		<copy file="${project.dirs.base}/etc/${profile}/build.properties" tofile="${project.dirs.base}/etc/${profile}/build.properties.bak" failonerror="false" />
 
@@ -38,7 +38,7 @@
 	</target>
 
 	<!-- Updates profile build properties -->
-	<target name="update" depends="list-properties-files">
+	<target name="update-profile" depends="list-properties-files">
 		<!-- Backup existing build.properties file -->
 		<copy file="${project.dirs.base}/etc/${profile}/build.properties" tofile="${project.dirs.base}/etc/${profile}/build.properties.bak" failonerror="false" />
 
