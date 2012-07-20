@@ -37,7 +37,7 @@ class PHPreprocessor
                 // Remove excluded tokens from list
                 // TODO : this should use array_diff_assoc()
                 $errorReporting = error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
-                $tokensExcluded = parse_ini_file($file);
+                $tokensExcluded = parse_ini_file($file, false, INI_SCANNER_RAW);
                 error_reporting($errorReporting);
                 foreach ($tokensExcluded as $tokenName => $tokenValue) {
                     if (!empty($tokensExcluded[$tokenName])) {
@@ -53,10 +53,13 @@ class PHPreprocessor
                 throw new \InvalidArgumentException(sprintf('File %s is not readable', $options['merge-with']));
             }
             $errorReporting = error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
-            $mergeWith = parse_ini_file($options['merge-with']);
+            $mergeWith = parse_ini_file($options['merge-with'], false, INI_SCANNER_RAW);
             error_reporting($errorReporting);
             $tokens = array_merge($tokens, $mergeWith);
         }
+
+        // Sort tokens
+        ksort($tokens);
 
         // Output results
         $file = new \SplFileObject('php://stdout', 'w');
