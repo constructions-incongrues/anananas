@@ -17,15 +17,9 @@ Il est basé sur [Ant](http://ant.apache.org) et [PHPreprocessor](https://github
 
 ## Utilisation
 
-Placez-vous à la racine du projet et exécutez les commandes suivantes :
+Le toolkit s'installe à l'aide de [Composer](http://getcomposer.org). 
 
-```bash
-curl -s http://getcomposer.org/installer | php
-mkdir -p vendor/constructions-incongrues
-php composer.phar create-project --repository-url=http://constructions-incongrues.github.com/packages/ constructions-incongrues/ananas-build-toolkit vendor/constructions-incongrues/ananas-build-toolkit
-ant -f vendor/constructions-incongrues/ananas-build-toolkit/modules/toolkit/module.xml toolkit.init -Dbasedir=$PWD
-```
-Puis créer un fichier ```composer.json``` avec le contenu suivant :
+Placez-vous à la racine du projet et créez un fichier ```composer.json``` avec le contenu suivant :
 
 ```json
 {
@@ -39,6 +33,22 @@ Puis créer un fichier ```composer.json``` avec le contenu suivant :
         "constructions-incongrues/ananas-build-toolkit": "dev-master"
     }
 }
-
 ```
 
+Installez Composer : 
+
+```bash
+curl -s http://getcomposer.org/installer | php
+```
+
+Récupérez le toolkit : 
+
+```bash
+php composer.phar update
+```
+
+Initialisez le toolkit : 
+
+```bash
+ant -f vendor/constructions-incongrues/ananas-build-toolkit/modules/toolkit/module.xml toolkit.init -Dbasedir=$PWD
+```
