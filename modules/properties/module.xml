@@ -38,6 +38,10 @@
 
 	<!-- Updates profile build properties -->
 	<target name="update-profile" depends="create-profile,list-properties-files">
+		<!-- Create tree if required -->
+		<mkdir dir="${project.dirs.base}/etc/${profile}" />
+		<touch file="${project.dirs.base}/etc/${profile}/build.properties" />
+
 		<!-- Backup existing build.properties file -->
 		<copy file="${project.dirs.base}/etc/${profile}/build.properties" tofile="${project.dirs.base}/etc/${profile}/build.properties.bak" failonerror="false" />
 

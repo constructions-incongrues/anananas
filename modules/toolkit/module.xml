@@ -52,7 +52,7 @@
 	<expandModulesPaths native="${toolkit.modules}" external="${toolkit.modules.external}" />
 
 	<!-- Mandatory targets -->
-	<target name="bootstrap" description="Boostraps project" depends="toolkit.init">
+	<target name="bootstrap" description="Boostraps project">
 		<iterate target="bootstrap" basedir="${project.dirs.base}" paths="${toolkit.modules.paths}" />
 	</target>
 
@@ -95,7 +95,10 @@
 	<target name="toolkit.init" description="Sets up project for usage with the toolkit">
 		<!-- Create common configuration profile -->
 		<mkdir dir="${basedir}/etc/common" />
-		
+	
+		<!-- Create sources directory -->
+		<mkdir dir="${basedir}/src" />
+	
 		<!-- Guess project name from project's root directory -->
 		<basename file="${project.dirs.base}" property="project.name" />
 
@@ -104,6 +107,10 @@
 		<echo>Backuped existing build file to ${basedir}/build.xml.bak</echo>
 		<copy file="${toolkit.basedir}/templates/build.xml" todir="${basedir}" overwrite="true" />
 		<replace file="${basedir}/build.xml" token="@project.name@" value="${project.name}" />
+
+		<!-- Bootstrap modules -->
+		<antcall target="bootstrap" />
+		<antcall target="resolve" />
 	</target>
 
 </project>
