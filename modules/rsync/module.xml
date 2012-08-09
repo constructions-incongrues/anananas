@@ -2,7 +2,7 @@
 <project name="rsync">	
 	<!-- Mandatory targets -->
 	<target name="bootstrap" depends="deploy-assets" />
-	<target name="resolve" />
+	<target name="update" />
 	<target name="configure" />
 	<target name="build" />
 	<target name="review" />

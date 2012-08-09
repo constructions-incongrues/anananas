@@ -2,7 +2,7 @@
 <project name="php">
     <!-- Mandatory targets -->
     <target name="bootstrap" />
-    <target name="resolve" />
+    <target name="update" />
     <target name="configure" />
     <target name="build" />
     <target name="review" depends="review.lint,review.phpmd,review.phpcpd,review.phpcs,review.phrocco" />

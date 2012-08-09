@@ -2,7 +2,7 @@
 <project name="rsync2">	
 	<!-- Mandatory targets -->
 	<target name="bootstrap" />
-	<target name="resolve" />
+	<target name="update" />
 	<target name="configure" />
 	<target name="build" />
 	<target name="review" />

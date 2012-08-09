@@ -56,9 +56,10 @@
 		<iterate target="bootstrap" basedir="${project.dirs.base}" paths="${toolkit.modules.paths}" />
 	</target>
 
-	<target name="resolve" description="Updates project dependencies">
-		<iterate target="resolve" basedir="${project.dirs.base}" paths="${toolkit.modules.paths}" />
+	<target name="update" description="Updates project dependencies">
+		<iterate target="update" basedir="${project.dirs.base}" paths="${toolkit.modules.paths}" />
 	</target>
+	<target name="resolve" depends="update" /> <!-- for BC -->
 
 	<target name="configure" description="Applies configuration profile to project sources">
 		<iterate target="configure" basedir="${project.dirs.base}" paths="${toolkit.modules.paths}" />
@@ -92,7 +93,7 @@
 		<echo>More documentation can obtained at https://github.com/constructions-incongrues/ananas-build-toolkit</echo>
 	</target>
 
-	<target name="toolkit.init" description="Sets up project for usage with the toolkit">
+	<target name="init" description="Sets up project for usage with the toolkit">
 		<!-- Create common configuration profile -->
 		<mkdir dir="${basedir}/etc/common" />
 	
@@ -110,7 +111,7 @@
 
 		<!-- Bootstrap modules -->
 		<antcall target="bootstrap" />
-		<antcall target="resolve" />
+		<antcall target="update" />
 	</target>
 
 </project>

@@ -3,7 +3,7 @@
 
 	<!-- Mandatory targets -->
 	<target name="bootstrap" depends="create-directories" />
-	<target name="resolve" />
+	<target name="update" />
 	<target name="configure" />
 	<target name="build" />
 	<target name="review" />
