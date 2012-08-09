@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Ananas-build-toolkit : L'Ananas Build Toolkit est un framework de configuration et de déploiement de projet logiciel." />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Ananas-build-toolkit</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/constructions-incongrues/ananas-build-toolkit">View on GitHub</a>
+
+          <h1 id="project_title">Ananas-build-toolkit</h1>
+          <h2 id="project_tagline">L'Ananas Build Toolkit est un framework de configuration et de déploiement de projet logiciel.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/constructions-incongrues/ananas-build-toolkit/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/constructions-incongrues/ananas-build-toolkit/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>Ananas Build Toolkit</h1>
+
+<h2>Présentation du projet</h2>
+
+<p>L'Ananas Build Toolkit est un framework de configuration et de déploiement de projet logiciel.</p>
+
+<p>Ces principaux intérêts sont :</p>
+
+<ul>
+<li>Installation aisée</li>
+<li>Indifférent au(x) langage(s) de programmation utilisé(s) au sein du projet</li>
+<li>Cycle de travail simple et rapide à prendre en main</li>
+<li>Gestion efficace de profils de configuration multiples</li>
+<li>Modulaire et extensible</li>
+<li>Libre et gratuit</li>
+</ul><p>Il est basé sur <a href="http://ant.apache.org">Ant</a> et <a href="https://github.com/constructions-incongrues/phpreprocessor">PHPreprocessor</a>.</p>
+
+<h2>Installation et configuration</h2>
+
+<p>Le toolkit s'installe à l'aide de <a href="http://getcomposer.org">Composer</a>. </p>
+
+<p>Placez-vous à la racine du projet et créez un fichier <code>composer.json</code> avec le contenu suivant :</p>
+
+<div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">"repositories"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">"type"</span><span class="p">:</span> <span class="s2">"composer"</span><span class="p">,</span>
+            <span class="nt">"url"</span><span class="p">:</span> <span class="s2">"http://constructions-incongrues.github.com/packages"</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="nt">"require"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">"constructions-incongrues/ananas-build-toolkit"</span><span class="p">:</span> <span class="s2">"dev-master"</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>Installez Composer : </p>
+
+<div class="highlight"><pre>curl -s http://getcomposer.org/installer | php
+</pre></div>
+
+<p>Récupérez le toolkit : </p>
+
+<div class="highlight"><pre>php composer.phar update
+</pre></div>
+
+<p>Initialisez le toolkit : </p>
+
+<div class="highlight"><pre>ant -f vendor/constructions-incongrues/ananas-build-toolkit/modules/toolkit/module.xml toolkit.init -Dbasedir<span class="o">=</span><span class="nv">$PWD</span>
+</pre></div>
+
+<h2>Utilisation</h2>
+
+<p>Le toolkit expose sept tâches :</p>
+
+<h3>boostrap</h3>
+
+<p>Cette tâche installe les composants nécessaires au bon fonctionnement de chacun des modules du toolkit. Elle doit être exécutée à chaque fois qu'un nouveau module est activé. Elle est appelée automatiquement lors de l'initialisation du projet par la tâche <code>toolkit.init</code>.</p>
+
+<p>Pour l'invoquer : </p>
+
+<div class="highlight"><pre>ant bootstrap
+</pre></div>
+
+<h3>build</h3>
+
+<p>Cette tâche génère le code qui doit l'être (classes d'ORM, etc) et effectue les opérations sur le système de fichiers (création de dossiers, liens symboliques, permissions, etc).</p>
+
+<p>Pour l'invoquer : </p>
+
+<div class="highlight"><pre>ant build
+</pre></div>
+
+<h3>configure</h3>
+
+<p>Cette tâche applique la configuration aux sources du projet. Les directives configurables dans les fichier suffixé par <code>-dist</code> sont remplacées par les valeurs définies dans le profil de configuration.</p>
+
+<p>Pour l'invoquer : </p>
+
+<div class="highlight"><pre>ant configure
+</pre></div>
+
+<h3>migrate</h3>
+
+<p>Cette tâche gère les modifications des données du projet et de leurs structures (base de données ou autre).</p>
+
+<p>Pour l'invoquer : </p>
+
+<div class="highlight"><pre>ant migrate
+</pre></div>
+
+<h3>review</h3>
+
+<p>Cette tâche analyse la qualité du code source avant que les modifications ne soient poussées vers le dépôt.</p>
+
+<p>Pour l'invoquer : </p>
+
+<div class="highlight"><pre>ant review
+</pre></div>
+
+<h3>sync</h3>
+
+<p>Cette tâche envoie les sources du projet vers le(s) serveur(s) distant(s).</p>
+
+<p>Pour l'invoquer : </p>
+
+<div class="highlight"><pre>ant sync
+</pre></div>
+
+<h3>update</h3>
+
+<p>Cette tâche met à jour le projet : dépendances git, Composer, etc. Elle recherche aussi les directives configurabless dans les sources et met à jour les profils de configuration.</p>
+
+<p>Pour l'invoquer : </p>
+
+<div class="highlight"><pre>ant update
+</pre></div>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Ananas-build-toolkit maintained by <a href="https://github.com/constructions-incongrues">constructions-incongrues</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
