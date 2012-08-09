@@ -25,5 +25,20 @@ mkdir -p vendor/constructions-incongrues
 php composer.phar create-project --repository-url=http://constructions-incongrues.github.com/packages/ constructions-incongrues/ananas-build-toolkit vendor/constructions-incongrues/ananas-build-toolkit
 ant -f vendor/constructions-incongrues/ananas-build-toolkit/modules/toolkit/module.xml toolkit.init -Dbasedir=$PWD
 ```
+Puis créer un fichier ```composer.json``` avec le contenu suivant :
 
+```json
+{
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://constructions-incongrues.github.com/packages"
+        }
+    ],
+    "require": {
+        "constructions-incongrues/ananas-build-toolkit": "dev-master"
+    }
+}
+
+```
 
