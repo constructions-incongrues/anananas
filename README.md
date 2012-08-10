@@ -53,9 +53,17 @@ Initialisez le toolkit :
 ant -f vendor/constructions-incongrues/ananas-build-toolkit/modules/toolkit/module.xml init -Dbasedir=$PWD
 ```
 
+Par défaut, seul le module ```properties``` est activé. Vous pouvez activer plus de modules en ajoutant leur nom à la liste (séparée par des virgules) définie par la directive ```toolkit.modules``` dans le fichier ```etc/build.properties```. Par exemple
+
+```
+toolkit.modules=properties,git,composer,liquibase,php
+```
+
+Modules disponibles à ce jour : [composer](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/composer), filesystem, git, liquibase, php, properties, rsync, rsync2, symfony1, toolkit, toolkit-sdk.
+
 ## Utilisation
 
-Le toolkit expose sept tâches :
+Le toolkit expose sept tâches. L'appel d'une tâche déclenche les actions correspondantes dans chacun des modules activé.
 
 ### boostrap
 
