@@ -15,127 +15,114 @@ Ces principaux intérêts sont :
 
 Il est basé sur [Ant](http://ant.apache.org) et [PHPreprocessor](https://github.com/constructions-incongrues/phpreprocessor).
 
-## Présentation du cycle de travail proposé par le toolkit
+## Installation et configuration
 
-Le toolkit segmente l'exploitation d'un projet en cinq phases.
+Le toolkit s'installe à l'aide de [Composer](http://getcomposer.org). 
 
-### Configuration
+Placez-vous à la racine du projet et créez un fichier ```composer.json``` avec le contenu suivant :
 
-Les caractéristiques du système de configuration offert par le toolkit sont les suivantes :
-
- * une séparation stricte du code source et de la configuration du projet
- * un mécanisme d'application de la configuration complètement indifférent aux solutions techniques utilisées par le projet (langage, framework, etc)
-
-La phase de configuration sert donc à appliquer un profil de configuration au projet dans l'attente de le déployer vers l'environnement d'exploitation correspondant.
-
-Cette phase de configuration est déclenchée par la commande suivante :
-
-```bash
-ant configure -Dprofile=NOM_DU_PROFIL
+```json
+{
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://constructions-incongrues.github.com/packages"
+        }
+    ],
+    "require": {
+        "constructions-incongrues/ananas-build-toolkit": "dev-master"
+    }
+}
 ```
 
-### Construction
-
-La phase de construction permet de :
-
- * récupérer et installer les dépendances du projet
- * générer tout le code qui doit l'être automatiquement (classes d'ORM, etc)
-
-L'Ananas Build Toolkit met à disposition des modules spécialisés :
-
- * [composer](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/composer), qui permet de gérer les dépendances d'un projet à l'aide [Composer](http://getcomposer.org)
- * [symfony1](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/symfony1), qui permet de générer les différents artefacts requis par un projet symfony (des version 1.2 à 1.4)
-
-Elle est déclenchée par la commande suivante :
+Installez Composer : 
 
 ```bash
-ant build -Dprofile=NOM_DU_PROFIL
+curl -s http://getcomposer.org/installer | php
 ```
- 
-### Analyse
 
+Récupérez le toolkit : 
 
+```bash
+php composer.phar update
+```
 
-### Migration
- 
-### Synchronisation
+Initialisez le toolkit : 
 
-## Fonctionnement de la configuration en cascade
+```bash
+ant -f vendor/constructions-incongrues/ananas-build-toolkit/modules/toolkit/module.xml init -Dbasedir=$PWD
+```
 
 ## Utilisation
 
-### Installation et initialisation d'un projet vide
+Le toolkit expose sept tâches :
 
-### Installation et initialisation au sein d'un projet existant
+### boostrap
 
-À la racine du projet :
+Cette tâche installe les composants nécessaires au bon fonctionnement de chacun des modules du toolkit. Elle doit être exécutée à chaque fois qu'un nouveau module est activé. Elle est appelée automatiquement lors de l'initialisation du projet par la tâche ```init```.
+
+Pour l'invoquer : 
 
 ```bash
-# Récupération des sources du toolkit
-git submodule add git@github.com:constructions-incongrues/ananas-build-toolkit.git vendor/ananas-build-toolkit
-
-# Récupération des sous-modules du toolkit
-cd vendor/ananas-build-toolkit
-git submodule update --init --recursive
-
-# Initialisation du projet : création du fichier de build et des profils de configuration
-cd -
-ant -f vendor/ananas-build-toolkit/modules/toolkit/module.xml -Dbasedir=. toolkit.init
+ant bootstrap
 ```
 
-Cette opération télécharge les sources du toolkit et crée un profil de configuration à votre nom dans le répertoire etc/.
+### build
 
-### Installation et utilisation des modules
+Cette tâche génère le code qui doit l'être (classes d'ORM, etc) et effectue les opérations sur le système de fichiers (création de dossiers, liens symboliques, permissions, etc).
 
-Il suffit d'importer le projet ant du module dans le fichier ```build.xml``` du projet. L'opération est décrite précisément dans la documentation de chacun des modules :
+Pour l'invoquer : 
 
-* [composer](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/composer)
-* [filesystem](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/filesystem)
-* [liquibase](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/liquibase)
-* [php](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/php)
-* [properties](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/properties)
-* [rsync](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/rsync)
-* [symfony1](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/symfony1)
-* [toolkit](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/toolkit)
-* [toolkit-sdk](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/toolkit-sdk)
+```bash
+ant build
+```
 
-### Création d'un nouveau module
+### configure
 
-## TODO
+Cette tâche applique la configuration aux sources du projet. Les directives configurables dans les fichier suffixé par ```-dist``` sont remplacées par les valeurs définies dans le profil de configuration.
 
-* [] [agnostism] third party module related helpers should not be bundled by default (better bootstrap.module them)
-* [] [doc] write project presentation
-* [] [doc] document each module : usage, directives
-* [] [doc] create a logo for the projet
-* [] [filesystem] make all targets more verbose
-* [] [filesystem] implement chown task
-* [] [filesystem] fix bug with multiple chmod modes
-* [] [properties] task for designating deprecated properties
-* [] [properties] also show non-valued properties in local configuration profile
-* [] [review] also include uncommited files to review
-* [] [sync] rename remote.host directive to remote.hostname
-* [] [sync] rename remote.* to sync.*
-* [] [sync] enable multiple sync destinations
-* [] [toolkit] implement list-profiles target
+Pour l'invoquer : 
 
-## DONE
+```bash
+ant configure
+```
 
-* [x] [agnostism] implement "module" concept
-* [x] [agnostism] language related modules should not be enabled by default
-* [x] [configure] move filesystem related tasks to filesystem module
-* [x] [development] task for generating module skeleton
-* [x] [development] rename "development" module to "toolkit-sdk"
-* [x] [init] make it possible to specify project name at runtime
-* [x] [init] review init targets
-* [x] [modules] add "php" module for handling PHP runtime configuration
-* [x] [php] php executable path must be configurable
-* [x] [properties] move preprocessing targets to dedicated module. properties.update, properties.apply
-* [x] [review] move review code to php module
-* [x] [review] rename bootstrap.review to review.bootstrap
-* [x] [review] add phpcs.additional_options directive (with -n activated by default)
-* [x] [symfony] rename symfony module to symfony1
-* [x] [toolkit] toolkit should me a module too, exposing default configuration (and init tasks ?)
-* [x] [toolkit] move init targets to toolkit module
-* [x] [toolkit] toolkit.init fails on ${php.executable} not found
-* [x] [toolkit-sdk] find an easier way to activate modules
+### migrate
 
+Cette tâche gère les modifications des données du projet et de leurs structures (base de données ou autre).
+
+Pour l'invoquer : 
+
+```bash
+ant migrate
+```
+
+### review
+
+Cette tâche analyse la qualité du code source avant que les modifications ne soient poussées vers le dépôt.
+
+Pour l'invoquer : 
+
+```bash
+ant review
+```
+
+### sync 
+
+Cette tâche envoie les sources du projet vers le(s) serveur(s) distant(s).
+
+Pour l'invoquer : 
+
+```bash
+ant sync
+```
+
+### update
+
+Cette tâche met à jour le projet : dépendances git, Composer, etc. Elle recherche aussi les directives configurabless dans les sources et met à jour les profils de configuration.
+
+Pour l'invoquer : 
+
+```bash
+ant update
+```

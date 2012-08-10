@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="toolkit-sdk">
 	<!-- Mandatory targets -->
-	<target name="resolve" />
+	<target name="update" />
 	<target name="configure" />
 	<target name="build" />
 	<target name="review" />

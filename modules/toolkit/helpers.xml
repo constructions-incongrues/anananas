@@ -2,13 +2,30 @@
 <project name="toolkit.helpers" default="help">
 	<!-- Generates list of paths to module.xml files in toolkit.modules.paths property -->
 	<scriptdef name="expandModulesPaths" language="javascript">
-		<attribute name="modules" />
+		<attribute name="native" />
+        <attribute name="external" />
 <![CDATA[
-var modules = attributes.get('modules').split(',');
 var modulesPaths = [];
+
+// Generate paths for native modules
+var modules = attributes.get('native').split(',');
 for (var i = 0; i < modules.length; i++) {
-	modulesPaths.push('modules/'+modules[i]+'/module.xml');
+	modulesPaths.push('vendor/constructions-incongrues/ananas-build-toolkit/modules/'+modules[i]+'/module.xml');
 }
+
+// TMP Generate paths for native modules (for BC)
+// TODELETE
+var modules = attributes.get('native').split(',');
+for (var i = 0; i < modules.length; i++) {
+    modulesPaths.push('vendor/ananas-build-toolkit/modules/'+modules[i]+'/module.xml');
+}
+
+// Generate paths for external modules
+var modules = attributes.get('external').split(',');
+for (var i = 0; i < modules.length; i++) {
+    modulesPaths.push(modules[i]+'/module.xml');
+}
+
 modulesPaths = modulesPaths.join(',');
 project.setNewProperty('toolkit.modules.paths', modulesPaths);
 ]]>

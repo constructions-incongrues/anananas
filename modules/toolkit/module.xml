@@ -40,32 +40,45 @@
 		</sequential>
 	</for>
 
+	<for list="${toolkit.modules.external}" param="module">
+		<sequential>
+			<echo>Importing module : @{module}</echo>
+			<import file="${project.dirs.base}/@{module}/module.xml" />
+			<property file="${project.dirs.base}/@{module}/build.properties" />
+		</sequential>
+	</for>
+
 	<!-- Generate list of paths to modules project files -->
-	<expandModulesPaths modules="${toolkit.modules}" />
+	<expandModulesPaths native="${toolkit.modules}" external="${toolkit.modules.external}" />
 
 	<!-- Mandatory targets -->
-	<target name="resolve" description="Updates project dependencies">
-		<iterate target="resolve" basedir="${toolkit.basedir}" paths="${toolkit.modules.paths}" />
+	<target name="bootstrap" description="Boostraps project">
+		<iterate target="bootstrap" basedir="${project.dirs.base}" paths="${toolkit.modules.paths}" />
 	</target>
 
+	<target name="update" description="Updates project dependencies">
+		<iterate target="update" basedir="${project.dirs.base}" paths="${toolkit.modules.paths}" />
+	</target>
+	<target name="resolve" depends="update" /> <!-- for BC -->
+
 	<target name="configure" description="Applies configuration profile to project sources">
-		<iterate target="configure" basedir="${toolkit.basedir}" paths="${toolkit.modules.paths}" />
+		<iterate target="configure" basedir="${project.dirs.base}" paths="${toolkit.modules.paths}" />
 	</target>
 
 	<target name="build" description="Builds project (ORM classes generation, etc)">
-		<iterate target="build" basedir="${toolkit.basedir}" paths="${toolkit.modules.paths}" />
+		<iterate target="build" basedir="${project.dirs.base}" paths="${toolkit.modules.paths}" />
 	</target>
 
 	<target name="review" description="Runs code quality analysis on uncommited and unmerged files">
-		<iterate target="review" basedir="${toolkit.basedir}" paths="${toolkit.modules.paths}" />
+		<iterate target="review" basedir="${project.dirs.base}" paths="${toolkit.modules.paths}" />
 	</target>
 
 	<target name="migrate" description="Handles data structure and values modifications">
-		<iterate target="migrate" basedir="${toolkit.basedir}" paths="${toolkit.modules.paths}" />
+		<iterate target="migrate" basedir="${project.dirs.base}" paths="${toolkit.modules.paths}" />
 	</target>
 
 	<target name="sync" description="Synchronizes code with remote server(s)">
-		<iterate target="sync" basedir="${toolkit.basedir}" paths="${toolkit.modules.paths}" />
+		<iterate target="sync" basedir="${project.dirs.base}" paths="${toolkit.modules.paths}" />
 	</target>
 
 	<target name="deploy" description="Configures, builds, migrates and syncs project" depends="resolve,configure,build,migrate,sync" />
@@ -80,36 +93,25 @@
 		<echo>More documentation can obtained at https://github.com/constructions-incongrues/ananas-build-toolkit</echo>
 	</target>
 
-	<target name="toolkit.setprofile">
-		<echo>This target is deprecated, please remove any dependency to it in your project's build file.</echo>
-	</target>
-
-	<target name="toolkit.init" description="Sets up project for usage with the toolkit" depends="toolkit.create-profile">
-		<!-- Create directories -->
-		<mkdir dir="${basedir}/src/" />
-		<mkdir dir="${basedir}/etc/liquibase/changelogs/" />
-		
+	<target name="init" description="Sets up project for usage with the toolkit">
 		<!-- Create common configuration profile -->
 		<mkdir dir="${basedir}/etc/common" />
-		<copy file="${toolkit.basedir}/templates/profile/build.properties" todir="${basedir}/etc/common" overwrite="false" />
-		<copy file="${toolkit.basedir}/templates/profile/rsync.exclude" todir="${basedir}/etc/common" overwrite="false" />
-
-		<!-- Create or update common configuration profile -->
-		<antcall target="properties.init" />
-
-		<!-- Create or update local configuration profile -->
-		<antcall target="properties.update" />
+	
+		<!-- Create sources directory -->
+		<mkdir dir="${basedir}/src" />
+	
+		<!-- Guess project name from project's root directory -->
+		<basename file="${project.dirs.base}" property="project.name" />
 
 		<!-- Create project build.xml file -->
 		<copy file="${basedir}/build.xml" tofile="${basedir}/build.xml.bak" failonerror="false" overwrite="true" />
 		<echo>Backuped existing build file to ${basedir}/build.xml.bak</echo>
 		<copy file="${toolkit.basedir}/templates/build.xml" todir="${basedir}" overwrite="true" />
 		<replace file="${basedir}/build.xml" token="@project.name@" value="${project.name}" />
+
+		<!-- Bootstrap modules -->
+		<antcall target="bootstrap" />
+		<antcall target="update" />
 	</target>
 
-	<!-- Creates a new property file for configuration profile -->
-	<target name="toolkit.create-profile">
-		<!-- Create profile directory and property file if it does not exist -->
-		<touch file="${basedir}/etc/${profile}/build.properties" mkdirs="true" verbose="true" />
-	</target>
 </project>

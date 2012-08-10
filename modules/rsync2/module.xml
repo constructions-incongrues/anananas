@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="rsync2">	
 	<!-- Mandatory targets -->
-	<target name="resolve" />
+	<target name="bootstrap" />
+	<target name="update" />
 	<target name="configure" />
 	<target name="build" />
 	<target name="review" />
 	<target name="migrate" />
 	<target name="sync" depends="ssh" />
 
+	<target name="deploy-assets">
+		<echo>Deploy Rsync assets to common configuration</echo>
+		<dirname file="${ant.file.rsync}" property="toolkit.module.basedir" />
+  		<copy todir="${project.dirs.base}/etc/common">
+			<fileset dir="${toolkit.module.basedir}/assets" includes="*" />
+		</copy>
+	</target>
+	
 	<!-- Syncs your project files to a remote destination -->
-	<!-- toolkit phase : sync -->
 	<target name="ssh">
 		<!-- Sanity checks -->
 		<fail unless="remote.username" />
@@ -22,6 +30,7 @@
 		<exec executable="rsync" failonerror="true">
 			<arg line="--cvs-exclude 
               --exclude-from=${project.dirs.base}/etc/common/rsync.exclude
+              --force
               --links
 	      ${rsync.options}
               -agpvzc ${project.dirs.base}/ -e ssh ${remote.username}@${remote.host}:${remote.path.root}" />

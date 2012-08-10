@@ -2,12 +2,17 @@
 <project name="liquibase">
 
 	<!-- Mandatory targets -->
-	<target name="resolve" />
+	<target name="bootstrap" depends="create-directories" />
+	<target name="update" />
 	<target name="configure" />
 	<target name="build" />
 	<target name="review" />
 	<target name="migrate" depends="migrate.databases" />
 	<target name="sync" />
+
+	<target name="create-directories">
+		<mkdir dir="${project.dirs.base}/${liquibase.changelogs}" />
+	</target>
 
 	<!-- toolkit phase : build -->
 	<target name="migrate.databases" description="Migrates all databases">

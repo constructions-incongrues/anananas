@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="properties" default="help">
 	<!-- Mandatory targets -->
-	<target name="resolve" />
+	<target name="bootstrap" depends="update-common" />
+	<target name="resolve" depends="update-common,update-profile" />
 	<target name="configure" depends="apply" />
 	<target name="build" />
 	<target name="review" />
@@ -9,7 +10,6 @@
 	<target name="sync" />
 
 	<!-- Preprocesses -dist files -->
-	<!-- toolkit phase : configure -->
 	<target name="apply" depends="list-properties-files">
 		<property file="${toolkit.basedir}/modules/php/build.properties" />
 		<exec executable="${php.executable}" failonerror="true">
@@ -21,7 +21,7 @@
 	</target>
 
 	<!-- Updates profile build properties -->
-	<target name="init" depends="list-properties-files">
+	<target name="update-common" depends="list-properties-files">
 		<!-- Backup existing build.properties file -->
 		<copy file="${project.dirs.base}/etc/${profile}/build.properties" tofile="${project.dirs.base}/etc/${profile}/build.properties.bak" failonerror="false" />
 
@@ -37,7 +37,11 @@
 	</target>
 
 	<!-- Updates profile build properties -->
-	<target name="update" depends="list-properties-files">
+	<target name="update-profile" depends="create-profile,list-properties-files">
+		<!-- Create tree if required -->
+		<mkdir dir="${project.dirs.base}/etc/${profile}" />
+		<touch file="${project.dirs.base}/etc/${profile}/build.properties" />
+
 		<!-- Backup existing build.properties file -->
 		<copy file="${project.dirs.base}/etc/${profile}/build.properties" tofile="${project.dirs.base}/etc/${profile}/build.properties.bak" failonerror="false" />
 
@@ -50,6 +54,12 @@
 				--src=${project.dirs.src}
 				--merge-with=${project.dirs.base}/etc/${profile}/build.properties" />
 		</exec>
+	</target>
+	
+	<!-- Creates a new property file for configuration profile -->
+	<target name="create-profile">
+		<!-- Create profile directory and property file if it does not exist -->
+		<touch file="${basedir}/etc/${profile}/build.properties" mkdirs="true" verbose="true" />
 	</target>
 
 	<target name="list-properties-files">
