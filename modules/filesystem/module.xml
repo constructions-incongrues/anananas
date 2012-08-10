@@ -4,8 +4,8 @@
     <!-- Mandatory targets -->
     <target name="bootstrap" />
     <target name="update" />
-    <target name="configure" depends="create-directories,create-symlinks,set-permissions" />
-    <target name="build" />
+    <target name="configure" />
+    <target name="build" depends="create-directories,create-symlinks,set-permissions" />
     <target name="review" />
     <target name="migrate" />
     <target name="sync" />
