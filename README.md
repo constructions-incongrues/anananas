@@ -119,7 +119,7 @@ ant sync
 
 ### update
 
-Cette tâche met à jour le projet : dépendances git, Composer, etc. Elle recherche aussi les directives configurabless dans les sources et met à jour les profils de configuration.
+Cette tâche met à jour le projet : dépendances git, Composer, etc. Elle recherche aussi les directives configurables dans les sources et met à jour les profils de configuration.
 
 Pour l'invoquer : 
 
