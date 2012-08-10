@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="git">
+	<!-- Mandatory targets -->
+	<target name="bootstrap" />
+	<target name="update" depends="git.pull-master,git.update-submodules" />
+	<target name="configure" />
+	<target name="build" />
+	<target name="review" />
+	<target name="migrate" />
+	<target name="sync" />
+
+	<target name="git.pull-master" description="Pulls latest modifications from project's master branch">
+		<exec executable="git" dir="${project.dirs.base}">
+			<arg line="pull origin ${git.master}" />
+		</exec>
+	</target>
+
+	<target name="git.update-submodules" description="Recursively update project's git submodules">
+		<exec executable="git" dir="${project.dirs.base}"> 
+			<arg line="submodule update --init --recursive" />
+		</exec>
+	</target>
+</project>
