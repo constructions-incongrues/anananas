@@ -50,7 +50,7 @@ php composer.phar update
 Initialisez le toolkit : 
 
 ```bash
-ant -f vendor/constructions-incongrues/ananas-build-toolkit/modules/toolkit/module.xml toolkit.init -Dbasedir=$PWD
+ant -f vendor/constructions-incongrues/ananas-build-toolkit/modules/toolkit/module.xml init -Dbasedir=$PWD
 ```
 
 ## Utilisation
