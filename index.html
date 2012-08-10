@@ -82,9 +82,16 @@
 <div class="highlight"><pre>ant -f vendor/constructions-incongrues/ananas-build-toolkit/modules/toolkit/module.xml init -Dbasedir<span class="o">=</span><span class="nv">$PWD</span>
 </pre></div>
 
+<p>Par défaut, seul le module <code>properties</code> est activé. Vous pouvez activer plus de modules en ajoutant leur nom à la liste (séparée par des virgules) définie par la directive <code>toolkit.modules</code> dans le fichier <code>etc/build.properties</code>. Par exemple</p>
+
+<pre><code>toolkit.modules=properties,git,composer,liquibase,php
+</code></pre>
+
+<p>Modules disponibles à ce jour : <a href="https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/composer">composer</a>, filesystem, git, liquibase, php, properties, rsync, rsync2, symfony1, toolkit, toolkit-sdk.</p>
+
 <h2>Utilisation</h2>
 
-<p>Le toolkit expose sept tâches :</p>
+<p>Le toolkit expose sept tâches. L'appel d'une tâche déclenche les actions correspondantes dans chacun des modules activé.</p>
 
 <h3>boostrap</h3>
 
@@ -142,7 +149,7 @@
 
 <h3>update</h3>
 
-<p>Cette tâche met à jour le projet : dépendances git, Composer, etc. Elle recherche aussi les directives configurabless dans les sources et met à jour les profils de configuration.</p>
+<p>Cette tâche met à jour le projet : dépendances git, Composer, etc. Elle recherche aussi les directives configurables dans les sources et met à jour les profils de configuration.</p>
 
 <p>Pour l'invoquer : </p>
 
