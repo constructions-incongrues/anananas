@@ -2,7 +2,7 @@
 <project name="properties" default="help">
 	<!-- Mandatory targets -->
 	<target name="bootstrap" depends="update-common" />
-	<target name="resolve" depends="update-common,update-profile" />
+	<target name="update" depends="update-common,update-profile" />
 	<target name="configure" depends="apply" />
 	<target name="build" />
 	<target name="review" />
