@@ -20,4 +20,16 @@
 			<arg line="submodule update --init --recursive" />
 		</exec>
 	</target>
+
+        <target name="git.push" description="Push the branch your working on">
+		<exec executable="git" failonerror="true" outputproperty="git.branch">
+			<arg line="rev-parse --abbrev-ref HEAD"/>
+		</exec>
+
+                <echo>You're working on the branch "${git.branch}"</echo>
+		<echo>Push git branch "${git.branch}" to "origin"</echo>
+		<exec executable="git" failonerror="true">
+			<arg line="push origin ${git.branch}"/>
+		</exec>
+	</target>
 </project>
