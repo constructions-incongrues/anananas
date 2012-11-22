@@ -21,7 +21,7 @@
 		</exec>
 	</target>
 
-        <target name="git:push" description="Push the branch your working on">
+        <target name="git.push" description="Push the branch your working on">
 		<exec executable="git" failonerror="true" outputproperty="git.branch">
 			<arg line="rev-parse --abbrev-ref HEAD"/>
 		</exec>
