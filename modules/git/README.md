@@ -7,6 +7,7 @@ Ce module permet d'interagir avec [Git](http://git-scm.com/), le gestionnaire de
 ## Directives de configuration
 
 * **git.branch** (défaut : *master*) : Le nom de la branche utilisée par défaut
+* **git.executable** (défaut : */usr/bin/git*) : Le chemin vers l'exécutable git
 * **git.remote** (défaut : *origin*) : Le nom du remote utilisé par défaut
 
 Si besoin, surchargez les directives de configuration par défaut du module dans votre profil de configuration ou en ligne de commande.
