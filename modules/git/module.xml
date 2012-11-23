@@ -2,34 +2,34 @@
 <project name="git">
 	<!-- Mandatory targets -->
 	<target name="bootstrap" />
-	<target name="update" depends="git.pull-master,git.update-submodules" />
+	<target name="update" depends="git.pull,git.update-submodules" />
 	<target name="configure" />
 	<target name="build" />
 	<target name="review" />
 	<target name="migrate" />
 	<target name="sync" />
 
-	<target name="git.pull-master" description="Pulls latest modifications from project's master branch">
+	<target name="git.pull" description="Pulls latest modifications from remote">
 		<exec executable="git" dir="${project.dirs.base}">
-			<arg line="pull origin ${git.master}" />
+			<arg line="pull ${git.remote} ${git.branch}" />
 		</exec>
 	</target>
 
-	<target name="git.update-submodules" description="Recursively update project's git submodules">
+	<target name="git.update-submodules" description="Recursively updates project's git submodules">
 		<exec executable="git" dir="${project.dirs.base}"> 
 			<arg line="submodule update --init --recursive" />
 		</exec>
 	</target>
 
-		<target name="git.push" description="Push the branch your working on">
-		<exec executable="git" failonerror="true" outputproperty="git.branch">
+	<target name="git.push" description="Pushes the branch your working on to the same branch on remote">
+		<exec executable="${git.executable}" failonerror="true" outputproperty="currentBranch">
 			<arg line="rev-parse --abbrev-ref HEAD"/>
 		</exec>
 
-		<echo>You're working on the branch "${git.branch}"</echo>
-		<echo>Push git branch "${git.branch}" to "origin"</echo>
+		<echo>You're working on the branch "${currentBranch}"</echo>
+		<echo>Push git branch "${currentBranch}" to "${git.origin}"</echo>
 		<exec executable="git" failonerror="true">
-			<arg line="push origin ${git.branch}"/>
+			<arg line="push ${git.remote} ${currentBranch}"/>
 		</exec>
 	</target>
 </project>
