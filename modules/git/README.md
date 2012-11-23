@@ -17,6 +17,10 @@ Si besoin, surchargez les directives de configuration par défaut du module dans
 
 Pull la branche **git.branch** depuis le remote **git.remote**
 
+### git.pull-request
+
+TODO
+
 ### git.push
 
 Push la branche courante vers une branche du même nom sur le remote **git.remote**
@@ -24,3 +28,5 @@ Push la branche courante vers une branche du même nom sur le remote **git.remot
 ### git.update-submodules
 
 Initialise et met à jour les sous-modules de manière récursive
+
+

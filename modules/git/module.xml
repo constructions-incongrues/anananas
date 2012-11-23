@@ -9,45 +9,47 @@
 	<target name="migrate" />
 	<target name="sync" />
 
-	<target name="git.pull" description="Pulls latest modifications from remote">
-		<exec executable="${git.executable}" dir="${project.dirs.base}">
-			<arg line="pull ${git.remote} ${git.branch}" />
+	<!-- Pulls latest modifications from remote -->
+	<target name="git.pull">
+		<exec executable="${git.executables.git}" dir="${project.dirs.base}">
+			<arg line="pull ${git.remotes.origin} ${git.branches.master}" />
 		</exec>
 	</target>
 
-	<target name="git.update-submodules" description="Recursively updates project's git submodules">
-		<exec executable="${git.executable}" dir="${project.dirs.base}"> 
+	<!-- Recursively updates project's git submodules -->
+	<target name="git.update-submodules">
+		<exec executable="${git.executables.git}" dir="${project.dirs.base}"> 
 			<arg line="submodule update --init --recursive" />
 		</exec>
 	</target>
 
-	<target name="git.push" description="Pushes the branch your working on to the same branch on remote">
-		<exec executable="${git.executable}" failonerror="true" outputproperty="currentBranch">
+	<!-- Pushes the branch your working on to the same branch on remote -->
+	<target name="git.push">
+		<exec executable="${git.executables.git}" failonerror="true" outputproperty="git.branches.current">
 			<arg line="rev-parse --abbrev-ref HEAD"/>
 		</exec>
 
-		<echo>You're working on the branch "${currentBranch}"</echo>
-		<echo>Push git branch "${currentBranch}" to "${git.origin}"</echo>
-		<exec executable="${git.executable}" failonerror="true">
-			<arg line="push ${git.remote} ${currentBranch}"/>
+		<echo>You're working on the branch "${git.branches.current}"</echo>
+		<echo>Push git branch "${git.branches.current}" to "${git.origin}"</echo>
+		<exec executable="${git.executables.git}" failonerror="true">
+			<arg line="push ${git.remotes.origin} ${git.branches.current}" />
 		</exec>
 	</target>
 
-	<target name="hub.pull-request" description="create a pull-request for the branch you're working on">
-		<input message="message of the pull request" addproperty="pull-request.message" />
-		<input message="branch base" addproperty="branch.base" />
-		<input message="github username" addproperty="github.username" />
-		<input message="github password" addproperty="github.password" />
-		<exec executable="git" failonerror="true" outputproperty="git.branch">
+	<!-- Creates a pull-request for the branch you're working on -->
+	<!-- TODO : create a dedicated "github" module ? -->
+	<!-- TODO : create a github.auth task ? -->
+	<target name="git.pull-request">
+	 	<input message="Please specify the title of this pull request" addproperty="git.github.pullRequestTitle" />
+
+		<exec executable="${git.executables.git}" failonerror="true" outputproperty="git.branches.current">
 			<arg line="rev-parse --abbrev-ref HEAD"/>
 		</exec>
 
-		<echo>You're working on the branch "${git.branch}"</echo>
-		<echo>Create a pull request for the branch "${git.branch}" to "release/next"</echo>
-		<exec executable="hub" failonerror="true">
-			<env key="GITHUB_USERNAME" value="${github.username}"/>
-			<env key="GITHUB_PASSWORD" value="${github.password}"/>
-			<arg line='pull-request ${pull-request.message} -b ${branch.base} -h ${git.branch}'/>
+		<echo>You're working on the branch "${git.branches.current}"</echo>
+		<echo>Create a pull request for the branch "${git.branches.current}" to "${git.branches.integration}"</echo>
+		<exec executable="${git.executables.hub}" failonerror="true">
+			<arg line='pull-request "${git.github.pullRequestTitle}" -b ${git.branches.integration} -h ${git.github.organization}:${git.branches.current}'/>
 		</exec>
 	</target>
 </project>
