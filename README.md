@@ -59,7 +59,7 @@ Par défaut, seul le module ```properties``` est activé. Vous pouvez activer pl
 toolkit.modules=properties,git,composer,liquibase,php
 ```
 
-Modules disponibles à ce jour : [composer](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/composer), filesystem, git, liquibase, php, properties, rsync, rsync2, symfony1, toolkit, toolkit-sdk.
+Modules disponibles à ce jour : [composer](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/composer), filesystem, [git](https://github.com/constructions-incongrues/ananas-build-toolkit/tree/master/modules/git), liquibase, php, properties, rsync, rsync2, symfony1, toolkit, toolkit-sdk.
 
 ## Utilisation
 
