@@ -10,13 +10,13 @@
 	<target name="sync" />
 
 	<target name="git.pull" description="Pulls latest modifications from remote">
-		<exec executable="git" dir="${project.dirs.base}">
+		<exec executable="${git.executable}" dir="${project.dirs.base}">
 			<arg line="pull ${git.remote} ${git.branch}" />
 		</exec>
 	</target>
 
 	<target name="git.update-submodules" description="Recursively updates project's git submodules">
-		<exec executable="git" dir="${project.dirs.base}"> 
+		<exec executable="${git.executable}" dir="${project.dirs.base}"> 
 			<arg line="submodule update --init --recursive" />
 		</exec>
 	</target>
@@ -28,7 +28,7 @@
 
 		<echo>You're working on the branch "${currentBranch}"</echo>
 		<echo>Push git branch "${currentBranch}" to "${git.origin}"</echo>
-		<exec executable="git" failonerror="true">
+		<exec executable="${git.executable}" failonerror="true">
 			<arg line="push ${git.remote} ${currentBranch}"/>
 		</exec>
 	</target>
