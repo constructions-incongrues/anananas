@@ -33,20 +33,20 @@
 		</exec>
 	</target>
 
-        <target name="hub.pull-request" description="create a pull-request for the branch you're working on">
-                <input message="message of the pull request" addproperty="pull-request.message" />
-                <input message="branch base" addproperty="branch.base" />
-                <input message="github username" addproperty="github.username" />
-                <input message="github password" addproperty="github.password" />
+	<target name="hub.pull-request" description="create a pull-request for the branch you're working on">
+		<input message="message of the pull request" addproperty="pull-request.message" />
+		<input message="branch base" addproperty="branch.base" />
+		<input message="github username" addproperty="github.username" />
+		<input message="github password" addproperty="github.password" />
 		<exec executable="git" failonerror="true" outputproperty="git.branch">
 			<arg line="rev-parse --abbrev-ref HEAD"/>
 		</exec>
 
-                <echo>You're working on the branch "${git.branch}"</echo>
+		<echo>You're working on the branch "${git.branch}"</echo>
 		<echo>Create a pull request for the branch "${git.branch}" to "release/next"</echo>
 		<exec executable="hub" failonerror="true">
-                        <env key="GITHUB_USERNAME" value="${github.username}"/>
-                        <env key="GITHUB_PASSWORD" value="${github.password}"/>
+			<env key="GITHUB_USERNAME" value="${github.username}"/>
+			<env key="GITHUB_PASSWORD" value="${github.password}"/>
 			<arg line='pull-request ${pull-request.message} -b ${branch.base} -h ${git.branch}'/>
 		</exec>
 	</target>
