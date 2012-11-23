@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="github">
+	<!-- Mandatory targets -->
+	<target name="bootstrap" />
+	<target name="update" />
+	<target name="configure" />
+	<target name="build" />
+	<target name="review" />
+	<target name="migrate" />
+	<target name="sync" />
+
+	<!-- Creates a pull-request for the branch you're working on -->
+	<!-- TODO : create a github.auth task ? -->
+	<target name="github.pull-request">
+		<property file="${toolkit.basedir}/modules/git/build.properties" />
+
+	 	<input message="Please specify the title of this pull request" addproperty="github.pullRequestTitle" />
+
+		<exec executable="${git.executables.git}" failonerror="true" outputproperty="github.branches.current">
+			<arg line="rev-parse --abbrev-ref HEAD"/>
+		</exec>
+
+		<echo>You're working on the branch "${github.branches.current}"</echo>
+		<echo>Create a pull request for the branch "${github.branches.current}" to "${git.branches.integration}"</echo>
+		<exec executable="${github.executables.hub}" failonerror="true">
+			<arg line='pull-request "${github.pullRequestTitle}" -b ${git.branches.integration} -h ${github.organization}:${github.branches.current}'/>
+		</exec>
+	</target>
+</project>

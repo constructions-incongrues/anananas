@@ -35,21 +35,4 @@
 			<arg line="push ${git.remotes.origin} ${git.branches.current}" />
 		</exec>
 	</target>
-
-	<!-- Creates a pull-request for the branch you're working on -->
-	<!-- TODO : create a dedicated "github" module ? -->
-	<!-- TODO : create a github.auth task ? -->
-	<target name="git.pull-request">
-	 	<input message="Please specify the title of this pull request" addproperty="git.github.pullRequestTitle" />
-
-		<exec executable="${git.executables.git}" failonerror="true" outputproperty="git.branches.current">
-			<arg line="rev-parse --abbrev-ref HEAD"/>
-		</exec>
-
-		<echo>You're working on the branch "${git.branches.current}"</echo>
-		<echo>Create a pull request for the branch "${git.branches.current}" to "${git.branches.integration}"</echo>
-		<exec executable="${git.executables.hub}" failonerror="true">
-			<arg line='pull-request "${git.github.pullRequestTitle}" -b ${git.branches.integration} -h ${git.github.organization}:${git.branches.current}'/>
-		</exec>
-	</target>
 </project>
