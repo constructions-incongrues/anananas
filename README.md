@@ -41,10 +41,10 @@ Installez Composer :
 curl -s http://getcomposer.org/installer | php
 ```
 
-Récupérez le toolkit : 
+Récupérez le toolkit et ses dépendances : 
 
 ```bash
-php composer.phar update
+php composer.phar install
 ```
 
 Initialisez le toolkit : 
@@ -53,7 +53,7 @@ Initialisez le toolkit :
 ant -f vendor/constructions-incongrues/ananas-build-toolkit/modules/toolkit/module.xml init -Dbasedir=$PWD
 ```
 
-Par défaut, seul le module ```properties``` est activé. Vous pouvez activer plus de modules en ajoutant leur nom à la liste (séparée par des virgules) définie par la directive ```toolkit.modules``` dans le fichier ```etc/build.properties```. Par exemple
+Par défaut, seul le module ```properties``` est activé. Vous pouvez activer plus de modules en ajoutant leur nom à la liste (séparée par des virgules) définie par la directive ```toolkit.modules``` dans le fichier ```etc/common/build.properties```. Par exemple
 
 ```
 toolkit.modules=properties,git,composer,liquibase,php
