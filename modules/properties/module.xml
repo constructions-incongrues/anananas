@@ -20,7 +20,7 @@
 		</exec>
 	</target>
 
-	<!-- Updates profile build properties -->
+	<!-- Updates common build properties -->
 	<target name="update-common" depends="list-properties-files">
 		<!-- Backup existing build.properties file -->
 		<copy file="${project.dirs.base}/etc/${profile}/build.properties" tofile="${project.dirs.base}/etc/${profile}/build.properties.bak" failonerror="false" />
@@ -45,7 +45,7 @@
 		<!-- Backup existing build.properties file -->
 		<copy file="${project.dirs.base}/etc/${profile}/build.properties" tofile="${project.dirs.base}/etc/${profile}/build.properties.bak" failonerror="false" />
 
-		<!-- Generate common build.properties file from project sources -->
+		<!-- Generate profile build.properties file from project sources -->
 		<property file="${toolkit.basedir}/modules/php/build.properties" />
 		<exec executable="${php.executable}" output="${project.dirs.base}/etc/${profile}/build.properties" logError="true" failonerror="true">
 			<arg line="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor 
