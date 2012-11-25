@@ -41,10 +41,10 @@ Installez Composer :
 curl -s http://getcomposer.org/installer | php
 ```
 
-Récupérez le toolkit : 
+Récupérez le toolkit et ses dépendances : 
 
 ```bash
-php composer.phar update
+php composer.phar install
 ```
 
 Initialisez le toolkit : 
