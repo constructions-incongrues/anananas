@@ -39,6 +39,7 @@ class PHPreprocessor
                 $errorReporting = error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
                 $tokensExcluded = parse_ini_file($file, false, INI_SCANNER_RAW);
                 error_reporting($errorReporting);
+                $tokens = array_merge($tokensExcluded, $tokens);
                 foreach ($tokensExcluded as $tokenName => $tokenValue) {
                     if (!empty($tokensExcluded[$tokenName])) {
                         unset($tokens[$tokenName]);
