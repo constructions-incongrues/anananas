@@ -28,7 +28,7 @@
 		<echo>rsync additional options : ${rsync.options}</echo> 
 		
 		<exec executable="rsync" failonerror="true">
-			<arg line="--cvs-exclude 
+			<arg line="
               --exclude-from=${project.dirs.base}/etc/common/rsync.exclude
               --force
               --links
