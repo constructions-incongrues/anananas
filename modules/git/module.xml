@@ -27,7 +27,7 @@
 		</exec>
 
 		<echo>You're working on the branch "${currentBranch}"</echo>
-		<echo>Push git branch "${currentBranch}" to "${git.origin}"</echo>
+		<echo>Push git branch "${currentBranch}" to "${git.remote}"</echo>
 		<exec executable="${git.executable}" failonerror="true">
 			<arg line="push ${git.remote} ${currentBranch}"/>
 		</exec>
