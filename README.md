@@ -53,6 +53,8 @@ Initialisez le toolkit :
 ant -f vendor/constructions-incongrues/ananas-build-toolkit/modules/toolkit/module.xml init -Dbasedir=$PWD
 ```
 
+Par ailleurs, vous devez définir la variable d'environnement ``` ABT_USER ``` si vous ne vous pas avoir à définir le profile utilisé ``` -Dprofile=identifiant``` à chaque appel ```ant```.
+
 Par défaut, seul le module ```properties``` est activé. Vous pouvez activer plus de modules en ajoutant leur nom à la liste (séparée par des virgules) définie par la directive ```toolkit.modules``` dans le fichier ```etc/common/build.properties```. Par exemple
 
 ```
