@@ -50,9 +50,9 @@
 
 	<target name="create-symlink">
 	    <if>
-		<available file="${symlink.current.target}"/>
+		<available file="${symlink.current.name}"/>
         	<then>
-	            <echo>le lien ${symlink.current.target} existe déjà.</echo>
+	            <echo>le lien ${symlink.current.name} existe déjà.</echo>
 	        </then>
 		<else>
 	            <exec executable="ln" failonerror="false" dir="${project.dirs.base}">
