@@ -49,19 +49,19 @@
 	</target>
 
 	<target name="create-symlink">
-	    <if>
-		<available file="${symlink.current.name}"/>
-        	<then>
-	            <echo>le lien ${symlink.current.name} existe déjà.</echo>
-	        </then>
-		<else>
-	            <exec executable="ln" failonerror="false" dir="${project.dirs.base}">
-        	        <arg value="-sfv" />
-	                <arg value="${symlink.current.target}" />
-        	        <arg value="${symlink.current.name}" />
-	            </exec>
-		</else>
-	    </if>
+		<if>
+			<available file="${symlink.current.name}"/>
+			<then>
+				<echo>le lien ${symlink.current.name} existe déjà.</echo>
+			</then>
+			<else>
+				<exec executable="ln" failonerror="false" dir="${project.dirs.base}">
+					<arg value="-sfv" />
+					<arg value="${symlink.current.target}" />
+					<arg value="${symlink.current.name}" />
+				</exec>
+			</else>
+		</if>
 	</target>
 
 	<target name="set-permissions">
