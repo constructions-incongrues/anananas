@@ -28,7 +28,7 @@
 		<!-- Primary rsync destination -->
 		<echo>Rsyncing to primary destination ${remote.username}@${remote.host}:${remote.path.root}</echo>
 		<echo>rsync additional options : ${rsync.options}</echo> 
-		<exec executable="rsync" failonerror="false">
+		<exec executable="rsync" failonerror="true">
 			<arg line="
               --exclude-from=${project.dirs.base}/etc/common/rsync.exclude
               --force
@@ -64,7 +64,7 @@
 	<target name="rsync.do">
 		<echo>Rsyncing to secondary destination ${remote.current.username}@${remote.current.host}:${remote.current.path.root}</echo>
 		<echo>rsync additional options : ${rsync.options}</echo> 
-		<exec executable="rsync" failonerror="false">
+		<exec executable="rsync" failonerror="true">
 			<arg line="
               --exclude-from=${project.dirs.base}/etc/common/rsync.exclude
               --force
