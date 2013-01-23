@@ -26,10 +26,20 @@
 
 		<echo>Rsyncing to ${remote.username}@${remote.host}:${remote.path.root}</echo>
 		<echo>rsync additional options : ${rsync.options}</echo> 
-		
+
+        <if>
+            <available file="${project.dirs.base}/etc/common/rsync.include"/>
+            <then>
+                <property name="rsync.include" location="${project.dirs.base}/etc/common/rsync.include"/>
+            </then>
+            <else>
+                <property name="rsync.include" value=""/>
+            </else>
+        </if>        
 		<exec executable="rsync" failonerror="true">
 			<arg line="
               --exclude-from=${project.dirs.base}/etc/common/rsync.exclude
+              ${rsync.include}
               --force
               --links
 	      ${rsync.options}
