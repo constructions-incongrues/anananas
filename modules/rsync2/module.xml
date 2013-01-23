@@ -28,15 +28,15 @@
 		<!-- Primary rsync destination -->
 		<echo>Rsyncing to primary destination ${remote.username}@${remote.host}:${remote.path.root}</echo>
 		<echo>rsync additional options : ${rsync.options}</echo> 
-                <if>
-                    <available file="${project.dirs.base}/etc/common/rsync.include"/>
-                    <then>
-                        <property name="rsync.include" location="${project.dirs.base}/etc/common/rsync.include"/>
-                    </then>
-                    <else>
-                        <property name="rsync.include" value=""/>
-                    </else>
-                </if>
+            <if>
+                <available file="${project.dirs.base}/etc/common/rsync.include"/>
+                <then>
+                    <property name="rsync.include" location="${project.dirs.base}/etc/common/rsync.include"/>
+                </then>
+                <else>
+                    <property name="rsync.include" value=""/>
+                </else>
+            </if>
 
 		<exec executable="rsync" failonerror="true">
 			<arg line="
