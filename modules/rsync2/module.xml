@@ -68,8 +68,7 @@
         <if>
             <available file="${project.dirs.base}/etc/common/rsync.include"/>
             <then>
-                <property name="rsync.include" location="${project.dirs.base}/etc/common/rsync.include"/>
-                <property name="rsync.include" value="--include-from ${rsync.include}"/>
+                <property name="rsync.include" value="--include-from=${project.dirs.base}/etc/common/rsync.include"/>
             </then>
             <else>
                 <property name="rsync.include" value=""/>
