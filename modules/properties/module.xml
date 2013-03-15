@@ -15,7 +15,7 @@
 		<exec executable="${php.executable}" failonerror="true">
 			<arg line="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor
 				--command=apply
-             	--src=${project.dirs.src}
+             	--src=${project.dirs.base}
              	--properties=${properties.files},${project.dirs.base}/etc/common/build.properties,${project.dirs.base}/etc/${profile}/build.properties" />
 		</exec>
 	</target>
@@ -31,7 +31,7 @@
 			<arg line="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor 
 				--command=extract 
 				--exclude-from=${properties.files}
-				--src=${project.dirs.src}
+				--src=${project.dirs.base}
 				--merge-with=${project.dirs.base}/etc/common/build.properties" />
 		</exec>
 	</target>
@@ -51,7 +51,7 @@
 			<arg line="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor 
 				--command=extract 
 				--exclude-from=${properties.files},${project.dirs.base}/etc/common/build.properties
-				--src=${project.dirs.src}
+				--src=${project.dirs.base}
 				--merge-with=${project.dirs.base}/etc/${profile}/build.properties" />
 		</exec>
 	</target>
