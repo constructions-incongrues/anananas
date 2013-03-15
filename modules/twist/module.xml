@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="twist" default="help">
+	<!-- Mandatory targets -->
+	<target name="bootstrap" />
+	<target name="update" />
+	<target name="configure" />
+	<target name="build" />
+	<target name="review" />
+	<target name="migrate" />
+	<target name="sync" />
+
+	<!-- Module targets -->
+	<!-- Properties for location of classes, location of project and so on -->
+	<property name="twist.lib.export.dir" value="${toolkit.basedir}/modules/twist/vendor" description="The location where Twist libraries were exported" />
+	<property name="twist.project.dir" value="${project.dirs.base}/tests/twist" description="twist project folder" />
+	<property name="scenarios.output.classes" value="${twist.project.dir}/bin" description="the output folder where the fixtures are compiled" />
+	<property name="scenarios.source.dir" value="${twist.project.dir}/src" description="the source folder where the fixtures are present" />
+
+	<property name="twist.reports.output.dir" value="${twist.project.dir}/twist-reports" description="Twist html reports will be generated here" />
+	<property name="twist.export.output.dir" value="${twist.project.dir}/export" description="Twist scenarios exported to this location"/>
+	<property name="twist.config.dir" value="${twist.project.dir}/twist-conf" description="configuration folder for Twist, this should be located in the project directory" />
+	<property name="twist.lib.dir" value="${twist.lib.export.dir}/twist-libs" description="the location of the Twist libs within the exported directory" />
+
+	<!-- Path definicaitons -->
+	<path id="fixtures.classes" description="output folder where the sources for fixtures are compiled">
+		<dirset dir="${scenarios.output.classes}" />
+	</path>
+
+	<path id="twist.libs">
+		<fileset dir="${twist.lib.dir}" includes="*.jar" description="include all jars" />
+		<dirset dir="${twist.lib.dir}" includes="*" description="include all class folders, etc" />
+	</path>
+
+	<target name="build-source" description="Build twist test sources">
+		<javac debug="true" destdir="${scenarios.output.classes}">
+			<src path="${scenarios.source.dir}" />
+			<classpath refid="twist.libs" />
+		</javac>
+	</target>
+
+	<target name="execute-scenarios" depends="build-source" description="Executes scenarios">
+
+		<!-- UGLY WORKAROUND : can't find a way to tell sahi where to look for the userdata directory -->
+		<symlink link="${project.dirs.base}/sahi" resource="${twist.project.dir}/sahi" failonerror="true" />
+
+		<path id="scenarios.classpath">
+			<path refid="twist.libs" />
+			<path refid="fixtures.classes" />
+		</path>
+
+		<delete dir="${twist.reports.output.dir}" description="delete old reports" />
+		<mkdir dir="${twist.reports.output.dir}/html" description="create html reports dir" />
+
+		<taskdef classname="com.thoughtworks.twist.core.execution.ant.ExecuteScenariosTask"
+                 classpathref="scenarios.classpath"
+                 name="twist.runner"
+                 description="the Twist ant task" />
+
+		<twist.runner scenarioDir="${twist.project.dir}/scenarios"
+                      reportsDir="${twist.reports.output.dir}"
+                      confDir="${twist.config.dir}"
+                      failureproperty="twist.scenarios.failed"
+                      classpathref="scenarios.classpath"
+                      tags="!in-progress" threads="1" savedFilters=""/>
+
+		<symlink action="delete" link="${project.dirs.base}/sahi" />
+
+		<fail if="twist.scenarios.failed"
+              message="One or more scenarios for failed" />
+	</target>
+	
+	<target name="export-scenarios" depends="build-source" description="Export scenarios">
+
+		<path id="scenarios.classpath">
+			<path refid="twist.libs" />
+			<path refid="fixtures.classes" />
+		</path>
+
+		<delete dir="${twist.export.output.dir}"
+                description="delete old exports" />
+		<mkdir dir="${twist.export.output.dir}"
+               description="create export dir" />
+
+		<taskdef classname="com.thoughtworks.twist.core.execution.ant.ExportScenariosTask"
+                 classpathref="scenarios.classpath"
+                 name="twist.runner"
+                 description="the Twist ant task" />
+
+		<twist.runner scenarioDir="${twist.project.dir}/scenarios"
+			          exportDir="${twist.export.output.dir}" 
+			          classpathref="scenarios.classpath"/>
+
+		<fail if="twist.scenarios.failed"
+              message="One or more scenarios for failed" />
+	</target>	
+</project>
