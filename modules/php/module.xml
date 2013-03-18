@@ -111,11 +111,11 @@
     <!-- Generates a browsable view of review warnings -->
     <target name="review.browse">
         <antcall target="review.phpcb" />
-        <exec executable="${php.review.phpcb.browser}" os="Linux">
+        <exec executable="${toolkit.browser.bin}" os="Linux">
             <arg line="${php.review.build.url}/code-browser/index.html ${php.review.build.url}/phrocco" />
         </exec>
         <exec executable="open" os="Mac OS X">
-            <arg line="-a ${php.review.phpcb.browser} ${php.review.build.url}/code-browser/index.html ${php.review.build.url}/phrocco" />
+            <arg line="-a ${toolkit.browser.bin} ${php.review.build.url}/code-browser/index.html ${php.review.build.url}/phrocco" />
        </exec>
     </target>
 
