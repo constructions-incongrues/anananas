@@ -66,12 +66,13 @@
                  name="twist.runner"
                  description="the Twist ant task" />
 
+		<property name="twist.scenarios.tags" value="!in-progress" />
 		<twist.runner scenarioDir="${twist.project.dir}/scenarios"
                       reportsDir="${twist.reports.output.dir}"
                       confDir="${twist.config.dir}"
                       failureproperty="twist.scenarios.failed"
                       classpathref="scenarios.classpath"
-                      tags="!in-progress" threads="1" savedFilters=""/>
+                      tags="${twist.scenarios.tags}" threads="1" savedFilters=""/>
 
 		<delete dir="${project.dirs.base}/sahi" />
 
