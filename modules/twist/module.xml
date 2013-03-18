@@ -5,7 +5,7 @@
 	<target name="update" />
 	<target name="configure" />
 	<target name="build" />
-	<target name="review" />
+	<target name="review" depends="execute-scenarios" />
 	<target name="migrate" />
 	<target name="sync" />
 
@@ -38,10 +38,20 @@
 		</javac>
 	</target>
 
-	<target name="execute-scenarios" depends="build-source" description="Executes scenarios">
+	<target name="copy-configuration" description="Copies configuration files to bin directory">
+		<copy file="${scenarios.source.dir}/applicationContext-scenario.xml" todir="${scenarios.output.classes}/" />
+		<copy file="${scenarios.source.dir}/applicationContext-suite.xml" todir="${scenarios.output.classes}/" />
+		<copy file="${scenarios.source.dir}/custom.properties" todir="${scenarios.output.classes}/" />
+		<copy file="${scenarios.source.dir}/log4j.properties" todir="${scenarios.output.classes}/" />
+		<copy file="${scenarios.source.dir}/twist.properties" todir="${scenarios.output.classes}/" />
+	</target>
+
+	<target name="execute-scenarios" depends="build-source, copy-configuration" description="Executes scenarios">
 
 		<!-- UGLY WORKAROUND : can't find a way to tell sahi where to look for the userdata directory -->
-		<symlink link="${project.dirs.base}/sahi" resource="${twist.project.dir}/sahi" failonerror="true" />
+		<copy todir="${project.dirs.base}/sahi">
+			<fileset dir="${twist.project.dir}/sahi"/>
+		</copy>
 
 		<path id="scenarios.classpath">
 			<path refid="twist.libs" />
@@ -63,7 +73,7 @@
                       classpathref="scenarios.classpath"
                       tags="!in-progress" threads="1" savedFilters=""/>
 
-		<symlink action="delete" link="${project.dirs.base}/sahi" />
+		<delete dir="${project.dirs.base}/sahi" />
 
 		<fail if="twist.scenarios.failed"
               message="One or more scenarios for failed" />
@@ -92,5 +102,11 @@
 
 		<fail if="twist.scenarios.failed"
               message="One or more scenarios for failed" />
-	</target>	
+	</target>
+
+	<target name="browse" description="Browse tests results using web browser">
+		<exec executable="${toolkit.browser.bin}">
+			<arg line="${twist.reports.output.dir}/html/index.html" />
+		</exec>
+	</target>
 </project>
