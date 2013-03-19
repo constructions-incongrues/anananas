@@ -97,7 +97,7 @@ class PHPreprocessor
         }
 
         // Perform replacements
-        $this->_replaceTokens($copied_files, '@', '@', $tokens);
+        $this->_replaceTokens($copied_files, '@', '@', $tokens, $options['reverse']);
     }
 
     /**
@@ -188,10 +188,11 @@ class PHPreprocessor
      * @param string $beginToken The begin token delimiter
      * @param string $endToken   The end token delimiter
      * @param array  $tokens     An array of token/value pairs
+     * @param bool   $reverse
      *
      * @return null
      */
-    private function _replaceTokens($files, $beginToken, $endToken, $tokens)
+    private function _replaceTokens($files, $beginToken, $endToken, $tokens, $reverse = false)
     {
         if (!is_array($files)) {
             $files = array($files);
@@ -200,13 +201,22 @@ class PHPreprocessor
         foreach ($files as $file) {
             $content = file_get_contents($file);
             foreach ($tokens as $key => $value) {
-                $content = str_replace($beginToken.$key.$endToken, $value, $content, $count);
+                if ($reverse === false) {
+                    $content = str_replace($beginToken.$key.$endToken, $value, $content);
+                } else {
+                    if (filter_var($key, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $reverse)))) {
+                        $content = str_replace($value, $beginToken.$key.$endToken, $content);
+                    }
+                }
             }
-
             file_put_contents($file, $content);
         }
 
-        $this->_logMessage('Replaced %d tokens in %d files', array(count($tokens), count($files)));
+        $feedbackReverse = '';
+        if ($reverse) {
+            $feedbackReverse = ' in reverse mode';
+        }
+        $this->_logMessage('Replaced %d tokens in %d files%s', array(count($tokens), count($files), $feedbackReverse));
     }
 
     private function _logMessage($messagePattern, array $values = array())

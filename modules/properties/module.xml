@@ -20,6 +20,17 @@
 		</exec>
 	</target>
 
+	<target name="apply-reverse" depends="list-properties-files" description="Replaces values by profile directives names in -dist files">
+		<property file="${toolkit.basedir}/modules/php/build.properties" />
+		<exec executable="${php.executable}" failonerror="true">
+			<arg line="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor
+				--command=apply
+				--reverse=/^.+\.(url|path)\..+$/
+             	--src=${project.dirs.base}
+             	--properties=${properties.files},${project.dirs.base}/etc/common/build.properties,${project.dirs.base}/etc/${profile}/build.properties" />
+		</exec>
+	</target>
+
 	<!-- Updates common build properties -->
 	<target name="update-common" depends="list-properties-files">
 		<!-- Backup existing build.properties file -->
@@ -55,7 +66,7 @@
 				--merge-with=${project.dirs.base}/etc/${profile}/build.properties" />
 		</exec>
 	</target>
-	
+
 	<!-- Creates a new property file for configuration profile -->
 	<target name="create-profile">
 		<!-- Create profile directory and property file if it does not exist -->
