@@ -46,7 +46,7 @@
 		<copy file="${scenarios.source.dir}/twist.properties" todir="${scenarios.output.classes}/" />
 	</target>
 
-	<target name="execute-scenarios" depends="build-source, copy-configuration" description="Executes scenarios">
+	<target name="execute-scenarios" depends="guess-tags, build-source, copy-configuration" description="Executes scenarios">
 
 		<!-- UGLY WORKAROUND : can't find a way to tell sahi where to look for the userdata directory -->
 		<copy todir="${project.dirs.base}/sahi">
@@ -72,7 +72,7 @@
                       confDir="${twist.config.dir}"
                       failureproperty="twist.scenarios.failed"
                       classpathref="scenarios.classpath"
-                      tags="${twist.scenarios.tags}" threads="1" savedFilters=""/>
+                      tags="${twist.scenarios.tags}" threads="${twist.threads}" savedFilters=""/>
 
 		<delete dir="${project.dirs.base}/sahi" />
 
@@ -80,6 +80,12 @@
               message="One or more scenarios for failed" />
 	</target>
 	
+	<target name="guess-tags" if="toolkit.modules.git">
+		<exec executable="${git.executable}" outputproperty="twist.scenarios.tags">
+			<arg line="rev-parse --abbrev-ref HEAD" />
+		</exec>
+	</target>
+
 	<target name="export-scenarios" depends="build-source" description="Export scenarios">
 
 		<path id="scenarios.classpath">
