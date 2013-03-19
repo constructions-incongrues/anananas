@@ -13,13 +13,6 @@ for (var i = 0; i < modules.length; i++) {
 	modulesPaths.push('vendor/constructions-incongrues/ananas-build-toolkit/modules/'+modules[i]+'/module.xml');
 }
 
-// TMP Generate paths for native modules (for BC)
-// TODELETE
-var modules = attributes.get('native').split(',');
-for (var i = 0; i < modules.length; i++) {
-    modulesPaths.push('vendor/ananas-build-toolkit/modules/'+modules[i]+'/module.xml');
-}
-
 // Generate paths for external modules
 var modules = attributes.get('external').split(',');
 for (var i = 0; i < modules.length; i++) {

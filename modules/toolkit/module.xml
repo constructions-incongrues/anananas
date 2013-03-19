@@ -38,6 +38,7 @@
 			<echo>Importing module : @{module}</echo>
 			<import file="${toolkit.basedir}/modules/@{module}/module.xml" />
 			<property file="${toolkit.basedir}/modules/@{module}/build.properties" />
+			<property name="toolkit.modules.@{module}" value="true" />
 		</sequential>
 	</for>
 
