@@ -32,4 +32,10 @@
 			<arg line="push ${git.remote} ${currentBranch}"/>
 		</exec>
 	</target>
+
+	<target name="git.set-current-branch">
+		<exec executable="${git.executable}" outputproperty="git.current-branch">
+			<arg line="rev-parse --abbrev-ref HEAD" />
+		</exec>
+	</target>
 </project>
