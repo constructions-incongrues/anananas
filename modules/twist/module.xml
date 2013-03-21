@@ -79,10 +79,6 @@
 		<fail if="twist.scenarios.failed"
               message="One or more scenarios for failed" />
 	</target>
-	
-	<target name="guess-tags" if="toolkit.modules.git" depends="git.set-current-branch">
-		<property name="twist.scenarios.tags" value="${git.current-branch}" />
-	</target>
 
 	<target name="export-scenarios" depends="build-source" description="Export scenarios">
 
