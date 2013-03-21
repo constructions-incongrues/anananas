@@ -46,7 +46,7 @@
 		<copy file="${scenarios.source.dir}/twist.properties" todir="${scenarios.output.classes}/" />
 	</target>
 
-	<target name="execute-scenarios" depends="guess-tags, build-source, copy-configuration" description="Executes scenarios">
+	<target name="execute-scenarios" depends="build-source, copy-configuration" description="Executes scenarios">
 
 		<!-- UGLY WORKAROUND : can't find a way to tell sahi where to look for the userdata directory -->
 		<copy todir="${project.dirs.base}/sahi">
