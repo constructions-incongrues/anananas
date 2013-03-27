@@ -30,7 +30,7 @@
 	<property file="${toolkit.basedir}/modules/toolkit/build.properties" />
 
 	<!-- Import helpers -->
-	<import file="${toolkit.basedir}/modules/toolkit/helpers.xml" />
+	<import file="${toolkit.basedir}/modules/toolkit/lib.xml" />
 
 	<!-- Load modules -->
 	<for list="${toolkit.modules}" param="module">
