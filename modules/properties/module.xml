@@ -12,7 +12,7 @@
 	<!-- Preprocesses -dist files -->
 	<target name="apply">
 		<property file="${toolkit.basedir}/modules/php/build.properties" />
-		<exec executable="${php.executable}" failonerror="true">
+		<exec executable="${php.executable}" failonerror="true" dir="${project.dirs.base}">
 			<arg line="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor
 				--command=apply
              	--src=${project.dirs.base}
