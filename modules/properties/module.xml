@@ -58,7 +58,7 @@
 
 		<!-- Generate profile build.properties file from project sources -->
 		<property file="${toolkit.basedir}/modules/php/build.properties" />
-		<exec executable="${php.executable}" output="${project.dirs.base}/etc/${profile}/build.properties" logError="true" failonerror="true">
+		<exec executable="${php.executable}" dir="${project.dirs.base}" output="${project.dirs.base}/etc/${profile}/build.properties" logError="true" failonerror="true">
 			<arg line="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor 
 				--command=extract 
 				--exclude-from=${toolkit.modules.paths.properties},${project.dirs.base}/etc/common/build.properties
