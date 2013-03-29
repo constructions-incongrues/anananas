@@ -98,6 +98,7 @@
 	<target name="init" description="Sets up project for usage with the toolkit">
 		<!-- Create common configuration profile -->
 		<mkdir dir="${basedir}/etc/common" />
+		<touch file="${basedir}/etc/common/build.properties" />
 	
 		<!-- Create sources directory -->
 		<mkdir dir="${basedir}/src" />
