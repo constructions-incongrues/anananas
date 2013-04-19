@@ -33,7 +33,7 @@ Ce module n'expose aucune tâche.
 ##### Dépendances
 
 Pour bien fonctionner, ce module a besoin que soit installé sur votre poste :
-- [phpcs](http://pear.php.net/package/PHP_CodeSniffer/) qui aura à sont tour besoin du standard [PSR](https://github.com/klaussilveira/phpcs-psr)
+- [phpcs](http://pear.php.net/package/PHP_CodeSniffer/) qui aura à son tour besoin du standard [PSR](https://github.com/klaussilveira/phpcs-psr)
 - [phpmd](http://phpmd.org/)
 - [phrocco](https://github.com/oneblackbear/phrocco)
 - [phpcpd](https://github.com/sebastianbergmann/phpcpd)
