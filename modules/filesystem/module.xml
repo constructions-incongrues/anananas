@@ -50,7 +50,10 @@
 
 	<target name="create-symlink">
 		<if>
-			<available file="${symlink.current.name}"/>
+            <or>
+    			<available file="${symlink.current.name}"/>
+                <available file="${symlink.current.name}" type="dir"/>
+            </or>
 			<then>
 				<echo>le lien ${symlink.current.name} existe déjà.</echo>
 			</then>
