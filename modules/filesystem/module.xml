@@ -49,22 +49,34 @@
 	</target>
 
 	<target name="create-symlink">
+        <propertyregex property="symlink.current.name.first"
+              input="${symlink.current.name}"
+              regexp="(.)?+"
+              select="\1"
+              casesensitive="false" />
 		<if>
-            <or>
-    			<available file="${symlink.current.name}"/>
-                <available file="${symlink.current.name}" type="dir"/>
-            </or>
-			<then>
-				<echo>le lien ${symlink.current.name} existe déjà.</echo>
-			</then>
-			<else>
-				<exec executable="ln" failonerror="false" dir="${project.dirs.base}">
-					<arg value="-sfv" />
-					<arg value="${symlink.current.target}" />
-					<arg value="${symlink.current.name}" />
-				</exec>
-			</else>
-		</if>
+            <equals arg1="${symlink.current.name.first}" arg2="/"/>
+            <then>
+                <property name="symlink.current.name.all" value="${symlink.current.name}"/>
+            </then>
+            <else>
+                <property name="symlink.current.name.all" value="${project.dirs.base}/${symlink.current.name}"/>
+            </else>
+        </if>
+        <if>
+            <available file="${symlink.current.name.all}" />
+            <then>
+                <echo>Le lien ${symlink.current.name.all} existe déjà.</echo>
+            </then>
+            <else>
+                <echo>Création du lien ${symlink.current.name.all} vers ${symlink.current.target}.</echo>
+                <exec executable="ln" failonerror="false" dir="${project.dirs.base}">
+                    <arg value="-sfv" />
+                    <arg value="${symlink.current.target}" />
+                    <arg value="${symlink.current.name}" />
+                </exec>
+            </else>
+        </if>
 	</target>
 
 	<target name="set-permissions">
