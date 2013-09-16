@@ -16,8 +16,11 @@
 
 	<!-- Setup toolkit depending on configuration profile -->
 	<!-- Guess profile -->
+    <exec outputproperty="profileWAI" logError="true" executable="whoami" /> 
 	<property environment="env"/>
-	<property name="profile" value="${env.ABT_USER}" />
+    <condition property="profile" value="${env.ABT_USER}" else="${profileWAI}">
+        <isset property="env.ABT_USER" />
+    </condition>
 	<echo message="Using profile : ${profile}" />
 
 	<!-- Local configuration profile properties -->
