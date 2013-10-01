@@ -76,7 +76,7 @@ class PHPreprocessor
 
         // Unserialize tokens
         $tokensFiles = explode(',', $options['properties']);
-        $tokens = array();
+        $tokens = array('phpreprocessor.apply.timestamp' => time());
         foreach ($tokensFiles as $tokenFile)
         {
             if (!is_readable($tokenFile))
