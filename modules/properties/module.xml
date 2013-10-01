@@ -11,6 +11,11 @@
 
 	<!-- Preprocesses -dist files -->
 	<target name="apply">
+ 		<!-- Make build timestamp available -->
+ 		<tstamp>
+	 		<format property="configure.timestamp" pattern="yyyyMMddHHmmss" />
+ 		</tstamp>
+
 		<property file="${toolkit.basedir}/modules/php/build.properties" />
 		<exec executable="${php.executable}" failonerror="true" dir="${project.dirs.base}">
 			<arg line="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor
@@ -39,8 +44,8 @@
 		<!-- Generate common build.properties file from project sources -->
 		<property file="${toolkit.basedir}/modules/php/build.properties" />
 		<exec executable="${php.executable}" dir="${project.dirs.base}" output="${project.dirs.base}/etc/common/build.properties" logError="true" failonerror="true">
-			<arg line="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor 
-				--command=extract 
+			<arg line="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor
+				--command=extract
 				--exclude-from=${toolkit.modules.paths.properties}
 				--src=${project.dirs.base}
 				--merge-with=${project.dirs.base}/etc/common/build.properties" />
@@ -59,8 +64,8 @@
 		<!-- Generate profile build.properties file from project sources -->
 		<property file="${toolkit.basedir}/modules/php/build.properties" />
 		<exec executable="${php.executable}" dir="${project.dirs.base}" output="${project.dirs.base}/etc/${profile}/build.properties" logError="true" failonerror="true">
-			<arg line="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor 
-				--command=extract 
+			<arg line="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor
+				--command=extract
 				--exclude-from=${toolkit.modules.paths.properties},${project.dirs.base}/etc/common/build.properties
 				--src=${project.dirs.base}
 				--merge-with=${project.dirs.base}/etc/${profile}/build.properties" />
