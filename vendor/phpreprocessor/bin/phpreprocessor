@@ -6,7 +6,7 @@ $stderr = new \SplFileObject('php://stderr', 'w');
 try {
 	// Dependencies
 	require(__DIR__.'/../src/Com/AramisAuto/PHPreprocessor.php');
-	
+
 	// Parse CLI arguments
 	// TODO : all this is pretty ugly and has to be reworked
 	// TODO : display command usage on error
@@ -19,7 +19,7 @@ try {
 
 	// Parse command
 	$commandsSpec = array(
-		'extract' => array('mandatory' => array('src')), 
+		'extract' => array('mandatory' => array('src')),
 		'apply' => array('mandatory' => array('src', 'properties'))
 	);
 	if (!isset($optsParsed['command'])) {
@@ -31,17 +31,17 @@ try {
 		throw new InvalidArgumentException(sprintf('Unknown command "%s"', $command));
 	}
 	$commandSpec = $commandsSpec[$command];
-	
+
 	// Parse command options
 	foreach ($commandSpec['mandatory'] as $option) {
 		if (!isset($optsParsed[$option])) {
 			throw new InvalidArgumentException(sprintf('Missing option "--%s"', $option));
 		}
 	}
-	
+
 	// Instanciate preprocessor
 	$p = new Com\AramisAuto\PHPreprocessor($stderr);
-	
+
 	// Call appropriate command
 	call_user_func(array($p, $command), $optsParsed);
 } catch (Exception $e) {
