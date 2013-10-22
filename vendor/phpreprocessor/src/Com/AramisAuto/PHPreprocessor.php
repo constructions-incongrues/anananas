@@ -80,7 +80,7 @@ class PHPreprocessor
 
         // Unserialize tokens
         $tokensFiles = explode(',', $options['properties']);
-        $tokens = array('phpreprocessor.apply.timestamp' => time());
+        $tokens = array();
         foreach ($tokensFiles as $tokenFile)
         {
             if (!is_readable($tokenFile))
@@ -91,6 +91,8 @@ class PHPreprocessor
             $tokens = array_merge($tokens, parse_ini_file($tokenFile, false, INI_SCANNER_RAW));
             error_reporting($errorReporting);
         }
+        // It has to be done afterwards otherwise you might end up with something else than a timestamp
+        $tokens = array('phpreprocessor.apply.timestamp' => time());
 
         // Create non -dist files
         $copied_files = array();
