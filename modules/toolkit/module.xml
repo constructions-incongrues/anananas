@@ -86,7 +86,7 @@
 		<iterate target="sync" basedir="${project.dirs.base}" paths="${toolkit.modules.paths}" />
 	</target>
 
-	<target name="deploy" description="Configures, builds, migrates and syncs project" depends="configure,update,configure,build,migrate,sync" />
+	<target name="deploy" description="Configures, builds, migrates and syncs project" depends="configure,update,build,migrate,sync" />
 
 	<target name="help" description="Displays project's help">
 		<echo>Ananas Build Toolkit : Usage</echo>
