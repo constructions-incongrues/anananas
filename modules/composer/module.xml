@@ -2,7 +2,7 @@
 <project name="composer">
 	<!-- Mandatory targets -->
 	<target name="bootstrap" />
-	<target name="update" depends="composer-update" />
+	<target name="update" depends="composer-install" />
 	<target name="configure" />
 	<target name="build" />
 	<target name="review" />
@@ -10,9 +10,9 @@
 	<target name="sync" />
 
 	<!-- toolkit phase : build -->
-	<target name="composer-update" description="Updates dependencies managed by composer">
+	<target name="composer-install" description="Installs dependencies managed by composer">
 		<exec dir="${project.dirs.base}" executable="${composer.executable}" failOnError="true" resolveexecutable="true">
-			<arg line="update" />
+			<arg line="install" />
 		</exec>
 	</target>
 </project>
