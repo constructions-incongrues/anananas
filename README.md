@@ -67,6 +67,8 @@ Modules disponibles à ce jour : [composer](https://github.com/constructions-inc
 
 Le toolkit expose sept tâches. L'appel d'une tâche déclenche les actions correspondantes dans chacun des modules activé.
 
+NB : Certaines version de oracle-java8 semblent poser problème. Par contre, oracle-java7 fonctionne sans problème.
+
 ### boostrap
 
 Cette tâche installe les composants nécessaires au bon fonctionnement de chacun des modules du toolkit. Elle doit être exécutée à chaque fois qu'un nouveau module est activé. Elle est appelée automatiquement lors de l'initialisation du projet par la tâche ```init```.
