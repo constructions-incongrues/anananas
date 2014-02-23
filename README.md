@@ -44,7 +44,7 @@ curl -s http://getcomposer.org/installer | php
 Récupérez le toolkit et ses dépendances : 
 
 ```bash
-php composer.phar install
+./composer.phar install --prefer-dist
 ```
 
 Initialisez le toolkit : 
