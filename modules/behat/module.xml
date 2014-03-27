@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="behat">
+    <!-- Mandatory targets -->
+    <target name="bootstrap" />
+    <target name="update" />
+    <target name="configure" />
+    <target name="build" />
+    <target name="review" depends="behat.run"/>
+    <target name="migrate" />
+    <target name="sync" />
+
+    <!-- toolkit phase : build -->
+    <target name="behat.run">
+        <echo>BEHAT ${behat.prop}</echo>
+    </target>
+</project>
