@@ -1,16 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="behat">
     <!-- Mandatory targets -->
-    <target name="bootstrap" />
-    <target name="update" />
+    <target name="bootstrap" depends="behat.make" />
+    <target name="update" depends="behat.composer.install" />
     <target name="configure" />
     <target name="build" />
     <target name="review" depends="behat.run"/>
     <target name="migrate" />
     <target name="sync" />
 
-    <!-- toolkit phase : build -->
-    <target name="behat.run">
-        <echo>BEHAT ${behat.prop}</echo>
+    <!-- Creates files and directories -->
+    <target name="behat.make" description="Creates files and directories for Behat">
+        <mkdir dir="${project.dirs.base}/${behat.dir}" />
+        <mkdir dir="${project.dirs.base}/${behat.dir}/${behat.features.dir}" />
+        <mkdir dir="${project.dirs.base}/${behat.dir}/${behat.results.dir}" />
+        <copy file="${toolkit.basedir}/modules/behat/templates/behat.yml.dist" tofile="${project.dirs.base}/${behat.dir}/${behat.config}-dist" overwrite="false">
+            <filterset>
+              <filter token="output_path" value="${project.dirs.base}/${behat.dir}/${behat.results.dir}"/>
+            </filterset>
+        </copy>
+    </target>
+
+    <!-- Removes previous results -->
+    <target name="behat.clean" description="Removes previous Behat results">
+        <delete dir="${project.dirs.base}/${behat.dir}/{behat.results.dir}" />
+        <mkdir dir="${project.dirs.base}/${behat.dir}/${behat.results.dir}" />
+    </target>
+
+    <!-- Installs Behat -->
+    <target name="behat.composer.install" description="Installs Behat">
+        <exec dir="${toolkit.basedir}/modules/behat" executable="${project.dirs.base}/${composer.executable}" failonerror="true">
+            <arg line="install" />
+        </exec>
+    </target>
+
+    <!-- Initializes Behat -->
+    <target name="behat.init" description="Initializes Behat">
+        <exec dir="${toolkit.basedir}/modules/behat" executable="bin/behat" failonerror="true">
+            <arg line="--config ${project.dirs.base}/${behat.dir}/${behat.config} --init" />
+        </exec>
+    </target>
+
+    <!-- Starts Behat -->
+    <target name="behat.run" description="Starts Behat">
+        <exec dir="${toolkit.basedir}/modules/behat" executable="bin/behat" failonerror="true">
+            <arg line="--config ${project.dirs.base}/${behat.dir}/${behat.config}" />
+        </exec>
     </target>
 </project>
