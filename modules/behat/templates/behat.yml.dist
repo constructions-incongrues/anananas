@@ -1,0 +1,13 @@
+# behat.yml
+default:
+    extensions:
+        Behat\MinkExtension\Extension:
+            base_url: '@base_url@'
+            javascript_session: 'selenium'
+            browser_name: firefox
+            goutte: ~
+            selenium2: ~
+    formatter:
+        name:       junit
+        parameters:
+            output_path: '@output_path@'
