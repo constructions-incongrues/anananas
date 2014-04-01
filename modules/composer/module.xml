@@ -12,7 +12,7 @@
 	<!-- toolkit phase : build -->
 	<target name="composer-install" description="Installs dependencies managed by composer">
 		<exec dir="${project.dirs.base}" executable="${composer.executable}" failOnError="true" resolveexecutable="true">
-			<arg line="install" />
+			<arg line="install --prefer-dist" />
 		</exec>
 	</target>
 </project>
