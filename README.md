@@ -30,7 +30,7 @@ Placez-vous à la racine du projet et créez un fichier ```composer.json``` avec
         }
     ],
     "require": {
-        "constructions-incongrues/ananas-build-toolkit": "dev-master"
+        "constructions-incongrues/ananas-build-toolkit": "~0.12"
     }
 }
 ```
@@ -44,7 +44,7 @@ curl -s http://getcomposer.org/installer | php
 Récupérez le toolkit et ses dépendances : 
 
 ```bash
-./composer.phar install --prefer-dist
+./composer.phar update --prefer-dist
 ```
 
 Initialisez le toolkit : 
