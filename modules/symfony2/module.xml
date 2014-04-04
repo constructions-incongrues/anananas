@@ -4,19 +4,19 @@
     <target name="bootstrap" />
     <target name="update" />
     <target name="configure" />
-    <target name="build" depends="sf2.assets, sf2.cache.clear" />
+    <target name="build" depends="symfony2.assets.install, symfony2.cache.clear" />
     <target name="review" />
     <target name="migrate" />
     <target name="sync" />
 
-    <target name="sf2.assets" >
+    <target name="symfony2.assets.install" >
         <!-- On installe les assets avec l'option symlink -->
         <exec executable="${php.executable}" dir="${project.dirs.base}/${symfony2.dirs.base}" failonerror="true">
             <arg line="app/console assets:install --symlink --relative" />
         </exec>
     </target>
 
-    <target name="sf2.cache.clear">
+    <target name="symfony2.cache.clear">
         <!-- On vide le cache -->
         <exec executable="${php.executable}" dir="${project.dirs.base}/${symfony2.dirs.base}" failonerror="true">
             <arg line="app/console cache:clear --process-isolation" />
