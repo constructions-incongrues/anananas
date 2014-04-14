@@ -73,7 +73,7 @@
 	</target>
 
 	<!-- Creates a new property file for configuration profile -->
-	<target name="create-profile">
+	<target name="create-profile" description="Creates an empty build.properties for the user defined by the ABT_USER environment variable or the -Dprofile parameter">
 		<!-- Create profile directory and property file if it does not exist -->
 		<touch file="${basedir}/etc/${profile}/build.properties" mkdirs="true" verbose="true" />
 	</target>
