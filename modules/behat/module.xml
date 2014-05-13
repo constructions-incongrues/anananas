@@ -17,6 +17,7 @@
         <copy file="${toolkit.basedir}/modules/behat/templates/behat.yml.dist" tofile="${project.dirs.base}/${behat.dir}/${behat.config}-dist" overwrite="false">
             <filterset>
               <filter token="output_path" value="${project.dirs.base}/${behat.dir}/${behat.results.dir}"/>
+              <filter token="features_path" value="${project.dirs.base}/${behat.dir}/${behat.features.dir}"/>
             </filterset>
         </copy>
     </target>
@@ -45,6 +46,7 @@
     <target name="behat.run" description="Starts Behat">
         <exec dir="${toolkit.basedir}/modules/behat" executable="bin/behat" failonerror="true">
             <arg line="--config ${project.dirs.base}/${behat.dir}/${behat.config}" />
+            <arg line="--tags '@${behat.test.tag}'" />
         </exec>
     </target>
 </project>
