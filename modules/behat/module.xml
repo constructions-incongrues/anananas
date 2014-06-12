@@ -46,7 +46,15 @@
     <target name="behat.run" description="Starts Behat">
         <exec dir="${toolkit.basedir}/modules/behat" executable="bin/behat" failonerror="true">
             <arg line="--config ${project.dirs.base}/${behat.dir}/${behat.config}" />
-            <arg line="--tags '@${behat.test.tag}'" />
+            <arg line="--tags '@${behat.tag}'" />
+        </exec>
+    </target>
+
+    <!-- Tests a feature file -->
+    <target name="behat.test" description="Tests Behat">
+        <exec dir="${toolkit.basedir}/modules/behat" executable="bin/behat" failonerror="true">
+            <arg line="--config ${project.dirs.base}/${behat.dir}/${behat.config}" />
+            <arg line="${project.dirs.base}/${behat.dir}/${behat.features.dir}/${behat.feature}" />
         </exec>
     </target>
 </project>
