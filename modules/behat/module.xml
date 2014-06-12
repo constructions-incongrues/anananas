@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="behat">
     <!-- Mandatory targets -->
-    <target name="bootstrap" depends="behat.make" />
-    <target name="update" depends="behat.composer.install" />
+    <target name="bootstrap" depends="behat.install,behat.make" />
+    <target name="update" />
     <target name="configure" />
     <target name="build" />
-    <target name="review" />
+    <target name="review" depends="behat.run" />
     <target name="migrate" />
     <target name="sync" />
 
@@ -29,9 +29,9 @@
     </target>
 
     <!-- Installs Behat -->
-    <target name="behat.composer.install" description="Installs Behat">
+    <target name="behat.install" description="Installs Behat">
         <exec dir="${toolkit.basedir}/modules/behat" executable="${project.dirs.base}/${composer.executable}" failonerror="true">
-            <arg line="install" />
+            <arg line="install --prefer-dist" />
         </exec>
     </target>
 
@@ -42,7 +42,7 @@
         </exec>
     </target>
 
-    <!-- Starts Behat -->
+    <!-- Runs tests -->
     <target name="behat.run" description="Starts Behat">
         <exec dir="${toolkit.basedir}/modules/behat" executable="bin/behat" failonerror="true">
             <arg line="--config ${project.dirs.base}/${behat.dir}/${behat.config}" />
