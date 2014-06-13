@@ -1,8 +1,8 @@
 # behat.yml
 default:
     paths:
-        features: '@features_path@'
-        bootstrap: %behat.paths.features%/bootstrap
+        features: '%behat.paths.base%/features'
+        bootstrap: '%behat.paths.features%/bootstrap'
     extensions:
         Behat\MinkExtension\Extension:
             base_url: '@base_url@'
@@ -13,4 +13,4 @@ default:
     formatter:
         name:       junit
         parameters:
-            output_path: '@output_path@'
+            output_path: '%behat.paths.base%/results,null'
