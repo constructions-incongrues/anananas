@@ -11,18 +11,25 @@
 
 	<!-- Preprocesses -dist files -->
 	<target name="apply">
+        <property name="apply-dirs" value="src"/>
+
  		<!-- Make build timestamp available -->
  		<tstamp>
 	 		<format property="configure.timestamp" pattern="yyyyMMddHHmmss" />
  		</tstamp>
 
 		<property file="${toolkit.basedir}/modules/php/build.properties" />
-		<exec executable="${php.executable}" failonerror="true" dir="${project.dirs.base}">
-			<arg line="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor
-				--command=apply
-             	--src=${project.dirs.base}/src
-             	--properties=${toolkit.modules.paths.properties},${project.dirs.base}/etc/common/build.properties,${project.dirs.base}/etc/${profile}/build.properties" />
-		</exec>
+
+		<for list="${apply-dirs}" param="dir">
+			<sequential>
+				<exec executable="${php.executable}" failonerror="true" dir="${project.dirs.base}">
+					<arg line="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor
+						--command=apply
+						--src=${project.dirs.base}/@{dir}
+						--properties=${toolkit.modules.paths.properties},${project.dirs.base}/etc/common/build.properties,${project.dirs.base}/etc/${profile}/build.properties" />
+				</exec>
+			</sequential>
+		</for>
 	</target>
 
 	<target name="apply-reverse" description="Replaces values by profile directives names in -dist files">
