@@ -11,7 +11,7 @@
 
 	<!-- Preprocesses -dist files -->
 	<target name="apply">
-        <property name="apply-dirs" value="src"/>
+		<property name="apply.dirs" value="src"/>
 
  		<!-- Make build timestamp available -->
  		<tstamp>
@@ -20,7 +20,7 @@
 
 		<property file="${toolkit.basedir}/modules/php/build.properties" />
 
-		<for list="${apply-dirs}" param="dir">
+		<for list="${apply.dirs}" param="dir">
 			<sequential>
 				<exec executable="${php.executable}" failonerror="true" dir="${project.dirs.base}">
 					<arg line="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor
