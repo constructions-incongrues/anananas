@@ -10,6 +10,9 @@
     <target name="sync" />
 
     <target name="meteor.bundle">
+        <exec executable="${mrt.executable}" dir="${project.dirs.base}/${meteor.src}">
+            <arg line="update" />
+        </exec>
         <exec executable="${meteor.executable}" dir="${project.dirs.base}/${meteor.src}">
             <arg line="bundle --directory ${meteor.bundle}" />
         </exec>
