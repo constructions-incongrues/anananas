@@ -11,10 +11,10 @@
 
     <target name="meteor.bundle">
         <exec executable="${mrt.executable}" dir="${project.dirs.base}/${meteor.src}">
-            <arg line="update" />
+            <arg line="install" />
         </exec>
         <exec executable="${meteor.executable}" dir="${project.dirs.base}/${meteor.src}">
-            <arg line="bundle --directory ${meteor.bundle}" />
+            <arg line="bundle --debug --directory ${meteor.bundle}" />
         </exec>
     </target>
 </project>
