@@ -143,7 +143,7 @@ class PHPreprocessor
         $tokens = array();
         foreach ($files as $path) {
             $matches = array();
-            preg_match_all('/@[a-z0-9\._]*?@/i', file_get_contents($path), $matches);
+            preg_match_all('/@[a-z0-9\._]+?@/i', file_get_contents($path), $matches);
             if (count($matches[0])) {
                 foreach ($matches[0] as $token) {
                     if (!isset($tokens[$token])) {
