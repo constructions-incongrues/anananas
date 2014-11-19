@@ -3,6 +3,8 @@ namespace Com\AramisAuto;
 
 class PHPreprocessor
 {
+    const BLANK = 'BLANK';
+
     /**
      * @var SplFileObject
      */
@@ -81,10 +83,8 @@ class PHPreprocessor
         // Unserialize tokens
         $tokensFiles = explode(',', $options['properties']);
         $tokens = array();
-        foreach ($tokensFiles as $tokenFile)
-        {
-            if (!is_readable($tokenFile))
-            {
+        foreach ($tokensFiles as $tokenFile) {
+            if (!is_readable($tokenFile)) {
                 throw new \RuntimeException(sprintf('File "%s" is not readable', $tokenFile));
             }
             $errorReporting = error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
@@ -184,6 +184,9 @@ class PHPreprocessor
                 $lines[] = '';
                 $lines[] = '# '.$namespaceCurrent;
             }
+            if (empty($value)) {
+                $value = self::BLANK;
+            }
             if (!is_array($value)) {
                 $lines[] = sprintf('%s=%s', $token, $value);
             } else {
@@ -219,6 +222,13 @@ class PHPreprocessor
         foreach ($files as $file) {
             $content = file_get_contents($file);
             foreach ($tokens as $key => $value) {
+                if (empty($value)) {
+                    throw new \Exception("No value has been found for ".$key.". If it is normal, please use the keyword BLANK to indicate it.", 500);
+                }
+                if ($value == self::BLANK) {
+                    // BLANK signifie qu'on doit laisser la variable vide.
+                    $value = '';
+                }
                 if ($reverse === false) {
                     $content = str_replace($beginToken.$key.$endToken, $value, $content);
                 } else {
