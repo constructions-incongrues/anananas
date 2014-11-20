@@ -3,7 +3,7 @@ namespace Com\AramisAuto;
 
 class PHPreprocessor
 {
-    const BLANK = 'BLANK';
+    const BLANK = '""';
 
     /**
      * @var SplFileObject
