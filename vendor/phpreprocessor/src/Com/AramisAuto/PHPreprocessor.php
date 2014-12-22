@@ -3,7 +3,7 @@ namespace Com\AramisAuto;
 
 class PHPreprocessor
 {
-    const BLANK = '""';
+    const BLANK = "''";
 
     /**
      * @var SplFileObject
@@ -184,7 +184,7 @@ class PHPreprocessor
                 $lines[] = '';
                 $lines[] = '# '.$namespaceCurrent;
             }
-            if (empty($value)) {
+            if ($value == "") {
                 $value = self::BLANK;
             }
             if (!is_array($value)) {
@@ -222,10 +222,9 @@ class PHPreprocessor
         foreach ($files as $file) {
             $content = file_get_contents($file);
             foreach ($tokens as $key => $value) {
-                if (empty($value)) {
-                    throw new \Exception("No value has been found for ".$key.". If it is normal, please use the keyword BLANK to indicate it.", 500);
-                }
-                if ($value == self::BLANK) {
+                if ($value == "") {
+                    throw new \Exception($value . 'No value has been found for '.$key.'. If it is normal, please put \'\' to indicate it.', 500);
+                } elseif ($value == self::BLANK) {
                     // BLANK signifie qu'on doit laisser la variable vide.
                     $value = '';
                 }
