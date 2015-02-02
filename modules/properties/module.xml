@@ -11,8 +11,6 @@
 
 	<!-- Preprocesses -dist files -->
 	<target name="apply">
-		<property name="apply.dirs" value="src"/>
-
  		<!-- Make build timestamp available -->
  		<tstamp>
 	 		<format property="configure.timestamp" pattern="yyyyMMddHHmmss" />
@@ -38,7 +36,7 @@
 			<arg line="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor
 				--command=apply
 				--reverse=/^.+\.(url|path)\..+$/
-             	--src=${project.dirs.base}/src
+             	--src=${project.dirs.base}/${apply.dirs}
              	--properties=${toolkit.modules.paths.properties},${project.dirs.base}/etc/common/build.properties,${project.dirs.base}/etc/${profile}/build.properties" />
 		</exec>
 	</target>
@@ -54,7 +52,7 @@
 			<arg line="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor
 				--command=extract
 				--exclude-from=${toolkit.modules.paths.properties}
-				--src=${project.dirs.base}/src
+				--src=${project.dirs.base}/${apply.dirs}
 				--merge-with=${project.dirs.base}/etc/common/build.properties" />
 		</exec>
 	</target>
@@ -74,7 +72,7 @@
 			<arg line="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor
 				--command=extract
 				--exclude-from=${toolkit.modules.paths.properties},${project.dirs.base}/etc/common/build.properties
-				--src=${project.dirs.base}/src
+				--src=${project.dirs.base}/${apply.dirs}
 				--merge-with=${project.dirs.base}/etc/${profile}/build.properties" />
 		</exec>
 	</target>
