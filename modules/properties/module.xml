@@ -18,7 +18,7 @@
 
 		<property file="${toolkit.basedir}/modules/php/build.properties" />
 
-		<for list="${apply.dirs}" param="dir">
+		<for list="${apply.dir}" param="dir">
 			<sequential>
 				<exec executable="${php.executable}" failonerror="true" dir="${project.dirs.base}">
 					<arg line="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor
@@ -36,7 +36,7 @@
 			<arg line="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor
 				--command=apply
 				--reverse=/^.+\.(url|path)\..+$/
-             	--src=${project.dirs.base}/${apply.dirs}
+             	--src=${project.dirs.base}/${apply.dir}
              	--properties=${toolkit.modules.paths.properties},${project.dirs.base}/etc/common/build.properties,${project.dirs.base}/etc/${profile}/build.properties" />
 		</exec>
 	</target>
@@ -52,7 +52,7 @@
 			<arg line="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor
 				--command=extract
 				--exclude-from=${toolkit.modules.paths.properties}
-				--src=${project.dirs.base}/${apply.dirs}
+				--src=${project.dirs.base}/${apply.dir}
 				--merge-with=${project.dirs.base}/etc/common/build.properties" />
 		</exec>
 	</target>
@@ -72,7 +72,7 @@
 			<arg line="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor
 				--command=extract
 				--exclude-from=${toolkit.modules.paths.properties},${project.dirs.base}/etc/common/build.properties
-				--src=${project.dirs.base}/${apply.dirs}
+				--src=${project.dirs.base}/${apply.dir}
 				--merge-with=${project.dirs.base}/etc/${profile}/build.properties" />
 		</exec>
 	</target>
