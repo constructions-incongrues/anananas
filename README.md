@@ -25,12 +25,12 @@ Placez-vous à la racine du projet et créez un fichier ```composer.json``` avec
 {
     "repositories": [
         {
-            "type": "composer",
-            "url": "http://constructions-incongrues.github.com/packages"
-        }
+            "type": "git",
+            "url": "git@github.com:constructions-incongrues/ananas-build-toolkit.git"
+        },
     ],
     "require": {
-        "constructions-incongrues/ananas-build-toolkit": "~0.12"
+        "constructions-incongrues/ananas-build-toolkit": "~0.20"
     }
 }
 ```
