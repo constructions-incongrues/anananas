@@ -5,5 +5,12 @@
 	"support": {
       "issues": "https://github.com/constructions-incongrues/ananas-build-toolkit/issues",
       "source": "https://github.com/constructions-incongrues/ananas-build-toolkit"
-    }
+    },
+    "require": {},
+    "authors": [
+        {
+            "name": "Constructions Incongrues",
+            "email": "contact@constructions-incongrues.net"
+        }
+    ]
 }
