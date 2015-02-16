@@ -12,7 +12,7 @@
     <target name="symfony2.assets.install" >
         <!-- On installe les assets avec l'option symlink -->
         <exec executable="${php.executable}" dir="${project.dirs.base}/${symfony2.dirs.base}" failonerror="true">
-            <arg line="app/console assets:install --symlink --relative" />
+            <arg line="app/console assets:install --process-isolation --env=${symfony2.environment} --symlink --relative" />
         </exec>
     </target>
 
@@ -22,7 +22,7 @@
             <arg line="app/console cache:clear --process-isolation" />
         </exec>
         <exec executable="${php.executable}" dir="${project.dirs.base}/${symfony2.dirs.base}" failonerror="true">
-            <arg line="app/console cache:clear --env=prod --process-isolation" />
+            <arg line="app/console cache:clear --process-isolation --env=${symfony2.environment}" />
         </exec>
     </target>
 
