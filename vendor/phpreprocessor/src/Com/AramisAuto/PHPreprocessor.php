@@ -3,6 +3,8 @@ namespace Com\AramisAuto;
 
 class PHPreprocessor
 {
+    const BLANK = "''";
+
     /**
      * @var SplFileObject
      */
@@ -81,10 +83,8 @@ class PHPreprocessor
         // Unserialize tokens
         $tokensFiles = explode(',', $options['properties']);
         $tokens = array();
-        foreach ($tokensFiles as $tokenFile)
-        {
-            if (!is_readable($tokenFile))
-            {
+        foreach ($tokensFiles as $tokenFile) {
+            if (!is_readable($tokenFile)) {
                 throw new \RuntimeException(sprintf('File "%s" is not readable', $tokenFile));
             }
             $errorReporting = error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
@@ -143,7 +143,7 @@ class PHPreprocessor
         $tokens = array();
         foreach ($files as $path) {
             $matches = array();
-            preg_match_all('/@[a-z0-9\._]*?@/i', file_get_contents($path), $matches);
+            preg_match_all('/@[a-z0-9\._]+?@/i', file_get_contents($path), $matches);
             if (count($matches[0])) {
                 foreach ($matches[0] as $token) {
                     if (!isset($tokens[$token])) {
@@ -184,6 +184,9 @@ class PHPreprocessor
                 $lines[] = '';
                 $lines[] = '# '.$namespaceCurrent;
             }
+            if ($value == "") {
+                $value = self::BLANK;
+            }
             if (!is_array($value)) {
                 $lines[] = sprintf('%s=%s', $token, $value);
             } else {
@@ -219,6 +222,12 @@ class PHPreprocessor
         foreach ($files as $file) {
             $content = file_get_contents($file);
             foreach ($tokens as $key => $value) {
+                if ($value == "") {
+                    throw new \Exception($value . 'No value has been found for '.$key.'. If it is normal, please put \'\' to indicate it.', 500);
+                } elseif ($value == self::BLANK) {
+                    // BLANK signifie qu'on doit laisser la variable vide.
+                    $value = '';
+                }
                 if ($reverse === false) {
                     $content = str_replace($beginToken.$key.$endToken, $value, $content);
                 } else {

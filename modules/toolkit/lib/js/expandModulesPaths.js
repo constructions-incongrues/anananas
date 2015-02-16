@@ -10,11 +10,15 @@ for (var i = 0; i < modules.length; i++) {
 
 // Generate paths for external modules
 var modules = attributes.get('external').split(',');
-for (var i = 0; i < modules.length; i++) {
-    modulesPaths.push(modules[i] + '/module.xml');
-    propertiesPaths.push(modules[i] + '/build.properties');
+if (modules.length > 1) {
+    for (var i = 0; i < modules.length; i++) {
+        modulesPaths.push(modules[i] + '/module.xml');
+        propertiesPaths.push(modules[i] + '/build.properties');
+    }
 }
 
 modulesPaths = modulesPaths.join(',');
+
 project.setNewProperty('toolkit.modules.paths', modulesPaths);
 project.setNewProperty('toolkit.modules.paths.properties', propertiesPaths);
+

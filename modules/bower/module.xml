@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="bower">
+    <property environment="env" />
+
+	<!-- Mandatory targets -->
+	<target name="bootstrap" />
+	<target name="build" depends="bower-install" />
+	<target name="configure" />
+	<target name="migrate" />
+	<target name="review" />
+	<target name="sync" />
+	<target name="update" depends="bower-update" />
+
+    <!-- Updates PATH environment variable according to NodeJS location -->
+    <!-- Can be convenient in case of non-standard NodeJS installation -->
+    <target name="bower-env-init">
+        <if>
+            <length string="${bower.nodejs.path}" when="greater" length="0" />
+            <then>
+                <property name="runtime.nodejs.path" value="${bower.nodejs.path}:${env.PATH}" />
+            </then>
+            <else>
+                <property name="runtime.nodejs.path" value="${env.PATH}" />
+            </else>
+        </if>
+    </target>
+
+	<!-- toolkit phase : build -->
+	<target name="bower-install" description="Installs dependencies managed by Bower" depends="bower-env-init">
+        <exec dir="${project.dirs.base}" executable="${bower.executable}" failOnError="true" resolveexecutable="true">
+            <env key="PATH" path="${runtime.nodejs.path}" />
+			<arg line="-f install" />
+		</exec>
+	</target>
+
+	<!-- toolkit phase : update -->
+	<target name="bower-update" description="Updates dependencies managed by Bower" depends="bower-env-init">
+		<exec dir="${project.dirs.base}" executable="${bower.executable}" failOnError="true" resolveexecutable="true">
+            <env key="PATH" path="${runtime.nodejs.path}" />
+            <arg line="update" />
+		</exec>
+	</target>
+</project>

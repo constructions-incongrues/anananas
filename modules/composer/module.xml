@@ -2,17 +2,24 @@
 <project name="composer">
 	<!-- Mandatory targets -->
 	<target name="bootstrap" />
-	<target name="update" depends="composer-install" />
+	<target name="update" depends="composer-update" />
 	<target name="configure" />
-	<target name="build" />
+	<target name="build" depends="composer-install" />
 	<target name="review" />
 	<target name="migrate" />
 	<target name="sync" />
 
 	<!-- toolkit phase : build -->
-	<target name="composer-install" description="Installs dependencies managed by composer">
+	<target name="composer-install" description="Installs dependencies managed by Composer">
 		<exec dir="${project.dirs.base}" executable="${composer.executable}" failOnError="true" resolveexecutable="true">
 			<arg line="install --prefer-dist" />
+		</exec>
+	</target>
+	
+	<!-- toolkit phase : update -->
+	<target name="composer-update" description="Updates dependencies managed by Composer">
+		<exec dir="${project.dirs.base}" executable="${composer.executable}" failOnError="true" resolveexecutable="true">
+			<arg line="update" />
 		</exec>
 	</target>
 </project>

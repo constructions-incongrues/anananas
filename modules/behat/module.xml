@@ -14,12 +14,6 @@
         <mkdir dir="${project.dirs.base}/${behat.dir}" />
         <mkdir dir="${project.dirs.base}/${behat.dir}/${behat.features.dir}" />
         <mkdir dir="${project.dirs.base}/${behat.dir}/${behat.results.dir}" />
-        <copy file="${toolkit.basedir}/modules/behat/templates/behat.yml.dist" tofile="${project.dirs.base}/${behat.dir}/${behat.config}-dist" overwrite="false">
-            <filterset>
-              <filter token="output_path" value="${project.dirs.base}/${behat.dir}/${behat.results.dir}"/>
-              <filter token="features_path" value="${project.dirs.base}/${behat.dir}/${behat.features.dir}"/>
-            </filterset>
-        </copy>
     </target>
 
     <!-- Removes previous results -->
