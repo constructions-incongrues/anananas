@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="cloudflare">
+    <!-- @see https://github.com/b0beR/ant-http-task -->
+    <taskdef
+        name="http"
+        classname="org.missinglink.ant.task.http.HttpClientTask"
+        classpath="${toolkit.basedir}/modules/cloudflare/vendor/ant-http-task/ml-ant-http-1.1.jar" />
+
+	<target name="purgeAll" description="Purges all Cloudflare cache">
+        <http
+            url="${cloudflare.endpoint}/zones/${cloudflare.zoneId}/purge_cache"
+            method="DELETE"
+            printRequest="true"
+            printResponse="true">
+            <headers>
+                <header name="X-Auth-Email" value="${cloudflare.authEmail}" />
+                <header name="X-Auth-Key" value="${cloudflare.authKey}" />
+                <header name="Content-Type" value="application/json" />
+            </headers>
+            <entity>{"purge_everything":true}</entity>
+        </http>
+	</target>
+
+    <target name="purgeUrl" description="Purges an URL in Cloudflare cache">
+        <tempfile property="temp.file" deleteonexit="true" />
+        <echo file="${temp.file}">{"files":["${url}"]}</echo>
+        <http
+            url="${cloudflare.endpoint}/zones/${cloudflare.zoneId}/purge_cache"
+            method="DELETE"
+            printRequest="true"
+            printResponse="true">
+            <headers>
+                <header name="X-Auth-Email" value="${cloudflare.authEmail}" />
+                <header name="X-Auth-Key" value="${cloudflare.authKey}" />
+                <header name="Content-Type" value="application/json" />
+            </headers>
+            <entity file="${temp.file}" />
+        </http>
+    </target>
+</project>
