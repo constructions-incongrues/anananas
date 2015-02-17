@@ -16,6 +16,7 @@
         classpath="${toolkit.basedir}/modules/cloudflare/vendor/ant-http-task/ml-ant-http-1.1.jar" />
 
 	<target name="purgeAll" description="Purges all Cloudflare cache">
+        <echo file="${temp.file}">{"purge_everything":true}</echo>
         <http
             url="${cloudflare.endpoint}/zones/${cloudflare.zoneId}/purge_cache"
             method="DELETE"
@@ -26,7 +27,7 @@
                 <header name="X-Auth-Key" value="${cloudflare.authKey}" />
                 <header name="Content-Type" value="application/json" />
             </headers>
-            <entity>{"purge_everything":true}</entity>
+            <entity file="${temp.file}" />
         </http>
 	</target>
 
