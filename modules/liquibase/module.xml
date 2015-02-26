@@ -34,11 +34,27 @@
 			<equals arg1="${liquibase.tunnel.enabled}" arg2="true" />
 			<then>
 				<echo>Using DSN : "jdbc:mysql://${liquibase.tunnel.host}:${liquibase.tunnel.port}/${current.db.name}?${liquibase.connection.parameters}"</echo>
-				<updateDatabase changeLogFile="${liquibase.changelog}" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://${liquibase.tunnel.host}:${liquibase.tunnel.port}/${current.db.name}?${liquibase.connection.parameters}" username="${current.db.username}" password="${current.db.password}" promptOnNonLocalDatabase="false" dropFirst="false" classpathref="classpath" />
+                <if>
+                	<equals arg1="${current.db.password}" arg2="''" />
+                    <then>
+                        <updateDatabase changeLogFile="${liquibase.changelog}" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://${liquibase.tunnel.host}:${liquibase.tunnel.port}/${current.db.name}?${liquibase.connection.parameters}" username="${current.db.username}" promptOnNonLocalDatabase="false" dropFirst="false" classpathref="classpath" />
+                    </then>
+                    <else>
+                        <updateDatabase changeLogFile="${liquibase.changelog}" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://${liquibase.tunnel.host}:${liquibase.tunnel.port}/${current.db.name}?${liquibase.connection.parameters}" username="${current.db.username}" password="${current.db.password}" promptOnNonLocalDatabase="false" dropFirst="false" classpathref="classpath" />
+                    </else>
+                </if>
 			</then>
 			<else>
 				<echo>Using DSN : "jdbc:mysql://${current.db.host}:${current.db.port}/${current.db.name}?${liquibase.connection.parameters}"</echo>
-				<updateDatabase changeLogFile="${liquibase.changelog}" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://${current.db.host}:${current.db.port}/${current.db.name}?${liquibase.connection.parameters}" username="${current.db.username}" password="${current.db.password}" promptOnNonLocalDatabase="false" dropFirst="false" classpathref="classpath" />
+                <if>
+                    <equals arg1="${current.db.password}" arg2="''" />
+                    <then>
+                        <updateDatabase changeLogFile="${liquibase.changelog}" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://${current.db.host}:${current.db.port}/${current.db.name}?${liquibase.connection.parameters}" username="${current.db.username}" promptOnNonLocalDatabase="false" dropFirst="false" classpathref="classpath" />
+                    </then>
+                    <else>
+                        <updateDatabase changeLogFile="${liquibase.changelog}" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://${current.db.host}:${current.db.port}/${current.db.name}?${liquibase.connection.parameters}" username="${current.db.username}" password="${current.db.password}" promptOnNonLocalDatabase="false" dropFirst="false" classpathref="classpath" />
+                    </else>
+                </if>
 			</else>
 		</if>
 	</target>
