@@ -32,13 +32,17 @@
 
 	<target name="apply-reverse" description="Replaces values by profile directives names in -dist files">
 		<property file="${toolkit.basedir}/modules/php/build.properties" />
-		<exec executable="${php.executable}" failonerror="true" dir="${project.dirs.base}">
-			<arg value="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor" />
-			<arg value="--command=apply" />
-			<arg value="--reverse=/^.+\.(url|path)\..+$/" />
-         	<arg value="--src=${project.dirs.base}/${properties.dirs}" />
-         	<arg value="--properties=${toolkit.modules.paths.properties},${project.dirs.base}/etc/common/build.properties,${project.dirs.base}/etc/${profile}/build.properties" />
-		</exec>
+		<for list="${properties.dirs}" param="dir">
+			<sequential>
+				<exec executable="${php.executable}" failonerror="true" dir="${project.dirs.base}">
+					<arg value="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor" />
+					<arg value="--command=apply" />
+					<arg value="--reverse=/^.+\.(url|path)\..+$/" />
+		         	<arg value="--src=${project.dirs.base}/@{dir}" />
+		         	<arg value="--properties=${toolkit.modules.paths.properties},${project.dirs.base}/etc/common/build.properties,${project.dirs.base}/etc/${profile}/build.properties" />
+				</exec>
+			</sequential>
+		</for>
 	</target>
 
 	<!-- Updates common build properties -->
@@ -48,13 +52,17 @@
 
 		<!-- Generate common build.properties file from project sources -->
 		<property file="${toolkit.basedir}/modules/php/build.properties" />
-		<exec executable="${php.executable}" dir="${project.dirs.base}" output="${project.dirs.base}/etc/common/build.properties" logError="true" failonerror="true">
-			<arg value="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor" />
-			<arg value="--command=extract" />
-			<arg value="--exclude-from=${toolkit.modules.paths.properties}" />
-			<arg value="--src=${project.dirs.base}/${properties.dirs}" />
-			<arg value="--merge-with=${project.dirs.base}/etc/common/build.properties" />
-		</exec>
+		<for list="${properties.dirs}" param="dir">
+			<sequential>
+				<exec executable="${php.executable}" dir="${project.dirs.base}" output="${project.dirs.base}/etc/common/build.properties" logError="true" failonerror="true">
+					<arg value="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor" />
+					<arg value="--command=extract" />
+					<arg value="--exclude-from=${toolkit.modules.paths.properties}" />
+					<arg value="--src=${project.dirs.base}/@{dir}" />
+					<arg value="--merge-with=${project.dirs.base}/etc/common/build.properties" />
+				</exec>
+			</sequential>
+		</for>
 	</target>
 
 	<!-- Updates profile build properties -->
@@ -68,13 +76,17 @@
 
 		<!-- Generate profile build.properties file from project sources -->
 		<property file="${toolkit.basedir}/modules/php/build.properties" />
-		<exec executable="${php.executable}" dir="${project.dirs.base}" output="${project.dirs.base}/etc/${profile}/build.properties" logError="true" failonerror="true">
-			<arg value="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor" />
-			<arg value="--command=extract" />
-			<arg value="--exclude-from=${toolkit.modules.paths.properties},${project.dirs.base}/etc/common/build.properties" />
-			<arg value="--src=${project.dirs.base}/${properties.dirs}" />
-			<arg value="--merge-with=${project.dirs.base}/etc/${profile}/build.properties" />
-		</exec>
+		<for list="${properties.dirs}" param="dir">
+			<sequential>
+				<exec executable="${php.executable}" dir="${project.dirs.base}" output="${project.dirs.base}/etc/${profile}/build.properties" logError="true" failonerror="true">
+					<arg value="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor" />
+					<arg value="--command=extract" />
+					<arg value="--exclude-from=${toolkit.modules.paths.properties},${project.dirs.base}/etc/common/build.properties" />
+					<arg value="--src=${project.dirs.base}/@{dir}" />
+					<arg value="--merge-with=${project.dirs.base}/etc/${profile}/build.properties" />
+				</exec>
+			</sequential>
+		</for>
 	</target>
 
 	<!-- Creates a new property file for configuration profile -->
