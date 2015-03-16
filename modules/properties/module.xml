@@ -17,6 +17,9 @@
  		</tstamp>
 
 		<property file="${toolkit.basedir}/modules/php/build.properties" />
+		<!-- Make all properties available -->
+		<tempfile property="all.properties" deleteonexit="true" />
+		<echoproperties destfile="${all.properties}" />
 
 		<for list="${properties.dirs}" param="dir">
 			<sequential>
@@ -24,7 +27,7 @@
 					<arg value="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor" />
 					<arg value="--command=apply" />
 					<arg value="--src=${project.dirs.base}/@{dir}" />
-					<arg value="--properties=${toolkit.modules.paths.properties},${project.dirs.base}/etc/common/build.properties,${project.dirs.base}/etc/${profile}/build.properties" />
+					<arg value="--properties=${toolkit.modules.paths.properties},${project.dirs.base}/etc/common/build.properties,${project.dirs.base}/etc/${profile}/build.properties,${all.properties}" />
 				</exec>
 			</sequential>
 		</for>
