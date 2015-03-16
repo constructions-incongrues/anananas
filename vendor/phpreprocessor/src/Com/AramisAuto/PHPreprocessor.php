@@ -3,16 +3,14 @@ namespace Com\AramisAuto;
 
 class PHPreprocessor
 {
-    const BLANK = "''";
-
     /**
      * @var SplFileObject
      */
-    private $_log;
+    private $log;
 
     public function __construct(\SplFileObject $logfile)
     {
-        $this->_log = $logfile;
+        $this->log = $logfile;
     }
 
     /**
@@ -23,7 +21,7 @@ class PHPreprocessor
         // TODO : options sanity checks
 
         // Find dist files
-        $files = $this->_findDistFiles($options['src']);
+        $files = $this->findDistFiles($options['src']);
 
         // Extract tokens
         $tokens = $this->_extractTokensFromFiles($files);
@@ -78,7 +76,7 @@ class PHPreprocessor
         // TODO : options sanity checks
 
         // Find dist files
-        $files = $this->_findDistFiles($options['src']);
+        $files = $this->findDistFiles($options['src']);
 
         // Unserialize tokens
         $tokensFiles = explode(',', $options['properties']);
@@ -103,7 +101,7 @@ class PHPreprocessor
         }
 
         // Perform replacements
-        $this->_replaceTokens($copied_files, '@', '@', $tokens, $options['reverse']);
+        $this->replaceTokens($copied_files, '@', '@', $tokens, $options['reverse']);
     }
 
     /**
@@ -113,7 +111,7 @@ class PHPreprocessor
      *
      * @return array An array of paths to found -dist files
      */
-    private function _findDistFiles($srcDir)
+    private function findDistFiles($srcDir)
     {
         $distFiles = array();
         $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($srcDir, \RecursiveDirectoryIterator::FOLLOW_SYMLINKS));
@@ -125,7 +123,7 @@ class PHPreprocessor
             }
         }
 
-        $this->_logMessage('Found %d -dist files in directory "%s"', array(count($distFiles), $srcDir));
+        $this->logMessage('Found %d -dist files in directory "%s"', array(count($distFiles), $srcDir));
 
         return $distFiles;
     }
@@ -184,9 +182,7 @@ class PHPreprocessor
                 $lines[] = '';
                 $lines[] = '# '.$namespaceCurrent;
             }
-            if ($value == "") {
-                $value = self::BLANK;
-            }
+
             if (!is_array($value)) {
                 $lines[] = sprintf('%s=%s', $token, $value);
             } else {
@@ -213,7 +209,7 @@ class PHPreprocessor
      *
      * @return null
      */
-    private function _replaceTokens($files, $beginToken, $endToken, $tokens, $reverse = false)
+    private function replaceTokens($files, $beginToken, $endToken, $tokens, $reverse = false)
     {
         if (!is_array($files)) {
             $files = array($files);
@@ -222,12 +218,6 @@ class PHPreprocessor
         foreach ($files as $file) {
             $content = file_get_contents($file);
             foreach ($tokens as $key => $value) {
-                if ($value == "") {
-                    throw new \Exception($value . 'No value has been found for '.$key.'. If it is normal, please put \'\' to indicate it.', 500);
-                } elseif ($value == self::BLANK) {
-                    // BLANK signifie qu'on doit laisser la variable vide.
-                    $value = '';
-                }
                 if ($reverse === false) {
                     $content = str_replace($beginToken.$key.$endToken, $value, $content);
                 } else {
@@ -243,14 +233,14 @@ class PHPreprocessor
         if ($reverse) {
             $feedbackReverse = ' in reverse mode';
         }
-        $this->_logMessage('Replaced %d tokens in %d files%s', array(count($tokens), count($files), $feedbackReverse));
+        $this->logMessage('Replaced %d tokens in %d files%s', array(count($tokens), count($files), $feedbackReverse));
     }
 
-    private function _logMessage($messagePattern, array $values = array())
+    private function logMessage($messagePattern, array $values = array())
     {
         $messagePattern = sprintf('[%s] %s', date('r'), $messagePattern);
         array_unshift($values, $messagePattern);
         $message = call_user_func_array('sprintf', $values);
-        $this->_log->fwrite($message."\n");
+        $this->log->fwrite($message."\n");
     }
 }
