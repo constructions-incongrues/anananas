@@ -1,7 +1,7 @@
 {
 	"name": "constructions-incongrues/ananas-build-toolkit",
 	"description": "L'Ananas Build Toolkit est un framework de configuration et de déploiement de projet logiciel.",
-	"homepage": "http://constructions-incongrues.github.com/ananas-build-toolkit/",
+	"homepage": "https://github.com/constructions-incongrues/ananas-build-toolkit",
 	"support": {
       "issues": "https://github.com/constructions-incongrues/ananas-build-toolkit/issues",
       "source": "https://github.com/constructions-incongrues/ananas-build-toolkit"

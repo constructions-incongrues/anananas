@@ -17,7 +17,7 @@ Il est basé sur [Ant](http://ant.apache.org) et [PHPreprocessor](https://github
 
 ## Installation et configuration
 
-Le toolkit s'installe à l'aide de [Composer](http://getcomposer.org). 
+Le toolkit s'installe à l'aide de [Composer](http://getcomposer.org).
 
 Placez-vous à la racine du projet et créez un fichier ```composer.json``` avec le contenu suivant :
 
@@ -30,30 +30,32 @@ Placez-vous à la racine du projet et créez un fichier ```composer.json``` avec
         }
     ],
     "require": {
-        "constructions-incongrues/ananas-build-toolkit": "~0.20"
+        "constructions-incongrues/ananas-build-toolkit": "0.24.*"
+    },
+    "scripts": {
+        "post-install-cmd": "ant -f vendor/constructions-incongrues/ananas-build-toolkit/modules/toolkit/module.xml init -Dbasedir=$PWD",
+        "post-update-cmd": "ant init"
     }
 }
 ```
 
-Installez Composer : 
+Installez Composer :
 
 ```bash
 curl -s http://getcomposer.org/installer | php
 ```
 
-Récupérez le toolkit et ses dépendances : 
+Récupérez le toolkit et ses dépendances :
 
 ```bash
-./composer.phar update --prefer-dist
+./composer.phar install --prefer-dist
 ```
 
-Initialisez le toolkit : 
+Initialisez le toolkit :
 
 ```bash
 ant -f vendor/constructions-incongrues/ananas-build-toolkit/modules/toolkit/module.xml init -Dbasedir=$PWD
 ```
-
-Par ailleurs, vous devez définir la variable d'environnement ``` ABT_USER ``` si vous ne vous pas avoir à définir le profile utilisé ``` -Dprofile=identifiant``` à chaque appel ```ant```.
 
 Par défaut, seul le module ```properties``` est activé. Vous pouvez activer plus de modules en ajoutant leur nom à la liste (séparée par des virgules) définie par la directive ```toolkit.modules``` dans le fichier ```etc/common/build.properties```. Par exemple
 
@@ -73,7 +75,7 @@ NB : Certaines version de oracle-java8 semblent poser problème. Par contre, ora
 
 Cette tâche installe les composants nécessaires au bon fonctionnement de chacun des modules du toolkit. Elle doit être exécutée à chaque fois qu'un nouveau module est activé. Elle est appelée automatiquement lors de l'initialisation du projet par la tâche ```init```.
 
-Pour l'invoquer : 
+Pour l'invoquer :
 
 ```bash
 ant bootstrap
@@ -83,7 +85,7 @@ ant bootstrap
 
 Cette tâche génère le code qui doit l'être (classes d'ORM, etc) et effectue les opérations sur le système de fichiers (création de dossiers, liens symboliques, permissions, etc).
 
-Pour l'invoquer : 
+Pour l'invoquer :
 
 ```bash
 ant build
@@ -93,7 +95,7 @@ ant build
 
 Cette tâche applique la configuration aux sources du projet. Les directives configurables dans les fichier suffixé par ```-dist``` sont remplacées par les valeurs définies dans le profil de configuration.
 
-Pour l'invoquer : 
+Pour l'invoquer :
 
 ```bash
 ant configure
@@ -103,7 +105,7 @@ ant configure
 
 Cette tâche gère les modifications des données du projet et de leurs structures (base de données ou autre).
 
-Pour l'invoquer : 
+Pour l'invoquer :
 
 ```bash
 ant migrate
@@ -113,17 +115,17 @@ ant migrate
 
 Cette tâche analyse la qualité du code source avant que les modifications ne soient poussées vers le dépôt.
 
-Pour l'invoquer : 
+Pour l'invoquer :
 
 ```bash
 ant review
 ```
 
-### sync 
+### sync
 
 Cette tâche envoie les sources du projet vers le(s) serveur(s) distant(s).
 
-Pour l'invoquer : 
+Pour l'invoquer :
 
 ```bash
 ant sync
@@ -133,7 +135,7 @@ ant sync
 
 Cette tâche met à jour le projet : dépendances git, Composer, etc. Elle recherche aussi les directives configurables dans les sources et met à jour les profils de configuration.
 
-Pour l'invoquer : 
+Pour l'invoquer :
 
 ```bash
 ant update
