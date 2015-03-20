@@ -29,7 +29,7 @@
 					<arg value="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor" />
 					<arg value="--command=apply" />
 					<arg value="--src=${project.dirs.base}/@{dir}" />
-					<arg value="--properties=${toolkit.modules.paths.properties},${project.dirs.base}/etc/common/build.properties,${project.dirs.base}/etc/${profile}/build.properties,${all.properties}" />
+					<arg value="--properties=${toolkit.modules.paths.properties},${project.dirs.base}/${abt.dir.profiles}/common/build.properties,${project.dirs.base}/${abt.dir.profiles}/${profile}/build.properties,${all.properties}" />
 				</exec>
 			</sequential>
 		</for>
@@ -44,7 +44,7 @@
 					<arg value="--command=apply" />
 					<arg value="--reverse=/^.+\.(url|path)\..+$/" />
 		         	<arg value="--src=${project.dirs.base}/@{dir}" />
-		         	<arg value="--properties=${toolkit.modules.paths.properties},${project.dirs.base}/etc/common/build.properties,${project.dirs.base}/etc/${profile}/build.properties" />
+		         	<arg value="--properties=${toolkit.modules.paths.properties},${project.dirs.base}/${abt.dir.profiles}/common/build.properties,${project.dirs.base}/${abt.dir.profiles}/${profile}/build.properties" />
 				</exec>
 			</sequential>
 		</for>
@@ -53,18 +53,18 @@
 	<!-- Updates common build properties -->
 	<target name="update-common">
 		<!-- Backup existing build.properties file -->
-		<copy file="${project.dirs.base}/etc/${profile}/build.properties" tofile="${project.dirs.base}/etc/${profile}/build.properties.bak" failonerror="false" />
+		<copy file="${project.dirs.base}/${abt.dir.profiles}/${profile}/build.properties" tofile="${project.dirs.base}/${abt.dir.profiles}/${profile}/build.properties.bak" failonerror="false" />
 
 		<!-- Generate common build.properties file from project sources -->
 		<property file="${toolkit.basedir}/modules/php/build.properties" />
 		<for list="${properties.dirs}" param="dir">
 			<sequential>
-				<exec executable="${php.executable}" dir="${project.dirs.base}" output="${project.dirs.base}/etc/common/build.properties" logError="true" failonerror="true">
+				<exec executable="${php.executable}" dir="${project.dirs.base}" output="${project.dirs.base}/${abt.dir.profiles}/common/build.properties" logError="true" failonerror="true">
 					<arg value="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor" />
 					<arg value="--command=extract" />
 					<arg value="--exclude-from=${toolkit.modules.paths.properties}" />
 					<arg value="--src=${project.dirs.base}/@{dir}" />
-					<arg value="--merge-with=${project.dirs.base}/etc/common/build.properties" />
+					<arg value="--merge-with=${project.dirs.base}/${abt.dir.profiles}/common/build.properties" />
 				</exec>
 			</sequential>
 		</for>
@@ -73,22 +73,22 @@
 	<!-- Updates profile build properties -->
 	<target name="update-profile" depends="create-profile">
 		<!-- Create tree if required -->
-		<mkdir dir="${project.dirs.base}/etc/${profile}" />
-		<touch file="${project.dirs.base}/etc/${profile}/build.properties" />
+		<mkdir dir="${project.dirs.base}/${abt.dir.profiles}/${profile}" />
+		<touch file="${project.dirs.base}/${abt.dir.profiles}/${profile}/build.properties" />
 
 		<!-- Backup existing build.properties file -->
-		<copy file="${project.dirs.base}/etc/${profile}/build.properties" tofile="${project.dirs.base}/etc/${profile}/build.properties.bak" failonerror="false" />
+		<copy file="${project.dirs.base}/${abt.dir.profiles}/${profile}/build.properties" tofile="${project.dirs.base}/${abt.dir.profiles}/${profile}/build.properties.bak" failonerror="false" />
 
 		<!-- Generate profile build.properties file from project sources -->
 		<property file="${toolkit.basedir}/modules/php/build.properties" />
 		<for list="${properties.dirs}" param="dir">
 			<sequential>
-				<exec executable="${php.executable}" dir="${project.dirs.base}" output="${project.dirs.base}/etc/${profile}/build.properties" logError="true" failonerror="true">
+				<exec executable="${php.executable}" dir="${project.dirs.base}" output="${project.dirs.base}/${abt.dir.profiles}/${profile}/build.properties" logError="true" failonerror="true">
 					<arg value="${toolkit.basedir}/vendor/phpreprocessor/bin/phpreprocessor" />
 					<arg value="--command=extract" />
-					<arg value="--exclude-from=${toolkit.modules.paths.properties},${project.dirs.base}/etc/common/build.properties" />
+					<arg value="--exclude-from=${toolkit.modules.paths.properties},${project.dirs.base}/${abt.dir.profiles}/common/build.properties" />
 					<arg value="--src=${project.dirs.base}/@{dir}" />
-					<arg value="--merge-with=${project.dirs.base}/etc/${profile}/build.properties" />
+					<arg value="--merge-with=${project.dirs.base}/${abt.dir.profiles}/${profile}/build.properties" />
 				</exec>
 			</sequential>
 		</for>
@@ -97,6 +97,6 @@
 	<!-- Creates a new property file for configuration profile -->
 	<target name="create-profile" description="Creates an empty build.properties for the user defined by the ABT_USER environment variable or the -Dprofile parameter">
 		<!-- Create profile directory and property file if it does not exist -->
-		<touch file="${basedir}/etc/${profile}/build.properties" mkdirs="true" verbose="true" />
+		<touch file="${basedir}/${abt.dir.profiles}/${profile}/build.properties" mkdirs="true" verbose="true" />
 	</target>
 </project>
