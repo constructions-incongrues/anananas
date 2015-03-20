@@ -12,8 +12,5 @@
             "name": "Constructions Incongrues",
             "email": "contact@constructions-incongrues.net"
         }
-    ],
-    "scripts": {
-        "post-update-cmd": "ant init"
-    }
+    ]
 }
