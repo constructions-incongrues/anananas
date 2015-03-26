@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="rsync2">	
+<project name="rsync2">
 	<!-- Mandatory targets -->
-	<target name="bootstrap" />
+	<target name="bootstrap">
+        <dirname file="${ant.file.rsync}" property="toolkit.module.basedir" />
+        <initConfiguration
+            projectDir="${project.dirs.base}"
+            configurationDir="${abt.dir.configuration}"
+            moduleDir="${toolkit.module.basedir}"
+            moduleName="rsync2" />
+    </target>
 	<target name="update" />
 	<target name="configure" />
 	<target name="build" />
@@ -9,14 +16,6 @@
 	<target name="migrate" />
 	<target name="sync" depends="rsync" />
 
-	<target name="deploy-assets">
-		<echo>Deploy Rsync assets to common configuration</echo>
-		<dirname file="${ant.file.rsync}" property="toolkit.module.basedir" />
-  		<copy todir="${project.dirs.base}/etc/common">
-			<fileset dir="${toolkit.module.basedir}/assets" includes="*" />
-		</copy>
-	</target>
-	
 	<!-- Syncs your project files to a remote destination -->
 	<!-- TODO : only use one rsync exec for all remotes -->
 	<target name="rsync">
@@ -27,7 +26,7 @@
 
 		<!-- Primary rsync destination -->
 		<echo>Rsyncing to primary destination ${remote.username}@${remote.host}:${remote.path.root}</echo>
-		<echo>rsync additional options : ${rsync.options}</echo> 
+		<echo>rsync additional options : ${rsync.options}</echo>
         <antcall target="rsync.remote">
             <param name="remote" value="${remote.username}@${remote.host}:${remote.path.root}" />
         </antcall>
@@ -55,7 +54,7 @@
             ]]>
         </script>
 	</target>
-	
+
 	<target name="rsync.do">
 		<echo>Rsyncing to secondary destination ${remote.current.username}@${remote.current.host}:${remote.current.path.root}</echo>
         <echo>rsync additional options : ${rsync.options}</echo>
@@ -66,9 +65,19 @@
 
     <target name="rsync.remote">
         <if>
-            <available file="${project.dirs.base}/etc/common/rsync.include"/>
+            <available file="${project.dirs.base}/${abt.dir.configuration}/modules/rsync2/exclude"/>
             <then>
-                <property name="rsync.include" value="--include-from=${project.dirs.base}/etc/common/rsync.include"/>
+                <property name="rsync.exclude" value="--exclude-from=${project.dirs.base}/${abt.dir.configuration}/modules/rsync2/exclude"/>
+            </then>
+            <else>
+                <property name="rsync.exclude" value=""/>
+            </else>
+        </if>
+
+        <if>
+            <available file="${project.dirs.base}/${abt.dir.configuration}/modules/rsync2/include"/>
+            <then>
+                <property name="rsync.include" value="--include-from=${project.dirs.base}/${abt.dir.configuration}/modules/rsync2/include"/>
             </then>
             <else>
                 <property name="rsync.include" value=""/>
@@ -77,7 +86,7 @@
 
         <exec executable="rsync" failonerror="true">
 			<arg line="
-              --exclude-from=${project.dirs.base}/etc/common/rsync.exclude
+              ${rsync.exclude}
               ${rsync.include}
               --force
               --links
