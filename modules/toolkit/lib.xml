@@ -26,7 +26,7 @@
         <sequential>
             <mkdir dir="@{projectDir}/@{configurationDir}/modules/@{moduleName}" />
             <copy todir="@{projectDir}/@{configurationDir}/modules/@{moduleName}">
-                <fileset dir="@{moduleDir}/etc" includes="*" />
+                <fileset dir="@{moduleDir}/etc" includes="*" erroronmissingdir="false" />
             </copy>
         </sequential>
     </macrodef>

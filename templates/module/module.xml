@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="@module.name@">
-	<!-- toolkit phase : phase -->
-	<target name="@module.name@.targetname" description="Target description">
-	</target>
+    <!-- Mandatory targets -->
+    <target name="bootstrap">
+        <dirname file="${ant.file.toolkit}" property="toolkit.module.toolkitdir" />
+        <dirname file="${toolkit.module.toolkitdir}/@module.name@" property="toolkit.module.basedir" />
+        <initConfiguration
+            projectDir="${project.dirs.base}"
+            configurationDir="${abt.dir.configuration}"
+            moduleDir="${toolkit.module.basedir}"
+            moduleName="@module.name@" />
+    </target>
+    <target name="update" />
+    <target name="configure" />
+    <target name="build" />
+    <target name="review" />
+    <target name="migrate" />
+    <target name="sync" />
 </project>

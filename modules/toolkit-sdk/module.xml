@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="toolkit-sdk">
 	<!-- Mandatory targets -->
-	<target name="bootstrap" />
+	<target name="bootstrap">
+        <dirname file="${ant.file.toolkit-sdk}" property="toolkit.module.basedir" />
+        <initConfiguration
+            projectDir="${project.dirs.base}"
+            configurationDir="${abt.dir.configuration}"
+            moduleDir="${toolkit.module.basedir}"
+            moduleName="toolkit-sdk" />
+	</target>
 	<target name="update" />
 	<target name="configure" />
 	<target name="build" />
@@ -17,6 +24,6 @@
 		<copy todir="${toolkit.basedir}/modules/${module.name}" overwrite="false" verbose="true">
 			<fileset dir="${toolkit.basedir}/templates/module" />
 		</copy>
-		<replace dir="${toolkit.basedir}/modules/${module.name}/" includes="*" excludes="**/module.xml" token="@module.name@" value="${module.name}" summary="true" />
+		<replace dir="${toolkit.basedir}/modules/${module.name}/" includes="*" token="@module.name@" value="${module.name}" summary="true" />
 	</target>
 </project>
