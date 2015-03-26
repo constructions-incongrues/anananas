@@ -2,7 +2,7 @@
 <project name="rsync2">
 	<!-- Mandatory targets -->
 	<target name="bootstrap">
-        <dirname file="${ant.file.rsync}" property="toolkit.module.basedir" />
+        <dirname file="${ant.file.rsync2}" property="toolkit.module.basedir" />
         <initConfiguration
             projectDir="${project.dirs.base}"
             configurationDir="${abt.dir.configuration}"
