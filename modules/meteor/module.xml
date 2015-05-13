@@ -4,17 +4,17 @@
     <target name="bootstrap" />
     <target name="update" />
     <target name="configure" />
-    <target name="build" depends="meteor.bundle" />
+    <target name="build" depends="meteor.build_bundle" />
     <target name="review" />
     <target name="migrate" />
     <target name="sync" />
 
-    <target name="meteor.bundle">
-        <exec executable="${mrt.executable}" dir="${project.dirs.base}/${meteor.src}">
-            <arg line="install" />
-        </exec>
+    <target name="meteor.build_bundle">
         <exec executable="${meteor.executable}" dir="${project.dirs.base}/${meteor.src}">
-            <arg line="bundle --debug --directory ${meteor.bundle}" />
+            <arg line="build --directory ${project.dirs.base}/${meteor.build-dir}" />
+        </exec>
+        <exec executable="${npm.executable}" dir="${project.dirs.base}/${meteor.build-dir}/bundle/programs/server">
+            <arg line="install" />
         </exec>
     </target>
 </project>
