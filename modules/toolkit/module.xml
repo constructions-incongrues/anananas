@@ -14,6 +14,13 @@
 		</classpath>
 	</taskdef>
 
+	<!-- Guess profile -->
+	<exec outputproperty="username" logError="true" executable="whoami" />
+	<property environment="env"/>
+	<condition property="profile" value="${env.ABT_USER}" else="${username}">
+		<isset property="env.ABT_USER" />
+	</condition>
+
 	<!-- Global ABT properties -->
 	<property file="${project.dirs.base}/abt.properties" />
 
@@ -96,16 +103,8 @@
 	</target>
 
 	<target name="init" description="Sets up project for usage with the toolkit">
-		<!-- Guess profile -->
-		<exec outputproperty="username" logError="true" executable="whoami" />
-		<property environment="env"/>
-		<condition property="profile" value="${env.ABT_USER}" else="${username}">
-			<isset property="env.ABT_USER" />
-		</condition>
-
 		<!-- Create abt.properties file -->
 		<copy file="${toolkit.basedir}/templates/abt.properties" todir="${basedir}" overwrite="false" />
-		<replace file="${basedir}/abt.properties" token="@profile@" value="${profile}" />
 
 		<property file="${toolkit.basedir}/templates/abt.properties" />
 
