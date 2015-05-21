@@ -51,12 +51,6 @@ Récupérez le toolkit et ses dépendances :
 ./composer.phar install --prefer-dist
 ```
 
-Initialisez le toolkit :
-
-```bash
-ant -f vendor/constructions-incongrues/ananas-build-toolkit/modules/toolkit/module.xml init -Dbasedir=$PWD
-```
-
 Par défaut, seul le module ```properties``` est activé. Vous pouvez activer plus de modules en ajoutant leur nom à la liste (séparée par des virgules) définie par la directive ```toolkit.modules``` dans le fichier ```etc/common/build.properties```. Par exemple
 
 ```
@@ -71,7 +65,7 @@ Le toolkit expose sept tâches. L'appel d'une tâche déclenche les actions corr
 
 NB : Certaines version de oracle-java8 semblent poser problème. Par contre, oracle-java7 fonctionne sans problème.
 
-### boostrap
+### bootstrap
 
 Cette tâche installe les composants nécessaires au bon fonctionnement de chacun des modules du toolkit. Elle doit être exécutée à chaque fois qu'un nouveau module est activé. Elle est appelée automatiquement lors de l'initialisation du projet par la tâche ```init```.
 
