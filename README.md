@@ -30,7 +30,7 @@ Placez-vous à la racine du projet et créez un fichier ```composer.json``` avec
         }
     ],
     "require": {
-        "constructions-incongrues/ananas-build-toolkit": "0.24.*"
+        "constructions-incongrues/ananas-build-toolkit": "0.25.*"
     },
     "scripts": {
         "post-install-cmd": "ant -f vendor/constructions-incongrues/ananas-build-toolkit/modules/toolkit/module.xml init -Dbasedir=$PWD",
