@@ -4,7 +4,7 @@
     <target name="bootstrap" />
     <target name="update" />
     <target name="configure" />
-    <target name="build" depends="symfony2.assets.install, symfony2.cache.clear" />
+    <target name="build" depends="symfony2.assets.install, symfony2.assetic.dump, symfony2.cache.clear" />
     <target name="review" />
     <target name="migrate" />
     <target name="sync" />
@@ -13,6 +13,13 @@
         <!-- On installe les assets avec l'option symlink -->
         <exec executable="${php.executable}" dir="${project.dirs.base}/${symfony2.dirs.base}" failonerror="true">
             <arg line="app/console assets:install --process-isolation --env=${symfony2.environment} --symlink --relative" />
+        </exec>
+    </target>
+
+    <target name="symfony2.assetic.dump" >
+        <!-- On installe les assets avec l'option symlink -->
+        <exec executable="${php.executable}" dir="${project.dirs.base}/${symfony2.dirs.base}" failonerror="true">
+            <arg line="src/app/console assetic:dump --process-isolation --env=${symfony2.environment}" />
         </exec>
     </target>
 
