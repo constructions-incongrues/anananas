@@ -26,7 +26,7 @@
     <target name="symfony2.cache.clear">
         <!-- On vide le cache -->
         <exec executable="${php.executable}" dir="${project.dirs.base}/${symfony2.dirs.base}" failonerror="true">
-            <arg line="app/console cache:clear --process-isolation --env=${symfony2.environment}" />
+            <arg line="app/console cache:clear --process-isolation --no-warmup --env=${symfony2.environment}" />
         </exec>
     </target>
 
