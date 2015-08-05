@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="npm">
+    <!-- Mandatory targets -->
+    <target name="bootstrap">
+        <dirname file="${ant.file.toolkit}" property="toolkit.module.toolkitdir" />
+        <dirname file="${toolkit.module.toolkitdir}/npm" property="toolkit.module.basedir" />
+        <initConfiguration
+            projectDir="${project.dirs.base}"
+            configurationDir="${abt.dir.configuration}"
+            moduleDir="${toolkit.module.basedir}"
+            moduleName="npm" />
+    </target>
+    <target name="update" />
+    <target name="configure" />
+    <target name="build" depends="npm.install" />
+    <target name="review" />
+    <target name="migrate" />
+    <target name="sync" />
+
+    <target name="npm.install">
+        <exec dir="${project.dirs.base}" executable="npm" failOnError="true">
+			<arg line="install" />
+		</exec>
+    </target>
+</project>
