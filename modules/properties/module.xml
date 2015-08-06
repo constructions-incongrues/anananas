@@ -19,7 +19,7 @@
 		<property file="${toolkit.basedir}/modules/php/build.properties" />
 
 		<!-- Make all properties available -->
-		<tempfile property="all.properties" deleteonexit="true" />
+		<tempfile property="all.properties" deleteonexit="false" />
 		<echoproperties destfile="${all.properties}" />
 		<replace file="${all.properties}" token="\:" value=":" />
 
