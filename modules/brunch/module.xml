@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="brunch">
+    <dirname property="brunch.basedir" file="${ant.file.brunch}" />
+
     <!-- Mandatory targets -->
     <target name="bootstrap">
         <dirname file="${ant.file.toolkit}" property="toolkit.module.toolkitdir" />
@@ -19,8 +21,8 @@
 
     <!-- toolkit phase : build -->
 	<target name="brunch.do-build" description="Triggers Brunch build">
-        <ant antfile="../npm/module.xml" target="npm.install"/>
-        <ant antfile="../bower/module.xml" target="bower.install"/>
+        <ant antfile="../npm/module.xml" dir="${brunch.basedir}" target="npm.install"/>
+        <ant antfile="../bower/module.xml" dir="${brunch.basedir}" target="bower.install"/>
         <exec dir="${project.dirs.base}" executable="${brunch.executable}" failOnError="true">
 			<arg line="build" />
 		</exec>
