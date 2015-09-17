@@ -11,21 +11,21 @@
 
     <target name="symfony2.assets.install" >
         <!-- On installe les assets avec l'option symlink -->
-        <exec executable="${php.executable}" dir="${project.dirs.base}/${symfony2.dirs.base}" failonerror="true">
+        <exec executable="php" dir="${project.dirs.base}/${symfony2.dirs.base}" failonerror="true">
             <arg line="app/console assets:install --process-isolation --env=${symfony2.environment} --symlink --relative" />
         </exec>
     </target>
 
     <target name="symfony2.assetic.dump" >
         <!-- On installe les assets avec l'option symlink -->
-        <exec executable="${php.executable}" dir="${project.dirs.base}/${symfony2.dirs.base}" failonerror="true">
+        <exec executable="php" dir="${project.dirs.base}/${symfony2.dirs.base}" failonerror="true">
             <arg line="app/console assetic:dump --process-isolation --env=${symfony2.environment}" />
         </exec>
     </target>
 
     <target name="symfony2.cache.clear">
         <!-- On vide le cache -->
-        <exec executable="${php.executable}" dir="${project.dirs.base}/${symfony2.dirs.base}" failonerror="true">
+        <exec executable="php" dir="${project.dirs.base}/${symfony2.dirs.base}" failonerror="true">
             <arg line="app/console cache:clear --process-isolation --no-warmup --env=${symfony2.environment}" />
         </exec>
     </target>
