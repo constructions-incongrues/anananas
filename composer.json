@@ -6,7 +6,9 @@
       "issues": "https://github.com/constructions-incongrues/ananas-build-toolkit/issues",
       "source": "https://github.com/constructions-incongrues/ananas-build-toolkit"
     },
-    "require": {},
+    "require": {
+		"php": ">=5.5.0"
+	},
     "authors": [
         {
             "name": "Constructions Incongrues",
