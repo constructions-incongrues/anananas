@@ -23,7 +23,9 @@
 	<target name="brunch.do-build" description="Triggers Brunch build">
         <ant antfile="../npm/module.xml" dir="${brunch.basedir}" target="npm.install"/>
         <ant antfile="../bower/module.xml" dir="${brunch.basedir}" target="bower.install"/>
+        <dirname property="npm.dir" file="${npm.executable}" />
         <exec dir="${project.dirs.base}" executable="${brunch.executable}" failOnError="true">
+            <env key="PATH" value="${npm.dir}:${env.PATH}" />
 			<arg line="build" />
 		</exec>
 	</target>
