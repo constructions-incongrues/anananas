@@ -18,7 +18,7 @@
     <target name="sync" />
 
     <target name="npm.install">
-        <exec dir="${project.dirs.base}" executable="npm" failOnError="true">
+        <exec dir="${project.dirs.base}" executable="${npm.executable}" failOnError="true">
 			<arg line="install" />
 		</exec>
     </target>
