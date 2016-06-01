@@ -30,7 +30,7 @@
         <ant antfile="../npm/module.xml" target="npm.install"/>
         <exec dir="${project.dirs.base}" executable="${bower.executable}" failOnError="true" resolveexecutable="true">
             <env key="PATH" path="${runtime.nodejs.path}" />
-			<arg line="-f install" />
+			<arg line="-f install --config.interactive=false --allow-root" />
 		</exec>
 	</target>
 
@@ -38,7 +38,7 @@
 	<target name="bower.update-dependencies" description="Updates dependencies managed by Bower" depends="bower.env-init">
 		<exec dir="${project.dirs.base}" executable="${bower.executable}" failOnError="true" resolveexecutable="true">
             <env key="PATH" path="${runtime.nodejs.path}" />
-            <arg line="update" />
+            <arg line="update --config.interactive=false --allow-root" />
 		</exec>
 	</target>
 </project>
