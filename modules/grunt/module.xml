@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="grunt">
+    <dirname property="grunt.basedir" file="${ant.file.grunt}" />
+
+    <!-- Mandatory targets -->
+    <target name="bootstrap">
+        <dirname file="${ant.file.toolkit}" property="toolkit.module.toolkitdir" />
+        <dirname file="${toolkit.module.toolkitdir}/grunt" property="toolkit.module.basedir" />
+        <initConfiguration
+            projectDir="${project.dirs.base}"
+            configurationDir="${abt.dir.configuration}"
+            moduleDir="${toolkit.module.basedir}"
+            moduleName="grunt" />
+    </target>
+    <target name="update" />
+    <target name="configure" />
+    <target name="build" depends="grunt.do-build" />
+    <target name="review" />
+    <target name="migrate" />
+    <target name="sync" />
+
+    <!-- toolkit phase : build -->
+	<target name="grunt.do-build" description="Triggers Grunt build">
+        <ant antfile="../npm/module.xml" dir="${grunt.basedir}" target="npm.install"/>
+        <dirname property="npm.dir" file="${npm.executable}" />
+        <exec dir="${project.dirs.base}" executable="${grunt.executable}" failOnError="true">
+            <env key="PATH" value="${npm.dir}:${env.PATH}" />
+		</exec>
+	</target>
+</project>
