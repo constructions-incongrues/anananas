@@ -86,8 +86,8 @@
 
         <exec executable="rsync" failonerror="true">
 			<arg line="
-              ${rsync.exclude}
               ${rsync.include}
+              ${rsync.exclude}
               --force
               --links
               ${rsync.options}
