@@ -26,7 +26,7 @@
         <dirname property="npm.dir" file="${npm.executable}" />
         <exec dir="${project.dirs.base}" executable="${brunch.executable}" failOnError="true">
             <env key="PATH" value="${npm.dir}:${env.PATH}" />
-			<arg line="build" />
+			<arg line="build --env=${brunch.environment}" />
 		</exec>
 	</target>
 </project>
