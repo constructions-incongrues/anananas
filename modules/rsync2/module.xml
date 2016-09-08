@@ -21,14 +21,15 @@
 	<target name="rsync">
 		<!-- Sanity checks -->
 		<fail unless="remote.username" />
-		<fail unless="remote.host" />
+        <fail unless="remote.host" />
 		<fail unless="remote.path.root" />
+        <fail unless="remote.port" />
 
 		<!-- Primary rsync destination -->
-		<echo>Rsyncing to primary destination ${remote.username}@${remote.host}:${remote.path.root}</echo>
+		<echo>Rsyncing to primary destination -p ${remote.port} ${remote.username}@${remote.host}:${remote.path.root}</echo>
 		<echo>rsync additional options : ${rsync.options}</echo>
         <antcall target="rsync.remote">
-            <param name="remote" value="${remote.username}@${remote.host}:${remote.path.root}" />
+            <param name="remote" value="ssh -p ${remote.port} ${remote.username}@${remote.host}:${remote.path.root}" />
         </antcall>
 
 		<!-- Secondary rsync destinations -->
@@ -40,10 +41,12 @@
                 if (ids != undefined) {
                     ids = ids.split(',');
                     for (var i = 0; i < ids.length; i++) {
-                    	var remoteHost = project.getProperty('remote.' + ids[i] + '.host');
+                        var remoteHost = project.getProperty('remote.' + ids[i] + '.host');
+                    	var remotePort = project.getProperty('remote.' + ids[i] + '.port');
                     	var remoteUsername = project.getProperty('remote.' + ids[i] + '.username');
                     	var remotePathRoot = project.getProperty('remote.' + ids[i] + '.path.root');
-                    	project.setProperty('remote.current.host', remoteHost);
+                        project.setProperty('remote.current.host', remoteHost);
+                    	project.setProperty('remote.current.port', remotePort);
                     	project.setProperty('remote.current.username', remoteUsername);
                     	project.setProperty('remote.current.path.root', remotePathRoot);
                         taskAntCall = project.createTask('antcall');
@@ -56,10 +59,10 @@
 	</target>
 
 	<target name="rsync.do">
-		<echo>Rsyncing to secondary destination ${remote.current.username}@${remote.current.host}:${remote.current.path.root}</echo>
+		<echo>Rsyncing to secondary destination -p ${remote.current.port} ${remote.current.username}@${remote.current.host}:${remote.current.path.root}</echo>
         <echo>rsync additional options : ${rsync.options}</echo>
         <antcall target="rsync.remote">
-            <param name="remote" value="${remote.current.username}@${remote.current.host}:${remote.current.path.root}" />
+            <param name="remote" value="ssh -p ${remote.current.port} ${remote.current.username}@${remote.current.host}:${remote.current.path.root}" />
         </antcall>
     </target>
 
@@ -91,7 +94,7 @@
               --force
               --links
               ${rsync.options}
-              -agpvzc ${project.dirs.base}/ -e ssh ${remote}" />
+              -agpvzc ${project.dirs.base}/ -e '${remote}'" />
 		</exec>
     </target>
 </project>
