@@ -29,7 +29,10 @@
 		<echo>Rsyncing to primary destination -p ${remote.port} ${remote.username}@${remote.host}:${remote.path.root}</echo>
 		<echo>rsync additional options : ${rsync.options}</echo>
         <antcall target="rsync.remote">
-            <param name="remote" value="ssh -p ${remote.port} ${remote.username}@${remote.host}:${remote.path.root}" />
+            <param name="remote" value="ssh -p ${remote.port}" />
+            <param name="remote.current.username" value="${remote.username}" />
+            <param name="remote.current.host" value="${remote.host}" />
+            <param name="remote.current.path.root" value="${remote.path.root}" />
         </antcall>
 
 		<!-- Secondary rsync destinations -->
@@ -65,7 +68,7 @@
 		<echo>Rsyncing to secondary destination -p ${remote.current.port} ${remote.current.username}@${remote.current.host}:${remote.current.path.root}</echo>
         <echo>rsync additional options : ${rsync.options}</echo>
         <antcall target="rsync.remote">
-            <param name="remote" value="ssh -p ${remote.current.port} ${remote.current.username}@${remote.current.host}:${remote.current.path.root}" />
+            <param name="remote" value="ssh -p ${remote.current.port}" />
         </antcall>
     </target>
 
@@ -97,7 +100,7 @@
               --force
               --links
               ${rsync.options}
-              -agpvzc ${project.dirs.base}/ -e '${remote}'" />
+              -agpvzc -e '${remote}' ${project.dirs.base}/ ${remote.current.username}@${remote.current.host}:${remote.current.path.root}" />
 		</exec>
     </target>
 </project>
