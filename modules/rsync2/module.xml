@@ -100,7 +100,7 @@
               --force
               --links
               ${rsync.options}
-              -agpvzc -e '${remote}' ${project.dirs.base}/ ${remote.current.username}@${remote.current.host}:${remote.current.path.root}" />
+              -agpvzc -e '${remote}' ${project.dirs.base}${rsync.local.path} ${remote.current.username}@${remote.current.host}:${remote.current.path.root}" />
 		</exec>
     </target>
 </project>
