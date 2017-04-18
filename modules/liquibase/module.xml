@@ -42,6 +42,11 @@
 			</else>
 		</if>
 	</target>
+	
+	<target name="rollback.changeSet" depends="config,init">
+		<echo>Using DSN : "jdbc:mysql://${current.db.host}:${current.db.port}/${current.db.name}?${liquibase.connection.parameters}"</echo>
+		<rollbackDatabase rollbackCount="1" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://${current.db.host}:${current.db.port}/${current.db.name}?${liquibase.connection.parameters}" username="${current.db.username}" password="${current.db.password}" promptOnNonLocalDatabase="false" dropFirst="false" classpathref="classpath" />
+	</target>
 
 	<target name="config">
 		<echo>Configuring for database "${runtime.db.name}"</echo>
