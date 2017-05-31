@@ -26,7 +26,7 @@
     <target name="symfony3.cache.clear" depends="symfony3.doctrine.cache.clear">
         <!-- On vide le cache -->
         <exec executable="php" dir="${project.dirs.base}/${symfony3.dirs.base}" failonerror="true">
-            <arg line="bin/console cache:clear --no-debug --no-warmup --env=${symfony3.environment}" />
+            <arg line="bin/console cache:clear --env=${symfony3.environment}" />
         </exec>
     </target>
 
