@@ -23,6 +23,7 @@
 		<echoproperties destfile="${all.properties}" />
 		<replace file="${all.properties}" token="\:" value=":" />
 		<replace file="${all.properties}" token="\#" value="#" />
+		<replace file="${all.properties}" token="\!" value="!" />
 
 		<for list="${properties.dirs}" param="dir">
 			<sequential>
