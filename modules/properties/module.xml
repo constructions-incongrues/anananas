@@ -21,9 +21,12 @@
 		<!-- Make all properties available -->
 		<tempfile property="all.properties" deleteonexit="true" />
 		<echoproperties destfile="${all.properties}" />
+
+		<!-- Fix echoproperties lame escaping -->
 		<replace file="${all.properties}" token="\:" value=":" />
 		<replace file="${all.properties}" token="\#" value="#" />
 		<replace file="${all.properties}" token="\!" value="!" />
+		<replace file="${all.properties}" token="\=" value="=" />
 
 		<for list="${properties.dirs}" param="dir">
 			<sequential>
