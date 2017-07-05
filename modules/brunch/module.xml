@@ -19,14 +19,24 @@
     <target name="migrate" />
     <target name="sync" />
 
+    <!-- Helpers -->
+    <target name="brunch.rebuild-node-sass" description="Rebuilds node-sass">
+        <ant antfile="../npm/module.xml" dir="${brunch.basedir}" target="npm.install" />
+        <dirname property="npm.dir" file="${npm.executable}" />
+        <exec dir="${project.dirs.base}" executable="${npm.executable}" failOnError="true">
+            <env key="PATH" value="${npm.dir}:${env.PATH}" />
+            <arg line="rebuild node-sass" />
+        </exec>
+    </target>
+
     <!-- toolkit phase : build -->
-	<target name="brunch.do-build" description="Triggers Brunch build">
-        <ant antfile="../npm/module.xml" dir="${brunch.basedir}" target="npm.install"/>
-        <ant antfile="../bower/module.xml" dir="${brunch.basedir}" target="bower.install"/>
+    <target name="brunch.do-build" description="Triggers Brunch build" depends="brunch.rebuild-node-sass">
+        <ant antfile="../npm/module.xml" dir="${brunch.basedir}" target="npm.install" />
+        <ant antfile="../bower/module.xml" dir="${brunch.basedir}" target="bower.install" />
         <dirname property="npm.dir" file="${npm.executable}" />
         <exec dir="${project.dirs.base}" executable="${brunch.executable}" failOnError="true">
             <env key="PATH" value="${npm.dir}:${env.PATH}" />
-			<arg line="build --env=${brunch.environment}" />
-		</exec>
-	</target>
+            <arg line="build --env=${brunch.environment}" />
+        </exec>
+    </target>
 </project>
