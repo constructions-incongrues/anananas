@@ -8,12 +8,12 @@ Ajoutez les lignes suivantes à votre fichier ```build.xml```, aux endroits indi
 
 Après l'import du module toolkit :
  ```xml
- <import file="${toolkit.basedir}/modules/symfony1/module.xml" />
+ <import file="${toolkit.dir.base}/modules/symfony1/module.xml" />
  ```
 
 Dans la *target* ```setprofile``` :
 ```xml
-<property file="${toolkit.basedir}/modules/symfony1/build.properties" />
+<property file="${toolkit.dir.base}/modules/symfony1/build.properties" />
 ```
 
 ##### Directives de configuration

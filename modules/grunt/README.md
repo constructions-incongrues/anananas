@@ -8,12 +8,12 @@ Ajoutez les lignes suivantes au fichier ```build.xml``` du projet, aux endroits 
 
 Après l'import du module toolkit :
  ```xml
- <import file="${toolkit.basedir}/modules/grunt/module.xml" />
+ <import file="${toolkit.dir.base}/modules/grunt/module.xml" />
  ```
 
 Dans la *target* ```setprofile``` :
 ```xml
-<property file="${toolkit.basedir}/modules/grunt/build.properties" />
+<property file="${toolkit.dir.base}/modules/grunt/build.properties" />
 ```
 
 Si besoin, surchargez les directives de configuration par défaut du module dans votre profil de configuration.

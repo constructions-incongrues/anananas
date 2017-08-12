@@ -6,3 +6,6 @@
 modules/behat/bin
 modules/behat/vendor
 modules/behat/composer.lock
+
+# vendors
+vendor

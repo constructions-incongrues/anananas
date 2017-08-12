@@ -1,26 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="lftp">	
 	<!-- Mandatory targets -->
-	<target name="bootstrap" />
-	<target name="update" />
-	<target name="configure" />
+    <target name="init" />
+	<target name="install" />
 	<target name="build" />
-	<target name="review" />
-	<target name="migrate" />
-	<target name="sync" depends="mirror" />
+	<target name="package" />
+	<target name="upload" depends="module.lftp.upload" />
+	<target name="configure" />
 
 	<!-- Syncs your project files to a remote destination -->
-	<target name="mirror">
+	<target name="module.lftp.upload" description="">
 		<!-- Sanity checks -->
-		<fail unless="remote.username" />
-		<fail unless="remote.host" />
-		<fail unless="remote.path.root" />
+		<fail unless="lftp.username" />
+		<fail unless="lftp.hostname" />
+		<fail unless="lftp.path" />
 
-		<echo>Syncing to ftp://${lftp.remote.username}@${lftp.remote.hostname}</echo>
+		<echo>Syncing to ftp://${lftp.username}@${lftp.hostname}</echo>
 		
-		<exec executable="${lftp.executable}" failonerror="true">
-			<arg line='ftp://${lftp.remote.username}:${lftp.remote.password}@${lftp.remote.hostname} -e "mirror -e -R -v ${lftp.exclude} ${project.dirs.base} ${lftp.remote.path}"' />
+		<exec executable="${lftp.executable}" dir="${application.dir.base}" failonerror="true">
+			<arg line='ftp://${lftp.username}:${lftp.password}@${lftp.hostname} -e "mirror -e -R -v ${lftp.exclude} ${application.dir.base} ${lftp.path}"' />
 		</exec>
 	</target>
-	
 </project>

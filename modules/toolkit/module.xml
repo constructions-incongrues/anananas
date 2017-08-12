@@ -1,130 +1,122 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="toolkit" default="help">
-	<!-- Store toolkit base directory for later use -->
-	<dirname property="toolkit.basedir" file="${ant.file.toolkit}/../.." />
+    <!-- Store toolkit base directory for later use -->
+    <dirname property="toolkit.dir.base" file="${ant.file.toolkit}/../.." />
 
-	<!-- Project sources directory -->
-	<property name="project.dirs.base" value="${basedir}" />
-	<property name="project.dirs.src" value="${project.dirs.base}/src" />
+    <!-- Project sources directory -->
+    <property name="application.dir.base" value="${basedir}" />
+    <property name="application.dir.src" value="${application.dir.base}/src" />
 
-	<!-- Enable ant-contrib (@see http://ant-contrib.sourceforge.net) -->
-	<taskdef resource="net/sf/antcontrib/antlib.xml">
-		<classpath>
-			<pathelement location="${toolkit.basedir}/vendor/ant-contrib/ant-contrib-1.0b3.jar" />
-		</classpath>
-	</taskdef>
+    <!-- Enable ant-contrib (@see http://ant-contrib.sourceforge.net) -->
+    <taskdef resource="net/sf/antcontrib/antlib.xml">
+        <classpath>
+            <pathelement location="${toolkit.dir.base}/vendor/ant-contrib/ant-contrib-1.0b3.jar" />
+        </classpath>
+    </taskdef>
 
-	<!-- Guess profile -->
-	<exec outputproperty="username" logError="true" executable="whoami" />
-	<property environment="env"/>
-	<condition property="profile" value="${env.ABT_USER}" else="${username}">
-		<isset property="env.ABT_USER" />
-	</condition>
+    <!-- Guess profile -->
+    <exec outputproperty="username" logError="true" executable="whoami" />
+    <property environment="env"/>
+    <condition property="profile" value="${env.TOOLKIT_USER}" else="${username}">
+        <isset property="env.TOOLKIT_USER" />
+    </condition>
 
-	<!-- Global ABT properties -->
-	<property file="${project.dirs.base}/abt.properties" />
+    <!-- Global ABT properties -->
+    <property file="${application.dir.base}/toolkit.properties" />
 
-	<echo message="Searching for profiles in : ${project.dirs.base}/${abt.dir.profiles}" />
-	<echo message="Using profile : ${profile}" />
+    <echo message="Searching for profiles in : ${application.dir.base}/${toolkit.dir.profiles}" />
+    <echo message="Using profile : ${profile}" />
 
-	<!-- Local configuration profile properties -->
-	<property file="${project.dirs.base}/${abt.dir.profiles}/${profile}/build.properties" />
+    <!-- Local configuration profile properties -->
+    <property file="${application.dir.base}/${toolkit.dir.profiles}/${profile}/build.properties" />
 
-	<!-- Team common properties -->
-	<property file="${project.dirs.base}/${abt.dir.profiles}/common/build.properties" />
+    <!-- Team common properties -->
+    <property file="${application.dir.base}/${toolkit.dir.profiles}/common/build.properties" />
 
-	<!-- Toolkit default properties -->
-	<property file="${toolkit.basedir}/modules/toolkit/build.properties" />
+    <!-- Toolkit default properties -->
+    <property file="${toolkit.dir.base}/modules/toolkit/build.properties" />
 
-	<!-- Import helpers -->
-	<import file="${toolkit.basedir}/modules/toolkit/lib.xml" />
+    <!-- Import helpers -->
+    <import file="${toolkit.dir.base}/modules/toolkit/lib.xml" />
 
-	<!-- Load modules -->
-	<for list="${toolkit.modules}" param="module">
-		<sequential>
-			<echo>Importing module : @{module}</echo>
-			<import file="${toolkit.basedir}/modules/@{module}/module.xml" />
-			<property file="${toolkit.basedir}/modules/@{module}/build.properties" />
-			<property name="toolkit.modules.@{module}" value="true" />
-		</sequential>
-	</for>
+    <!-- Make build timestamp available -->
+    <tstamp>
+        <format property="toolkit.timestamp" pattern="${toolkit.timestamp.format}" />
+    </tstamp>
 
-	<for list="${toolkit.modules.external}" param="module">
-		<sequential>
-			<echo>Importing module : @{module}</echo>
-			<import file="${project.dirs.base}/@{module}/module.xml" />
-			<property file="${project.dirs.base}/@{module}/build.properties" />
-		</sequential>
-	</for>
+    <!-- Load modules -->
+    <for list="${toolkit.modules}" param="module">
+        <sequential>
+            <echo>Importing module : @{module}</echo>
+            <import file="${toolkit.dir.base}/modules/@{module}/module.xml" />
+            <property file="${toolkit.dir.base}/modules/@{module}/build.properties" />
+            <property name="toolkit.modules.@{module}" value="true" />
+        </sequential>
+    </for>
 
-	<!-- Generate list of paths to modules project files -->
-	<expandModulesPaths native="${toolkit.modules}" external="${toolkit.modules.external}" />
+    <for list="${toolkit.modules.external}" param="module">
+        <sequential>
+            <echo>Importing module : @{module}</echo>
+            <import file="${application.dir.base}/@{module}/module.xml" />
+            <property file="${application.dir.base}/@{module}/build.properties" />
+        </sequential>
+    </for>
 
-	<!-- Mandatory targets -->
-	<target name="bootstrap" description="Boostraps project">
-		<iterate target="bootstrap" basedir="${project.dirs.base}" paths="${toolkit.modules.paths}" />
-	</target>
+    <!-- Generate list of paths to modules project files -->
+    <expandModulesPaths native="${toolkit.modules}" external="${toolkit.modules.external}" />
 
-	<target name="update" description="Updates project dependencies">
-		<iterate target="update" basedir="${project.dirs.base}" paths="${toolkit.modules.paths}" />
-	</target>
-	<target name="resolve" depends="update" /> <!-- for BC -->
+    <!-- Mandatory targets -->
+    <target name="init" description="Sets up project for usage with the toolkit">
+        <!-- Create toolkit.properties file -->
+        <copy file="${toolkit.dir.base}/templates/toolkit.properties" todir="${basedir}" overwrite="false" />
 
-	<target name="configure" description="Applies configuration profile to project sources">
-		<iterate target="configure" basedir="${project.dirs.base}" paths="${toolkit.modules.paths}" />
-	</target>
+        <property file="${toolkit.dir.base}/templates/toolkit.properties" />
 
-	<target name="build" description="Builds project (ORM classes generation, etc)">
-		<iterate target="build" basedir="${project.dirs.base}" paths="${toolkit.modules.paths}" />
-	</target>
+        <!-- Create common configuration profile -->
+        <mkdir dir="${basedir}/${toolkit.dir.profiles}/common" />
+        <touch file="${basedir}/${toolkit.dir.profiles}/common/build.properties" />
 
-	<target name="review" description="Runs code quality analysis on uncommited and unmerged files">
-		<iterate target="review" basedir="${project.dirs.base}" paths="${toolkit.modules.paths}" />
-	</target>
+        <!-- Create sources directory -->
+        <mkdir dir="${basedir}/src" />
 
-	<target name="migrate" description="Handles data structure and values modifications">
-		<iterate target="migrate" basedir="${project.dirs.base}" paths="${toolkit.modules.paths}" />
-	</target>
+        <!-- Guess project name from project's root directory -->
+        <basename file="${application.dir.base}" property="application.name" />
 
-	<target name="sync" description="Synchronizes code with remote server(s)">
-		<iterate target="sync" basedir="${project.dirs.base}" paths="${toolkit.modules.paths}" />
-	</target>
+        <!-- Create project build.xml file -->
+        <copy file="${toolkit.dir.base}/templates/build.xml" todir="${basedir}" overwrite="false" />
+        <replace file="${basedir}/build.xml" token="@application.name@" value="${application.name}" />
 
-	<target name="deploy" description="Configures, builds, migrates and syncs project" depends="configure,update,build,migrate,sync" />
+        <!-- Execute activated modules init -->
+        <iterate target="init" basedir="${application.dir.base}" paths="${toolkit.modules.paths}" />
+    </target>
 
-	<target name="help" description="Displays project's help">
-		<echo>Ananas Build Toolkit : Usage</echo>
-		<java classname="org.apache.tools.ant.Main">
-			<arg value="-buildfile" />
-			<arg value="${ant.file}" />
-			<arg value="-projecthelp" />
-		</java>
-		<echo>More documentation can obtained at https://github.com/constructions-incongrues/ananas-build-toolkit</echo>
-	</target>
+    <target name="install" description="Installs project dependencies">
+        <iterate target="install" basedir="${application.dir.base}" paths="${toolkit.modules.paths}" />
+    </target>
 
-	<target name="init" description="Sets up project for usage with the toolkit">
-		<!-- Create abt.properties file -->
-		<copy file="${toolkit.basedir}/templates/abt.properties" todir="${basedir}" overwrite="false" />
+    <target name="build" description="Builds project (ORM classes generation, etc)">
+        <iterate target="build" basedir="${application.dir.base}" paths="${toolkit.modules.paths}" />
+    </target>
 
-		<property file="${toolkit.basedir}/templates/abt.properties" />
+    <target name="package" description="Packages build sources">
+        <iterate target="package" basedir="${application.dir.base}" paths="${toolkit.modules.paths}" />
+    </target>
 
-		<!-- Create common configuration profile -->
-		<mkdir dir="${basedir}/${abt.dir.profiles}/common" />
-		<touch file="${basedir}/${abt.dir.profiles}/common/build.properties" />
+    <target name="upload" description="Uploads build artifact">
+        <iterate target="upload" basedir="${application.dir.base}" paths="${toolkit.modules.paths}" />
+    </target>
 
-		<!-- Create sources directory -->
-		<mkdir dir="${basedir}/src" />
+    <target name="configure" description="Configures application">
+        <iterate target="configure" basedir="${application.dir.base}" paths="${toolkit.modules.paths}" />
+    </target>
 
-		<!-- Guess project name from project's root directory -->
-		<basename file="${project.dirs.base}" property="project.name" />
-
-		<!-- Create project build.xml file -->
-		<copy file="${toolkit.basedir}/templates/build.xml" todir="${basedir}" overwrite="false" />
-		<replace file="${basedir}/build.xml" token="@project.name@" value="${project.name}" />
-
-		<!-- Bootstrap modules -->
-		<antcall target="bootstrap" />
-		<antcall target="update" />
-	</target>
-
+    <target name="help" description="Displays project's help">
+        <echo>Ananas Build Toolkit : Usage</echo>
+        <java classname="org.apache.tools.ant.Main">
+            <arg value="-buildfile" />
+            <arg value="${ant.file}" />
+            <arg value="-projecthelp" />
+        </java>
+        <echo>More documentation can obtained at https://github.com/constructions-incongrues/ananas-build-toolkit</echo>
+    </target>
 </project>

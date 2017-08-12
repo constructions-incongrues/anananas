@@ -1,9 +1,0 @@
-*-dist
-*.sw*
-*.bak
-*.orig
-*~
-.git
-/composer.*
-/etc
-/vendor/constructions-incongrues/ananas-build-toolkit

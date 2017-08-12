@@ -1,42 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="brunch">
-    <dirname property="brunch.basedir" file="${ant.file.brunch}" />
-
     <!-- Mandatory targets -->
-    <target name="bootstrap">
-        <dirname file="${ant.file.toolkit}" property="toolkit.module.toolkitdir" />
-        <dirname file="${toolkit.module.toolkitdir}/brunch" property="toolkit.module.basedir" />
-        <initConfiguration
-            projectDir="${project.dirs.base}"
-            configurationDir="${abt.dir.configuration}"
-            moduleDir="${toolkit.module.basedir}"
-            moduleName="brunch" />
-    </target>
-    <target name="update" />
-    <target name="configure" />
-    <target name="build" depends="brunch.do-build" />
-    <target name="review" />
-    <target name="migrate" />
-    <target name="sync" />
-
-    <!-- Helpers -->
-    <target name="brunch.rebuild-node-sass" description="Rebuilds node-sass">
-        <ant antfile="../npm/module.xml" dir="${brunch.basedir}" target="npm.install" />
-        <dirname property="npm.dir" file="${npm.executable}" />
-        <exec dir="${project.dirs.base}" executable="${npm.executable}" failOnError="true">
-            <env key="PATH" value="${npm.dir}:${env.PATH}" />
-            <arg line="rebuild node-sass" />
-        </exec>
-    </target>
+    <target name="init" />
+	<target name="install" />
+	<target name="build" depends="module.brunch.build" />
+	<target name="package" />
+	<target name="upload" />
+	<target name="configure" />
 
     <!-- toolkit phase : build -->
-    <target name="brunch.do-build" description="Triggers Brunch build" depends="brunch.rebuild-node-sass">
-        <ant antfile="../npm/module.xml" dir="${brunch.basedir}" target="npm.install" />
-        <ant antfile="../bower/module.xml" dir="${brunch.basedir}" target="bower.install" />
-        <dirname property="npm.dir" file="${npm.executable}" />
-        <exec dir="${project.dirs.base}" executable="${brunch.executable}" failOnError="true">
-            <env key="PATH" value="${npm.dir}:${env.PATH}" />
-            <arg line="build --env=${brunch.environment}" />
+    <target name="module.brunch.build" description="Triggers Brunch build">
+        <exec dir="${application.dir.base}" executable="${brunch.executable}" failonerror="true">
+            <arg line="build ${brunch.build.options} --env=${brunch.environment}" />
         </exec>
     </target>
 </project>

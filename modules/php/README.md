@@ -1,8 +1,6 @@
 #### Module : php
 
-Ce module expose toutes les directives nécessaires à la configuration de PHP sur différentes plate-formes.
-
-On pourra ainsi se servir des directives ```php.ini.*``` pour contrôller la configuration d'un projet via un fichier ```.htaccess-dist``` et la tâche [properties.apply]() par exemple.
+TODO : Présentation du module.
 
 ##### Installation
 
@@ -10,30 +8,21 @@ Ajoutez les lignes suivantes au fichier ```build.xml``` du projet, aux endroits 
    
 Après l'import du module toolkit :
  ```xml
- <import file="${toolkit.basedir}/modules/php/module.xml" />
+ <import file="${toolkit.dir.base}/modules/php/module.xml" />
  ```
 
 Dans la *target* ```setprofile``` :
 ```xml
-<property file="${toolkit.basedir}/modules/php/build.properties" />
+<property file="${toolkit.dir.base}/modules/php/build.properties" />
 ```
 
 Si besoin, surchargez les directives de configuration par défaut du module dans votre profil de configuration.
 
-##### Directives de configuration
+##### TODO : Directives de configuration
 
-* **php.executable** (défaut: */usr/bin/php*) : Le chemin vers l'exécutable PHP à employer
-* **php.ini.display_errors** (défaut : *true*) : cf. http://php.net/manual/errorfunc.configuration.php#ini.display-errors
-* **php.ini.error_reporting** (défaut : *32767, soit E_ALL | E_STRICT*) : cf. http://php.net/manual/errorfunc.configuration.php#ini.error-reporting
+* **php.directivename** (défaut : *valeur*) : description
 
-##### Les tâches et leurs paramètres
+##### TODO : Les tâches et leurs paramètres
 
-Ce module n'expose aucune tâche.
-
-##### Dépendances
-
-Pour bien fonctionner, ce module a besoin que soit installé sur votre poste :
-- [phpcs](http://pear.php.net/package/PHP_CodeSniffer/) qui aura à son tour besoin du standard [PSR](https://github.com/klaussilveira/phpcs-psr)
-- [phpmd](http://phpmd.org/)
-- [phrocco](https://github.com/oneblackbear/phrocco)
-- [phpcpd](https://github.com/sebastianbergmann/phpcpd)
+* **php.taskname** : (toolkit phase : *configure|build|review|migrate|sync*) : description
+    * **parameter.name** (défaut : valeur) : description

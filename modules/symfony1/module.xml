@@ -1,38 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="symfony1">
 	<!-- Mandatory targets -->
-	<target name="bootstrap" />
-	<target name="update" />
+    <target name="init" />
+	<target name="install" />
+	<target name="build" depends="module.symfony1.build" />
+	<target name="package" />
+	<target name="upload" />
 	<target name="configure" />
-	<target name="build" depends="orm,sf1.cc" />
-	<target name="review" />
-	<target name="migrate" />
-	<target name="sync" />
 
 	<!-- toolkit phase : build -->
-	<target name="orm" description="Generates ORM classes needed for the project to work properly">
-		<antcall target="12.orm" />
-		<antcall target="14.orm" />
-	</target>
+	<target name="module.symfony1.build" description="Generates ORM classes needed for the project to work properly" depends="module.symfony1.build.12,module.symfony1.build.14" />
 
-	<target name="12.orm" if="${symfony1.version12}">
-		<property file="${toolkit.basedir}/modules/php/build.properties" />
+	<target name="module.symfony1.build.12" if="${symfony1.version12}">
 		<exec executable="${php.executable}" failonerror="true">
-			<arg line="${project.dirs.base}/${symfony1.executable} doctrine:build-model" />
+			<arg line="${application.dir.base}/${symfony1.executable} doctrine:build-model" />
 		</exec>
 	</target>
 
-	<target name="14.orm" if="${symfony1.version14}">
-		<property file="${toolkit.basedir}/modules/php/build.properties" />
+	<target name="module.symfony1.build.14" if="${symfony1.version14}">
 		<exec executable="${php.executable}" failonerror="true">
-			<arg line="${project.dirs.base}/${symfony1.executable} doctrine:build --all-classes" />
-		</exec>
-	</target>
-
-	<target name="sf1.cc">
-		<property file="${toolkit.basedir}/modules/php/build.properties" />
-		<exec executable="${php.executable}" failonerror="true">
-			<arg line="${project.dirs.base}/${symfony1.executable} cc" />
+			<arg line="${application.dir.base}/${symfony1.executable} doctrine:build --all-classes" />
 		</exec>
 	</target>
 </project>
