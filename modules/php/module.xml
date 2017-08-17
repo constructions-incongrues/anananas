@@ -6,7 +6,7 @@
         <dirname file="${toolkit.module.toolkitdir}/php" property="toolkit.module.basedir" />
         <initConfiguration
             projectDir="${application.dir.base}"
-            configurationDir="${abt.dir.configuration}"
+            configurationDir="${toolkit.dir.configuration}"
             moduleDir="${toolkit.module.basedir}"
             moduleName="php" />
     </target>

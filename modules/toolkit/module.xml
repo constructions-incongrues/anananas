@@ -44,6 +44,9 @@
         <format property="toolkit.timestamp" pattern="${toolkit.timestamp.format}" />
     </tstamp>
 
+    <!-- Guess project name from project's root directory -->
+    <basename file="${application.dir.base}" property="application.name" />
+
     <!-- Load modules -->
     <for list="${toolkit.modules}" param="module">
         <sequential>
@@ -79,8 +82,8 @@
         <!-- Create sources directory -->
         <mkdir dir="${basedir}/src" />
 
-        <!-- Guess project name from project's root directory -->
-        <basename file="${application.dir.base}" property="application.name" />
+        <!-- Create dist directory -->
+        <mkdir dir="${basedir}/dist" />
 
         <!-- Create project build.xml file -->
         <copy file="${toolkit.dir.base}/templates/build.xml" todir="${basedir}" overwrite="false" />

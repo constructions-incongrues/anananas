@@ -6,12 +6,13 @@
         <dirname file="${toolkit.module.toolkitdir}/@module.name@" property="toolkit.module.basedir" />
         <initConfiguration
             projectDir="${application.dir.base}"
-            configurationDir="${abt.dir.configuration}"
+            configurationDir="${toolkit.dir.configuration}"
             moduleDir="${toolkit.module.basedir}"
             moduleName="@module.name@" />
     </target>
-	<target name="configure" />
-	<target name="build" />
 	<target name="install" />
+	<target name="build" />
+	<target name="package" />
 	<target name="upload" />
+	<target name="configure" />
 </project>
