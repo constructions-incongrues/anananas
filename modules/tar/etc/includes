@@ -1,0 +1,5 @@
+src/meteor/*/build/bundle/**
+src/symfony/**
+vendor/**
+node_modules/**
+bower_components/**

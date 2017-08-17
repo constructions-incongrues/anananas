@@ -1,0 +1,7 @@
+src/meteor/*/.meteor/**
+src/meteor/*/client/**
+src/meteor/*/node_modules/**
+src/meteor/*/server/**
+dist/**
+**.bak
+**-dist
