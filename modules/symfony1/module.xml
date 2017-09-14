@@ -18,21 +18,21 @@
 	<target name="12.orm" if="${symfony1.version12}">
 		<property file="${toolkit.basedir}/modules/php/build.properties" />
 		<exec executable="${php.executable}" failonerror="true">
-			<arg line="${project.dirs.base}/${symfony1.executable} doctrine:build-model" />
+			<arg line="${project.dirs.base}/${symfony1.executable} doctrine:build-model --env=${symfony1.environment}" />
 		</exec>
 	</target>
 
 	<target name="14.orm" if="${symfony1.version14}">
 		<property file="${toolkit.basedir}/modules/php/build.properties" />
 		<exec executable="${php.executable}" failonerror="true">
-			<arg line="${project.dirs.base}/${symfony1.executable} doctrine:build --all-classes" />
+			<arg line="${project.dirs.base}/${symfony1.executable} doctrine:build --all-classes --env=${symfony1.environment}" />
 		</exec>
 	</target>
 
 	<target name="sf1.cc">
 		<property file="${toolkit.basedir}/modules/php/build.properties" />
 		<exec executable="${php.executable}" failonerror="true">
-			<arg line="${project.dirs.base}/${symfony1.executable} cc" />
+			<arg line="${project.dirs.base}/${symfony1.executable} cc --env=${symfony1.environment}" />
 		</exec>
 	</target>
 </project>
