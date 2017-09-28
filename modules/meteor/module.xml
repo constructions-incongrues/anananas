@@ -14,7 +14,7 @@
             <arg line="npm install" />
         </exec>
         <exec executable="${meteor.executable}" dir="${project.dirs.base}/${meteor.src}">
-            <arg line="build --directory ${project.dirs.base}/${meteor.build-dir}" />
+            <arg line="build --directory ${project.dirs.base}/${meteor.build-dir} ${meteor.build-parameters}" />
         </exec>
     </target>
 </project>
