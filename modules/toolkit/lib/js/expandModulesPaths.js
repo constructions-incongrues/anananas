@@ -12,8 +12,10 @@ for (var i = 0; i < modules.length; i++) {
 var modules = attributes.get('external').split(',');
 if (modules.length > 1) {
     for (var i = 0; i < modules.length; i++) {
-        modulesPaths.push(modules[i] + '/module.xml');
-        propertiesPaths.push(modules[i] + '/build.properties');
+        if (modules[i] && modules[i].length > 0) {
+            modulesPaths.push(modules[i] + '/module.xml');
+            propertiesPaths.push(modules[i] + '/build.properties');
+        }
     }
 }
 
