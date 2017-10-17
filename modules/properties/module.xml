@@ -8,31 +8,6 @@
 	<target name="package" />
 	<target name="upload" />
 
-	<!-- Properties namespaces to ignore when generating profiles -->
-	<propertyset negate="true" id="properties.ignore">
-		<propertyref prefix="DSTAMP" />
-		<propertyref prefix="TODAY" />
-		<propertyref prefix="TSTAMP" />
-		<propertyref prefix="application.dir" />
-		<propertyref prefix="ant." />
-		<propertyref prefix="awt." />
-		<propertyref prefix="basedir" />
-		<propertyref prefix="env." />
-		<propertyref prefix="file." />
-		<propertyref prefix="java." />
-		<propertyref prefix="line." />
-		<propertyref prefix="os." />
-		<propertyref prefix="path." />
-		<propertyref prefix="properties.found" />
-		<propertyref prefix="sun." />
-		<propertyref prefix="toolkit.dir." />
-		<propertyref prefix="toolkit.modules." />
-		<propertyref prefix="toolkit.profile" />
-		<propertyref prefix="toolkit.timestamp" />
-		<propertyref prefix="user." />
-		<propertyref prefix="username" />
-	</propertyset>
-
 	<target name="properties.apply" description="Applies profile configuration">
 		<!-- Make all properties available -->
 		<tempfile property="properties.loaded" deleteonexit="true" />
@@ -99,13 +74,5 @@
 
 		<!-- Log message -->
 		<echo message="Updated configuration profile in ${toolkit.dir.profiles}/${toolkit.profile}/build.properties" />
-	</target>
-
-	<target name="properties.show" description="Displays profile properties">
-		<echoproperties>
-			<propertyset>
-				<propertyset refid="properties.ignore" />
-			</propertyset>
-		</echoproperties>
 	</target>
 </project>
