@@ -67,18 +67,6 @@
         profile="${toolkit.modules}"
         external="${toolkit.modules.external}" />
 
-    <target name="bootstrap" description="Bootstraps application">
-        <!-- Create sources directory -->
-        <mkdir dir="${application.dir.src}" />
-
-        <!-- Create dist directory -->
-        <mkdir dir="${application.dir.dist}" />
-
-        <!-- Create project build.xml file -->
-        <copy file="${toolkit.dir.base}/modules/toolkit/templates/build.xml" todir="${basedir}" overwrite="false" />
-        <replace file="${basedir}/build.xml" token="@application.name@" value="${application.name}" />
-    </target>
-
     <!-- Stages -->
     <target name="init" description="Inits modules">
         <iterate target="init" basedir="${application.dir.base}" paths="${toolkit.modules.paths}" />

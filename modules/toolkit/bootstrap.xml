@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="bootstrap" default="bootstrap">
+    <target name="bootstrap" description="Bootstraps application">
+        <!-- Store toolkit base directory for later use -->
+        <dirname property="toolkit.dir.base" file="${ant.file.bootstrap}/../.." />
+
+        <!-- Default values -->
+        <basename property="bootstrap.application.name" file="${basedir}" />
+
+        <!-- Create application build.xml file -->
+        <copy file="${toolkit.dir.base}/modules/toolkit/templates/build.xml" todir="${basedir}" overwrite="false" />
+        <replace file="${basedir}/build.xml" token="@application.name@" value="${bootstrap.application.name}" />
+
+        <!-- Create application toolkit.properties file-->
+        <copy file="${toolkit.dir.base}/modules/toolkit/templates/toolkit.properties" todir="${basedir}" overwrite="false" />
+
+        <!-- Load default toolkit properties -->
+        <property file="${basedir}/toolkit.properties" />
+
+        <!-- Create sources directory -->
+        <mkdir dir="${application.dir.src}" />
+
+        <!-- Create dist directory -->
+        <mkdir dir="${application.dir.dist}" />
+
+    </target>
+</project>
