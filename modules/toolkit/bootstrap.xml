@@ -6,6 +6,8 @@
 
         <!-- Default values -->
         <basename property="bootstrap.application.name" file="${basedir}" />
+        <property name="bootstrap.application.dir.src" value="src" />
+        <property name="bootstrap.application.dir.dist" value="dist" />
 
         <!-- Create application build.xml file -->
         <copy file="${toolkit.dir.base}/modules/toolkit/templates/build.xml" todir="${basedir}" overwrite="false" />
@@ -14,14 +16,10 @@
         <!-- Create application toolkit.properties file-->
         <copy file="${toolkit.dir.base}/modules/toolkit/templates/toolkit.properties" todir="${basedir}" overwrite="false" />
 
-        <!-- Load default toolkit properties -->
-        <property file="${basedir}/toolkit.properties" />
-
         <!-- Create sources directory -->
-        <mkdir dir="${application.dir.src}" />
+        <mkdir dir="${basedir}/${bootstrap.application.dir.src}" />
 
         <!-- Create dist directory -->
-        <mkdir dir="${application.dir.dist}" />
-
+        <mkdir dir="${basedir}/${bootstrap.application.dir.dist}" />
     </target>
 </project>
