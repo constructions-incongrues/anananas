@@ -79,6 +79,7 @@
 		<property file="${properties.found.file}" />
 
 		<!-- Write new property file, excluding Ant native properties -->
+		<touch file="${toolkit.dir.profiles}/${toolkit.profile}/build.properties" mkdirs="true" />
 		<echoproperties destfile="${toolkit.dir.profiles}/${toolkit.profile}/build.properties">
 			<propertyset>
 				<propertyset refid="properties.ignore" />
@@ -90,6 +91,9 @@
 		<replace file="${toolkit.dir.profiles}/${toolkit.profile}/build.properties" token="\#" value="#" />
 		<replace file="${toolkit.dir.profiles}/${toolkit.profile}/build.properties" token="\!" value="!" />
 		<replace file="${toolkit.dir.profiles}/${toolkit.profile}/build.properties" token="\=" value="=" />
+
+		<!-- Log message -->
+		<echo message="Updated configuration profile in ${toolkit.dir.profiles}/${toolkit.profile}/build.properties" />
 	</target>
 
 	<target name="properties.show" description="Displays profile properties">
