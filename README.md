@@ -51,7 +51,7 @@ Récupérez le toolkit et ses dépendances :
 ./composer.phar install --prefer-dist
 ```
 
-Par défaut, seul le module ```properties``` est activé. Vous pouvez activer plus de modules en ajoutant leur nom à la liste (séparée par des virgules) définie par la directive ```toolkit.modules``` dans le fichier ```etc/common/build.properties```. Par exemple
+Par défaut, seul le module ```properties``` est activé. Vous pouvez activer plus de modules en ajoutant leur nom à la liste (séparée par des virgules) définie par la directive ```toolkit.modules``` dans le fichier ```etc/common/configuration.properties```. Par exemple
 
 ```
 toolkit.modules=properties,git,composer,liquibase,php
