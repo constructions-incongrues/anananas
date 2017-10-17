@@ -19,13 +19,12 @@
     </macrodef>
 
     <macrodef name="initConfiguration">
-        <attribute name="projectDir" />
         <attribute name="configurationDir" />
         <attribute name="moduleDir" />
         <attribute name="moduleName" />
         <sequential>
-            <mkdir dir="@{projectDir}/@{configurationDir}/modules/@{moduleName}" />
-            <copy todir="@{projectDir}/@{configurationDir}/modules/@{moduleName}">
+            <mkdir dir="@{configurationDir}/modules/@{moduleName}" />
+            <copy todir="@{configurationDir}/modules/@{moduleName}">
                 <fileset dir="@{moduleDir}/@{moduleName}/etc" includes="*" erroronmissingdir="false" />
             </copy>
         </sequential>

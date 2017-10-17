@@ -5,8 +5,7 @@
         <dirname file="${ant.file.toolkit}" property="toolkit.module.toolkitdir" />
         <dirname file="${toolkit.module.toolkitdir}/tar" property="toolkit.module.basedir" />
         <initConfiguration
-            projectDir="${application.dir.base}"
-            configurationDir="${toolkit.dir.configuration}"
+            configurationDir="${configuration.dir.profiles}/${configuration.profile}"
             moduleDir="${toolkit.module.basedir}/.."
             moduleName="tar" />
     </target>
@@ -17,12 +16,12 @@
 	<target name="upload" />
 
     <target name="tar.archive" description="Packages application sources into a tar archive">
-        <tar 
-            basedir="${application.dir.base}${tar.dir.base}" 
+        <tar
+            basedir="${application.dir.base}${tar.dir.base}"
             compression="${tar.compression}"
             destfile="${application.dir.base}/dist/${tar.package.filename}"
-            includesfile="${application.dir.base}/${toolkit.dir.configuration}/modules/tar/includes"
-            excludesfile="${application.dir.base}/${toolkit.dir.configuration}/modules/tar/excludes"
+            includesfile="${configuration.dir.profiles}/${configuration.profile}/modules/tar/includes"
+            excludesfile="${configuration.dir.profiles}/${configuration.profile}/modules/tar/excludes"
             longfile="posix" />
     </target>
 </project>
