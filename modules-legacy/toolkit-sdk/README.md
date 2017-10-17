@@ -5,7 +5,7 @@ Ce module regroupe des tâches destinées à faciliter la vie des développeurs 
 ##### Installation
 
 Ajoutez les lignes suivantes au fichier ```build.xml``` du projet, aux endroits indiqués :
-   
+
 Après l'import du module toolkit :
  ```xml
  <import file="${toolkit.dir.base}/modules/toolkit-sdk/module.xml" />
@@ -13,7 +13,7 @@ Après l'import du module toolkit :
 
 Dans la *target* ```setprofile``` :
 ```xml
-<property file="${toolkit.dir.base}/modules/toolkit-sdk/build.properties" />
+<property file="${toolkit.dir.base}/modules/toolkit-sdk/configuration.properties" />
 ```
 
 Si besoin, surchargez les directives de configuration par défaut du module dans votre profil de configuration.

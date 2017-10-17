@@ -1,4 +1,4 @@
-#### Module : grunt
+#### Module : brunch
 
 TODO : Présentation du module.
 
@@ -8,21 +8,21 @@ Ajoutez les lignes suivantes au fichier ```build.xml``` du projet, aux endroits 
 
 Après l'import du module toolkit :
  ```xml
- <import file="${toolkit.dir.base}/modules/grunt/module.xml" />
+ <import file="${toolkit.dir.base}/modules/brunch/module.xml" />
  ```
 
 Dans la *target* ```setprofile``` :
 ```xml
-<property file="${toolkit.dir.base}/modules/grunt/build.properties" />
+<property file="${toolkit.dir.base}/modules/brunch/configuration.properties" />
 ```
 
 Si besoin, surchargez les directives de configuration par défaut du module dans votre profil de configuration.
 
 ##### TODO : Directives de configuration
 
-* **grunt.directivename** (défaut : *valeur*) : description
+* **brunch.directivename** (défaut : *valeur*) : description
 
 ##### TODO : Les tâches et leurs paramètres
 
-* **grunt.taskname** : (toolkit phase : *configure|build|review|migrate|sync*) : description
+* **brunch.taskname** : (toolkit phase : *configure|build|review|migrate|sync*) : description
     * **parameter.name** (défaut : valeur) : description
