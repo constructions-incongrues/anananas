@@ -17,18 +17,22 @@
     <!-- Guess profile -->
     <exec outputproperty="username" logError="true" executable="whoami" />
     <property environment="env" />
-    <condition property="toolkit.profile" value="${env.TOOLKIT_PROFILE}" else="${username}">
-        <isset property="env.TOOLKIT_PROFILE" />
+    <condition property="configuration.profile" value="${env.CONFIGURATION_PROFILE}" else="${username}">
+        <isset property="env.CONFIGURATION_PROFILE" />
     </condition>
 
     <!-- Global ABT properties -->
     <property file="${application.dir.base}/toolkit.properties" />
 
+    <!-- Enable configuration module -->
+    <property file="${toolkit.dir.base}/modules/configuration/build.properties" />
+    <import file="${toolkit.dir.base}/modules/configuration/module.xml" />
+
     <echo message="Searching for profiles in : ${application.dir.base}/${toolkit.dir.profiles}" />
-    <echo message="Using profile : ${toolkit.profile}" />
+    <echo message="Using profile : ${configuration.profile}" />
 
     <!-- Local configuration profile properties -->
-    <property file="${application.dir.base}/${toolkit.dir.profiles}/${toolkit.profile}/build.properties" />
+    <property file="${application.dir.base}/${toolkit.dir.profiles}/${configuration.profile}/build.properties" />
 
     <!-- Toolkit default properties -->
     <property file="${toolkit.dir.base}/modules/toolkit/build.properties" />
