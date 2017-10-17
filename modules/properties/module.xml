@@ -2,6 +2,11 @@
 <project name="properties" default="help">
 	<!-- Stages hooks -->
 	<target name="configure" depends="properties.apply" />
+	<target name="init" />
+	<target name="install" />
+	<target name="build" />
+	<target name="package" />
+	<target name="upload" />
 
 	<!-- Properties namespaces to ignore when generating profiles -->
 	<propertyset negate="true" id="properties.ignore">
@@ -48,7 +53,7 @@
 	</target>
 
 	<target name="properties.update" description="Searches for property tokens in dist files and adds missing properties to common profile">
-		<tempfile property="properties.found.file" deleteonexit="true" />
+		<tempfile property="properties.found.file" deleteonexit="false" />
 		<for param="file">
 			<path>
 				<fileset dir="${application.dir.base}" includes="**/*${properties.suffix}" />
@@ -75,14 +80,14 @@
 			</sequential>
 		</for>
 
-		<!-- Load found properties -->
-		<property file="${properties.found.file}" />
-
-		<!-- Write new property file, excluding Ant native properties -->
+		<!-- Merge found properties with properties already in configuration profile -->
+		<property prefix="properties.merge" file="${toolkit.dir.profiles}/${toolkit.profile}/build.properties" />
+		<property prefix="properties.merge" file="${properties.found.file}" />
 		<touch file="${toolkit.dir.profiles}/${toolkit.profile}/build.properties" mkdirs="true" />
 		<echoproperties destfile="${toolkit.dir.profiles}/${toolkit.profile}/build.properties">
 			<propertyset>
-				<propertyset refid="properties.ignore" />
+				<propertyref prefix="properties.merge"/>
+				<mapper type="glob" from="properties.merge.*" to="*"/>
 			</propertyset>
 		</echoproperties>
 
