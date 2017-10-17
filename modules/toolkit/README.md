@@ -13,7 +13,7 @@ Après l'import du module toolkit :
 
 Dans la *target* ```setprofile``` :
 ```xml
-<property file="${toolkit.dir.base}/modules/toolkit/build.properties" />
+<property file="${toolkit.dir.base}/modules/toolkit/configuration.properties" />
 ```
 
 ##### Directives de configuration

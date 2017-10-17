@@ -18,17 +18,17 @@
     <property file="${application.dir.base}/toolkit.properties" />
 
     <!-- Enable configuration module -->
-    <property file="${toolkit.dir.base}/modules/configuration/build.properties" />
+    <property file="${toolkit.dir.base}/modules/configuration/configuration.properties" />
     <import file="${toolkit.dir.base}/modules/configuration/module.xml" />
 
-    <echo message="Searching for profiles in : ${configuration.dir}/profiles" />
+    <echo message="Searching for profiles in : ${configuration.dir.profiles}" />
     <echo message="Using profile : ${configuration.profile}" />
 
     <!-- Local configuration profile properties -->
-    <property file="${configuration.dir}/profiles/${configuration.profile}/build.properties" />
+    <property file="${configuration.dir.profiles}/${configuration.profile}/configuration.properties" />
 
     <!-- Toolkit default properties -->
-    <property file="${toolkit.dir.base}/modules/toolkit/build.properties" />
+    <property file="${toolkit.dir.base}/modules/toolkit/configuration.properties" />
 
     <!-- Import helpers -->
     <import file="${toolkit.dir.base}/modules/toolkit/lib.xml" />
@@ -46,7 +46,7 @@
         <sequential>
             <echo>Importing module : @{module}</echo>
             <import file="${toolkit.dir.base}/modules/@{module}/module.xml" />
-            <property file="${toolkit.dir.base}/modules/@{module}/build.properties" />
+            <property file="${toolkit.dir.base}/modules/@{module}/configuration.properties" />
             <property name="toolkit.modules.@{module}" value="true" />
         </sequential>
     </for>
@@ -55,7 +55,7 @@
         <sequential>
             <echo>Importing module : @{module}</echo>
             <import file="${application.dir.base}/@{module}/module.xml" />
-            <property file="${application.dir.base}/@{module}/build.properties" />
+            <property file="${application.dir.base}/@{module}/configuration.properties" />
         </sequential>
     </for>
 

@@ -24,14 +24,14 @@ Create a configuration profile by scanning application's dist files :
 ```
 $ ant configuration.update -Dconfiguration.profile=production
 
-# etc/profiles/production/build.properties
+# etc/profiles/production/configuration.properties
 database.host=
 database.port=
 ```
 
 Define configuration values :
 ```
-# etc/profiles/production/build.properties
+# etc/profiles/production/configuration.properties
 database.host=mysql_master
 database.port=3306
 ```
@@ -48,6 +48,7 @@ database:
 
 ##### Attributes
 
+* **configuration.dir.profiles** (default : `etc/profiles`) : Directory holding configuration profiles. Relative paths are relative to application's root directory
 * **configuration.suffix** (default : `-dist`) : files suffixed with this values are considered dist files
 * **configuration.token** (default : `@`) : char surrounding configuration tokens in dist files
 

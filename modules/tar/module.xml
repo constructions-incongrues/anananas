@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="tar">
-    <!-- Mandatory targets -->
+    <!-- Stages hooks -->
     <target name="init">
         <dirname file="${ant.file.toolkit}" property="toolkit.module.toolkitdir" />
         <dirname file="${toolkit.module.toolkitdir}/tar" property="toolkit.module.basedir" />
@@ -13,17 +13,16 @@
 	<target name="install" />
 	<target name="configure" />
 	<target name="build" />
-	<target name="package" depends="module.tar.package" />
+	<target name="package" depends="tar.archive" />
 	<target name="upload" />
 
-    <target name="module.tar.package" description="">
+    <target name="tar.archive" description="Packages application sources into a tar archive">
         <tar 
             basedir="${application.dir.base}${tar.dir.base}" 
             compression="${tar.compression}"
             destfile="${application.dir.base}/dist/${tar.package.filename}"
             includesfile="${application.dir.base}/${toolkit.dir.configuration}/modules/tar/includes"
             excludesfile="${application.dir.base}/${toolkit.dir.configuration}/modules/tar/excludes"
-            longfile="posix"
-        />
+            longfile="posix" />
     </target>
 </project>

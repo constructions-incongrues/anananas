@@ -5,7 +5,7 @@ var propertiesPaths = [];
 var modules = attributes.get('native').split(',');
 for (var i = 0; i < modules.length; i++) {
     modulesPaths.push('vendor/constructions-incongrues/ananas-build-toolkit/modules/' + modules[i] + '/module.xml');
-    propertiesPaths.push('vendor/constructions-incongrues/ananas-build-toolkit/modules/' + modules[i] + '/build.properties');
+    propertiesPaths.push('vendor/constructions-incongrues/ananas-build-toolkit/modules/' + modules[i] + '/configuration.properties');
 }
 
 // Generate paths for external modules
@@ -13,7 +13,7 @@ var modules = attributes.get('external').split(',');
 if (modules.length > 1) {
     for (var i = 0; i < modules.length; i++) {
         modulesPaths.push(modules[i] + '/module.xml');
-        propertiesPaths.push(modules[i] + '/build.properties');
+        propertiesPaths.push(modules[i] + '/configuration.properties');
     }
 }
 
