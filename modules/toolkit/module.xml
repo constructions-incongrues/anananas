@@ -16,22 +16,19 @@
 
     <!-- Guess profile -->
     <exec outputproperty="username" logError="true" executable="whoami" />
-    <property environment="env"/>
-    <condition property="profile" value="${env.TOOLKIT_USER}" else="${username}">
-        <isset property="env.TOOLKIT_USER" />
+    <property environment="env" />
+    <condition property="toolkit.profile" value="${env.TOOLKIT_PROFILE}" else="${username}">
+        <isset property="env.TOOLKIT_PROFILE" />
     </condition>
 
     <!-- Global ABT properties -->
     <property file="${application.dir.base}/toolkit.properties" />
 
     <echo message="Searching for profiles in : ${application.dir.base}/${toolkit.dir.profiles}" />
-    <echo message="Using profile : ${profile}" />
+    <echo message="Using profile : ${toolkit.profile}" />
 
     <!-- Local configuration profile properties -->
-    <property file="${application.dir.base}/${toolkit.dir.profiles}/${profile}/build.properties" />
-
-    <!-- Team common properties -->
-    <property file="${application.dir.base}/${toolkit.dir.profiles}/common/build.properties" />
+    <property file="${application.dir.base}/${toolkit.dir.profiles}/${toolkit.profile}/build.properties" />
 
     <!-- Toolkit default properties -->
     <property file="${toolkit.dir.base}/modules/toolkit/build.properties" />
@@ -74,10 +71,6 @@
         <copy file="${toolkit.dir.base}/templates/toolkit.properties" todir="${basedir}" overwrite="false" />
 
         <property file="${toolkit.dir.base}/templates/toolkit.properties" />
-
-        <!-- Create common configuration profile -->
-        <mkdir dir="${basedir}/${toolkit.dir.profiles}/common" />
-        <touch file="${basedir}/${toolkit.dir.profiles}/common/build.properties" />
 
         <!-- Create sources directory -->
         <mkdir dir="${basedir}/src" />

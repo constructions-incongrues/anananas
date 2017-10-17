@@ -1,106 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="properties" default="help">
-	<!-- Mandatory targets -->
-	<target name="init" />
-	<target name="install" />
-	<target name="build" />
-	<target name="package" />
-	<target name="upload" />
-	<target name="configure" />
+	<!-- Stages hooks -->
+	<target name="configure" depends="properties.apply" />
 
-	<!-- Preprocesses -dist files -->
-	<target name="module.properties.apply" description="">
- 		<!-- Make build timestamp available -->
- 		<tstamp>
-	 		<format property="configure.timestamp" pattern="yyyyMMddHHmmss" />
- 		</tstamp>
+	<!-- Properties namespaces to ignore when generating profiles -->
+	<propertyset negate="true" id="properties.ignore">
+		<propertyref prefix="DSTAMP" />
+		<propertyref prefix="TODAY" />
+		<propertyref prefix="TSTAMP" />
+		<propertyref prefix="application.dir" />
+		<propertyref prefix="ant." />
+		<propertyref prefix="awt." />
+		<propertyref prefix="basedir" />
+		<propertyref prefix="env." />
+		<propertyref prefix="file." />
+		<propertyref prefix="java." />
+		<propertyref prefix="line." />
+		<propertyref prefix="os." />
+		<propertyref prefix="path." />
+		<propertyref prefix="properties.found" />
+		<propertyref prefix="sun." />
+		<propertyref prefix="toolkit.dir." />
+		<propertyref prefix="toolkit.modules." />
+		<propertyref prefix="toolkit.profile" />
+		<propertyref prefix="toolkit.timestamp" />
+		<propertyref prefix="user." />
+		<propertyref prefix="username" />
+	</propertyset>
 
-		<property file="${toolkit.dir.base}/modules/php/build.properties" />
-
+	<target name="properties.apply" description="Applies profile configuration">
 		<!-- Make all properties available -->
-		<tempfile property="all.properties" deleteonexit="true" />
-		<echoproperties destfile="${all.properties}" />
+		<tempfile property="properties.loaded" deleteonexit="true" />
+		<echoproperties destfile="${properties.loaded}" />
 
 		<!-- Fix echoproperties lame escaping -->
-		<replace file="${all.properties}" token="\:" value=":" />
-		<replace file="${all.properties}" token="\#" value="#" />
-		<replace file="${all.properties}" token="\!" value="!" />
-		<replace file="${all.properties}" token="\=" value="=" />
+		<replace file="${properties.loaded}" token="\:" value=":" />
+		<replace file="${properties.loaded}" token="\#" value="#" />
+		<replace file="${properties.loaded}" token="\!" value="!" />
+		<replace file="${properties.loaded}" token="\=" value="=" />
 
-		<for list="${properties.dirs}" param="dir">
-			<sequential>
-				<exec executable="${php.executable}" failonerror="true" dir="${application.dir.base}">
-					<arg value="${toolkit.dir.base}/vendor/phpreprocessor/bin/phpreprocessor" />
-					<arg value="--command=apply" />
-					<arg value="--src=${application.dir.base}/@{dir}" />
-					<arg value="--properties=${toolkit.modules.paths.properties},${application.dir.base}/${toolkit.dir.profiles}/common/build.properties,${application.dir.base}/${toolkit.dir.profiles}/${profile}/build.properties,${all.properties}" />
-				</exec>
-			</sequential>
-		</for>
+		<!-- Replace tokens with values in dist files and copy them with the right name -->
+		<copy verbose="true" todir="${application.dir.base}" overwrite="true">
+			<fileset dir="${application.dir.base}" includes="**/*${properties.suffix}" />
+			<mapper type="glob" from="*${properties.suffix}" to="*" />
+			<filterset begintoken="${properties.token}" endtoken="${properties.token}" filtersfile="${properties.loaded}" />
+		</copy>
 	</target>
 
-	<target name="apply-reverse" description="Replaces values by profile directives names in -dist files">
-		<property file="${toolkit.dir.base}/modules/php/build.properties" />
-		<for list="${properties.dirs}" param="dir">
+	<target name="properties.update" description="Searches for property tokens in dist files and adds missing properties to common profile">
+		<tempfile property="properties.found.file" deleteonexit="true" />
+		<for param="file">
+			<path>
+				<fileset dir="${application.dir.base}" includes="**/*${properties.suffix}" />
+			</path>
 			<sequential>
-				<exec executable="${php.executable}" failonerror="true" dir="${application.dir.base}">
-					<arg value="${toolkit.dir.base}/vendor/phpreprocessor/bin/phpreprocessor" />
-					<arg value="--command=apply" />
-					<arg value="--reverse=/^.+\.(url|path)\..+$/" />
-		         	<arg value="--src=${application.dir.base}/@{dir}" />
-		         	<arg value="--properties=${toolkit.modules.paths.properties},${application.dir.base}/${toolkit.dir.profiles}/common/build.properties,${application.dir.base}/${toolkit.dir.profiles}/${profile}/build.properties" />
-				</exec>
+				<var name="properties.found" unset="true" />
+				<loadfile srcFile="@{file}" property="properties.found">
+					<filterchain>
+						<!-- Put tokens on single lines -->
+						<tokenfilter>
+							<replaceregex pattern="(${properties.token}[^${properties.token}]+${properties.token})" replace="${line.separator}\1${line.separator}" flags="g" />
+						</tokenfilter>
+						<!-- Remove lines not containing tokens-->
+						<linecontainsregexp>
+							<regexp pattern="^${properties.token}.+${properties.token}$" />
+						</linecontainsregexp>
+						<!-- Transform tokens into properties declarations -->
+						<tokenfilter>
+							<replaceregex pattern="^${properties.token}(.+)${properties.token}$" replace="\1=" />
+						</tokenfilter>
+					</filterchain>
+				</loadfile>
+				<echo message="${properties.found}" file="${properties.found.file}" append="true" />
 			</sequential>
 		</for>
+
+		<!-- Load found properties -->
+		<property file="${properties.found.file}" />
+
+		<!-- Write new property file, excluding Ant native properties -->
+		<echoproperties destfile="${toolkit.dir.profiles}/${toolkit.profile}/build.properties">
+			<propertyset>
+				<propertyset refid="properties.ignore" />
+			</propertyset>
+		</echoproperties>
+
+		<!-- Fix echoproperties lame escaping -->
+		<replace file="${toolkit.dir.profiles}/${toolkit.profile}/build.properties" token="\:" value=":" />
+		<replace file="${toolkit.dir.profiles}/${toolkit.profile}/build.properties" token="\#" value="#" />
+		<replace file="${toolkit.dir.profiles}/${toolkit.profile}/build.properties" token="\!" value="!" />
+		<replace file="${toolkit.dir.profiles}/${toolkit.profile}/build.properties" token="\=" value="=" />
 	</target>
 
-	<!-- Updates common build properties -->
-	<target name="module.properties.common.update" description="">
-		<!-- Backup existing build.properties file -->
-		<copy file="${application.dir.base}/${toolkit.dir.profiles}/${profile}/build.properties" tofile="${application.dir.base}/${toolkit.dir.profiles}/${profile}/build.properties.bak" failonerror="false" />
-
-		<!-- Generate common build.properties file from project sources -->
-		<property file="${toolkit.dir.base}/modules/php/build.properties" />
-		<for list="${properties.dirs}" param="dir">
-			<sequential>
-				<exec executable="${php.executable}" dir="${application.dir.base}" output="${application.dir.base}/${toolkit.dir.profiles}/common/build.properties" logError="true" failonerror="true">
-					<arg value="${toolkit.dir.base}/vendor/phpreprocessor/bin/phpreprocessor" />
-					<arg value="--command=extract" />
-					<arg value="--exclude-from=${toolkit.modules.paths.properties}" />
-					<arg value="--src=${application.dir.base}/@{dir}" />
-					<arg value="--merge-with=${application.dir.base}/${toolkit.dir.profiles}/common/build.properties" />
-				</exec>
-			</sequential>
-		</for>
-	</target>
-
-	<!-- Updates profile build properties -->
-	<target name="module.properties.profile.update" depends="module.properties.profile.create" description="">
-		<!-- Create tree if required -->
-		<mkdir dir="${application.dir.base}/${toolkit.dir.profiles}/${profile}" />
-		<touch file="${application.dir.base}/${toolkit.dir.profiles}/${profile}/build.properties" />
-
-		<!-- Backup existing build.properties file -->
-		<copy file="${application.dir.base}/${toolkit.dir.profiles}/${profile}/build.properties" tofile="${application.dir.base}/${toolkit.dir.profiles}/${profile}/build.properties.bak" failonerror="false" />
-
-		<!-- Generate profile build.properties file from project sources -->
-		<property file="${toolkit.dir.base}/modules/php/build.properties" />
-		<for list="${properties.dirs}" param="dir">
-			<sequential>
-				<exec executable="${php.executable}" dir="${application.dir.base}" output="${application.dir.base}/${toolkit.dir.profiles}/${profile}/build.properties" logError="true" failonerror="true">
-					<arg value="${toolkit.dir.base}/vendor/phpreprocessor/bin/phpreprocessor" />
-					<arg value="--command=extract" />
-					<arg value="--exclude-from=${toolkit.modules.paths.properties},${application.dir.base}/${toolkit.dir.profiles}/common/build.properties" />
-					<arg value="--src=${application.dir.base}/@{dir}" />
-					<arg value="--merge-with=${application.dir.base}/${toolkit.dir.profiles}/${profile}/build.properties" />
-				</exec>
-			</sequential>
-		</for>
-	</target>
-
-	<!-- Creates a new property file for configuration profile -->
-	<target name="module.properties.profile.create" description="Creates an empty build.properties for the user defined by the TOOLKIT_USER environment variable or the -Dprofile parameter">
-		<!-- Create profile directory and property file if it does not exist -->
-		<touch file="${basedir}/${toolkit.dir.profiles}/${profile}/build.properties" mkdirs="true" verbose="true" />
+	<target name="properties.show" description="Displays profile properties">
+		<echoproperties>
+			<propertyset>
+				<propertyset refid="properties.ignore" />
+			</propertyset>
+		</echoproperties>
 	</target>
 </project>
