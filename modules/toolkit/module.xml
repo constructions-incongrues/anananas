@@ -10,8 +10,13 @@
         </classpath>
     </taskdef>
 
-    <!-- Toolkit default properties -->
-    <property file="${toolkit.dir.base}/modules/toolkit/configuration.properties" />
+    <!-- Load toolkit default properties -->
+    <property file="${basedir}/toolkit.properties" />
+
+    <!-- Load selected configuration profile properties -->
+    <echo message="Searching for configuration profiles in : ${configuration.dir.profiles}" />
+    <echo message="Using configuration profile : ${configuration.profile}" />
+    <property file="${configuration.dir.profiles}/${configuration.profile}/configuration.properties" />
 
     <!-- Load mandatory modules -->
     <for list="${toolkit.modules.mandatory}" param="module">
@@ -23,11 +28,8 @@
         </sequential>
     </for>
 
-    <echo message="Searching for configuration profiles in : ${configuration.dir.profiles}" />
-    <echo message="Using configuration profile : ${configuration.profile}" />
-
-    <!-- Local configuration profile properties -->
-    <property file="${configuration.dir.profiles}/${configuration.profile}/configuration.properties" />
+    <!-- Toolkit default properties -->
+    <property file="${toolkit.dir.base}/modules/toolkit/configuration.properties" />
 
     <!-- Import macros -->
     <import file="${toolkit.dir.base}/modules/toolkit/lib/ant/macro.xml" />
