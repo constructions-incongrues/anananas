@@ -14,13 +14,6 @@
         </classpath>
     </taskdef>
 
-    <!-- Guess profile -->
-    <exec outputproperty="username" logError="true" executable="whoami" />
-    <property environment="env" />
-    <condition property="configuration.profile" value="${env.CONFIGURATION_PROFILE}" else="${username}">
-        <isset property="env.CONFIGURATION_PROFILE" />
-    </condition>
-
     <!-- Global ABT properties -->
     <property file="${application.dir.base}/toolkit.properties" />
 
@@ -28,11 +21,11 @@
     <property file="${toolkit.dir.base}/modules/configuration/build.properties" />
     <import file="${toolkit.dir.base}/modules/configuration/module.xml" />
 
-    <echo message="Searching for profiles in : ${application.dir.base}/${toolkit.dir.profiles}" />
+    <echo message="Searching for profiles in : ${configuration.dir}/profiles" />
     <echo message="Using profile : ${configuration.profile}" />
 
     <!-- Local configuration profile properties -->
-    <property file="${application.dir.base}/${toolkit.dir.profiles}/${configuration.profile}/build.properties" />
+    <property file="${configuration.dir}/profiles/${configuration.profile}/build.properties" />
 
     <!-- Toolkit default properties -->
     <property file="${toolkit.dir.base}/modules/toolkit/build.properties" />
