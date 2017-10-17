@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="toolkit.lib" default="help">
-	<!-- Generates list of paths to module.xml files in toolkit.modules.paths property -->
-	<scriptdef name="expandModulesPaths" language="javascript" src="${toolkit.dir.base}/modules/toolkit/lib/js/expandModulesPaths.js">
-		<attribute name="native" />
-        <attribute name="external" />
-	</scriptdef>
-
+<project name="toolkit.lib.macro">
 	<!-- Iterates of project files and calls given target -->
     <macrodef name="iterate">
         <attribute name="target" />

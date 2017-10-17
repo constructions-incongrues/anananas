@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="application" default="help">
+	<!-- Stages hooks -->
+	<target name="build" />
+	<target name="configure" />
+	<target name="init" />
+	<target name="install" />
+	<target name="package" />
+	<target name="upload" />
+
+    <!-- Guess project name from project's root directory -->
+    <basename file="${basedir}" property="application.name" />
+</project>

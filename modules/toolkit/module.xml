@@ -3,10 +3,6 @@
     <!-- Store toolkit base directory for later use -->
     <dirname property="toolkit.dir.base" file="${ant.file.toolkit}/../.." />
 
-    <!-- Project sources directory -->
-    <property name="application.dir.base" value="${basedir}" />
-    <property name="application.dir.src" value="${application.dir.base}/src" />
-
     <!-- Enable ant-contrib (@see http://ant-contrib.sourceforge.net) -->
     <taskdef resource="net/sf/antcontrib/antlib.xml">
         <classpath>
@@ -14,72 +10,75 @@
         </classpath>
     </taskdef>
 
-    <!-- Global ABT properties -->
-    <property file="${application.dir.base}/toolkit.properties" />
-
-    <!-- Enable configuration module -->
-    <property file="${toolkit.dir.base}/modules/configuration/configuration.properties" />
-    <import file="${toolkit.dir.base}/modules/configuration/module.xml" />
-
-    <echo message="Searching for profiles in : ${configuration.dir.profiles}" />
-    <echo message="Using profile : ${configuration.profile}" />
-
-    <!-- Local configuration profile properties -->
-    <property file="${configuration.dir.profiles}/${configuration.profile}/configuration.properties" />
-
     <!-- Toolkit default properties -->
     <property file="${toolkit.dir.base}/modules/toolkit/configuration.properties" />
 
-    <!-- Import helpers -->
-    <import file="${toolkit.dir.base}/modules/toolkit/lib.xml" />
-
-    <!-- Make build timestamp available -->
-    <tstamp>
-        <format property="toolkit.timestamp" pattern="${toolkit.timestamp.format}" />
-    </tstamp>
-
-    <!-- Guess project name from project's root directory -->
-    <basename file="${application.dir.base}" property="application.name" />
-
-    <!-- Load modules -->
-    <for list="${toolkit.modules}" param="module">
+    <!-- Load mandatory modules -->
+    <for list="${toolkit.modules.mandatory}" param="module">
         <sequential>
-            <echo>Importing module : @{module}</echo>
+            <echo>Importing mandatory module : @{module}</echo>
             <import file="${toolkit.dir.base}/modules/@{module}/module.xml" />
             <property file="${toolkit.dir.base}/modules/@{module}/configuration.properties" />
             <property name="toolkit.modules.@{module}" value="true" />
         </sequential>
     </for>
 
+    <echo message="Searching for configuration profiles in : ${configuration.dir.profiles}" />
+    <echo message="Using configuration profile : ${configuration.profile}" />
+
+    <!-- Local configuration profile properties -->
+    <property file="${configuration.dir.profiles}/${configuration.profile}/configuration.properties" />
+
+    <!-- Import macros -->
+    <import file="${toolkit.dir.base}/modules/toolkit/lib/ant/macro.xml" />
+
+    <!-- Import scripts -->
+    <import file="${toolkit.dir.base}/modules/toolkit/lib/ant/script.xml" />
+
+    <!-- Make build timestamp available -->
+    <tstamp>
+        <format property="toolkit.timestamp" pattern="${toolkit.timestamp.format}" />
+    </tstamp>
+
+    <!-- Load native modules -->
+    <for list="${toolkit.modules}" param="module">
+        <sequential>
+            <echo>Importing profile module : @{module}</echo>
+            <import file="${toolkit.dir.base}/modules/@{module}/module.xml" />
+            <property file="${toolkit.dir.base}/modules/@{module}/configuration.properties" />
+            <property name="toolkit.modules.@{module}" value="true" />
+        </sequential>
+    </for>
+
+    <!-- Load external modules -->
     <for list="${toolkit.modules.external}" param="module">
         <sequential>
-            <echo>Importing module : @{module}</echo>
+            <echo>Importing external module : @{module}</echo>
             <import file="${application.dir.base}/@{module}/module.xml" />
             <property file="${application.dir.base}/@{module}/configuration.properties" />
         </sequential>
     </for>
 
     <!-- Generate list of paths to modules project files -->
-    <expandModulesPaths native="${toolkit.modules}" external="${toolkit.modules.external}" />
+    <expandModulesPaths
+        mandatory="${toolkit.modules.mandatory}"
+        profile="${toolkit.modules}"
+        external="${toolkit.modules.external}" />
 
-    <!-- Mandatory targets -->
-    <target name="init" description="Sets up project for usage with the toolkit">
-        <!-- Create toolkit.properties file -->
-        <copy file="${toolkit.dir.base}/templates/toolkit.properties" todir="${basedir}" overwrite="false" />
-
-        <property file="${toolkit.dir.base}/templates/toolkit.properties" />
-
+    <target name="bootstrap" description="Bootstraps application">
         <!-- Create sources directory -->
-        <mkdir dir="${basedir}/src" />
+        <mkdir dir="${application.dir.src}" />
 
         <!-- Create dist directory -->
-        <mkdir dir="${basedir}/dist" />
+        <mkdir dir="${application.dir.dist}" />
 
         <!-- Create project build.xml file -->
-        <copy file="${toolkit.dir.base}/templates/build.xml" todir="${basedir}" overwrite="false" />
+        <copy file="${toolkit.dir.base}/modules/toolkit/templates/build.xml" todir="${basedir}" overwrite="false" />
         <replace file="${basedir}/build.xml" token="@application.name@" value="${application.name}" />
+    </target>
 
-        <!-- Execute activated modules init -->
+    <!-- Stages -->
+    <target name="init" description="Inits modules">
         <iterate target="init" basedir="${application.dir.base}" paths="${toolkit.modules.paths}" />
     </target>
 
@@ -87,15 +86,15 @@
         <iterate target="install" basedir="${application.dir.base}" paths="${toolkit.modules.paths}" />
     </target>
 
-    <target name="build" description="Builds project (ORM classes generation, etc)">
+    <target name="build" description="Builds project">
         <iterate target="build" basedir="${application.dir.base}" paths="${toolkit.modules.paths}" />
     </target>
 
-    <target name="package" description="Packages build sources">
+    <target name="package" description="Packages application sources into a build artifact">
         <iterate target="package" basedir="${application.dir.base}" paths="${toolkit.modules.paths}" />
     </target>
 
-    <target name="upload" description="Uploads build artifact">
+    <target name="upload" description="Uploads build artifact to artifacts repositories">
         <iterate target="upload" basedir="${application.dir.base}" paths="${toolkit.modules.paths}" />
     </target>
 

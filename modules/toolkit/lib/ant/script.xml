@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="toolkit.lib.script">
+	<!-- Generates list of paths to module.xml files in toolkit.modules.paths property -->
+	<scriptdef name="expandModulesPaths" language="javascript" src="${toolkit.dir.base}/modules/toolkit/lib/js/expandModulesPaths.js">
+		<attribute name="mandatory" />
+		<attribute name="profile" />
+        <attribute name="external" />
+	</scriptdef>
+</project>

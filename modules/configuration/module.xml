@@ -5,7 +5,7 @@
 	<target name="init" />
 	<target name="install" />
 	<target name="build" />
-	<target name="package" depends="configuration.dotenv" />
+	<target name="package" />
 	<target name="upload" />
 
 	<target name="configuration.apply" description="Applies profile configuration">
