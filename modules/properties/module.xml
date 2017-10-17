@@ -28,7 +28,7 @@
 	</target>
 
 	<target name="properties.update" description="Searches for property tokens in dist files and adds missing properties to common profile">
-		<tempfile property="properties.found.file" deleteonexit="false" />
+		<tempfile property="properties.found.file" deleteonexit="true" />
 		<for param="file">
 			<path>
 				<fileset dir="${application.dir.base}" includes="**/*${properties.suffix}" />
