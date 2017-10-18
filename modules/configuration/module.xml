@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="configuration" default="help">
+<project xmlns:if="ant:if" xmlns:unless="ant:unless" name="configuration" default="help">
 	<!-- Stages hooks -->
 	<target name="configure" depends="configuration.apply" />
 	<target name="init" depends="configuration.update" />
@@ -51,6 +51,7 @@
 						</tokenfilter>
 					</filterchain>
 				</loadfile>
+				<property unless:set="configuration.found" name="configuration.found" value="" />
 				<echo message="${configuration.found}" file="${configuration.found.file}" append="true" />
 			</sequential>
 		</for>
