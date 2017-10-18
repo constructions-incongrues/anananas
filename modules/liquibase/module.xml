@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="liquibase" xmlns:if="ant:if" xmlns:unless="ant:unless" xmlns:liquibase="antlib:liquibase.integration.ant" default="help">
+	<!-- Stages hooks -->
+	<target name="build" />
+	<target name="configure" />
+	<target name="deploy" />
+    <target name="init" />
+	<target name="install" />
+	<target name="package" />
+	<target name="upload" />
+
+	<!-- Load Liquibase types and tasks -->
+	<path id="liquibase.classpath">
+		<fileset dir="${toolkit.dir.base}/modules/liquibase/vendor/liquibase/">
+			<include name="**/*.jar" />
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+	<taskdef resource="liquibase/integration/ant/antlib.xml" uri="antlib:liquibase.integration.ant">
+		<classpath refid="liquibase.classpath"/>
+	</taskdef>
+
+	<target name="liquibase.databases.reference">
+	    <propertyselector property="liquibase.databases" delimiter="," match="service\.database\.([^\.]*)\.host" select="\1" />
+		<for list="${liquibase.databases}" param="liquibase.database">
+			<sequential>
+				<condition property="service.database.@{liquibase.database}.isMysql">
+					<equals arg1="${service.database.@{liquibase.database}.driver}" arg2="mysql" trim="true" forcestring="true" />
+				</condition>
+				<property name="service.database.@{liquibase.database}.driver.liquibase" value="com.mysql.jdbc.Driver" if:true="${service.database.@{liquibase.database}.isMysql}" />
+				<liquibase:database
+					id="liquibase.database.@{liquibase.database}"
+					driver="${service.database.@{liquibase.database}.driver.liquibase}"
+					url="${service.database.@{liquibase.database}.jdbc.url}"
+					user="${service.database.@{liquibase.database}.user}"
+					password="${service.database.@{liquibase.database}.password}" />
+			</sequential>
+		</for>
+	</target>
+
+    <target name="liquibase.databases.update" description="Updates databases" depends="liquibase.databases.reference">
+		<for list="${liquibase.databases}" param="liquibase.database">
+			<sequential>
+				<echo message="Connecting to database '@{liquibase.database}' : '${service.database.@{liquibase.database}.jdbc.url}' with user '${service.database.@{liquibase.database}.user}'" />
+        		<liquibase:updateDatabase databaseref="liquibase.database.${liquibase.database}" changelogfile="${liquibase.changelog}" />
+			</sequential>
+		</for>
+    </target>
+
+    <target name="liquibase.database.rollback.tag" description="Rollbacks database to tag" depends="liquibase.databases.reference">
+		<fail unless="liquibase.rollback.tag" />
+		<fail unless="liquibase.database" />
+		<fail unless="liquibase.changelog" />
+		<liquibase:rollbackDatabase
+			databaseref="liquibase.database.${liquibase.database}"
+			changelogfile="${liquibase.changelog}"
+			rollbackTag="${liquibase.rollback.tag}" />
+    </target>
+
+    <target name="liquibase.database.rollback.date" description="Rollbacks database to date" depends="liquibase.databases.reference">
+		<fail unless="liquibase.rollback.date" />
+		<fail unless="liquibase.database" />
+		<fail unless="liquibase.changelog" />
+		<liquibase:rollbackDatabase
+			databaseref="liquibase.database.${liquibase.database}"
+			changelogfile="${liquibase.changelog}"
+			rollbackDate="${liquibase.rollback.date}" />
+    </target>
+
+    <target name="liquibase.database.rollback.count" description="Rollbacks database to count" depends="liquibase.databases.reference">
+		<fail unless="liquibase.rollback.count" />
+		<fail unless="liquibase.database" />
+		<fail unless="liquibase.changelog" />
+		<liquibase:rollbackDatabase
+			databaseref="liquibase.database.${liquibase.database}"
+			changelogfile="${liquibase.changelog}"
+			rollbackCount="${liquibase.rollback.count}" />
+    </target>
+
+    <target name="liquibase.database.rollback.future" description="Outputs SQL to un-run changes that have not yet been executed" depends="liquibase.databases.reference">
+		<fail unless="liquibase.database" />
+		<fail unless="liquibase.changelog" />
+		<liquibase:rollbackFutureDatabase
+			databaseref="liquibase.database.${liquibase.database}"
+			changelogfile="${liquibase.changelog}"
+			outputfile="${liquibase.rollback.future.outputfile}" />
+		<echo message="Wrote SQL to ${liquibase.rollback.future.outputfile}" />
+    </target>
+
+    <target name="liquibase.database.tag" description="Tags the database for possible future rollback" depends="liquibase.databases.reference">
+		<fail unless="liquibase.database" />
+		<fail unless="liquibase.tag" />
+		<liquibase:tagDatabase databaseref="liquibase.database.${liquibase.database}" tag="${liquibase.tag}" />
+    </target>
+
+    <target name="liquibase.database.changelog" description="Generates changelog to re-create an existing database" depends="liquibase.databases.reference">
+		<fail unless="liquibase.database" />
+		<liquibase:generateChangeLog databaseref="liquibase.database.${liquibase.database}">
+			<liquibase:yaml outputfile="${liquibase.changelog.outputfile}.yaml" encoding="UTF-8" />
+		</liquibase:generateChangeLog>
+    </target>
+
+    <target name="liquibase.database.diff.report" description="Outputs a diff report of the difference between two databases" depends="liquibase.databases.reference">
+		<fail unless="liquibase.database" />
+		<fail unless="liquibase.referencedatabase" />
+		<liquibase:diffDatabase
+			databaseref="liquibase.database.${liquibase.database}"
+			referencedatabaseref="liquibase.database.${liquibase.referencedatabase}"
+			outputfile="${liquibase.diff.outputfile}"
+			difftypes="${liquibase.diff.types}" />
+    </target>
+
+    <target name="liquibase.database.diff.changelog" description="Outputs a diff changelog of the difference between two databases" depends="liquibase.databases.reference">
+		<fail unless="liquibase.database" />
+		<fail unless="liquibase.referencedatabase" />
+		<liquibase:diffDatabaseToChangeLog
+			databaseref="liquibase.database.${liquibase.database}"
+			referencedatabaseref="liquibase.database.${liquibase.referencedatabase}"
+			difftypes="${liquibase.diff.types}">
+			<liquibase:yaml outputfile="${liquibase.diff.outputfile}.yaml" encoding="UTF-8" />
+		</liquibase:diffDatabaseToChangeLog>
+    </target>
+
+    <target name="liquibase.database.dbdoc" description="Generates dbdoc database documentation for a given database" depends="liquibase.databases.reference">
+		<fail unless="liquibase.database" />
+		<fail unless="liquibase.changelog" />
+		<liquibase:dbDoc
+			databaseref="liquibase.database.${liquibase.database}"
+			changelogfile="${liquibase.changelog}"
+			outputdirectory="${liquibase.dbdoc.outputdirectory}" />
+		<echo message="Generated '${liquibase.database}' documentation in '${liquibase.dbdoc.outputdirectory}'" />
+    </target>
+
+    <target name="liquibase.changelog.sync" description="Marks all change sets as ran against the database" depends="liquibase.databases.reference">
+		<fail unless="liquibase.database" />
+		<fail unless="liquibase.changelog" />
+		<liquibase:changeLogSync
+			databaseref="liquibase.database.${liquibase.database}"
+			changelogfile="${liquibase.changelog}"
+			unless:true="${liquibase.changelog.sync.tosql}" />
+		<liquibase:changeLogSync
+			databaseref="liquibase.database.${liquibase.database}"
+			changelogfile="${liquibase.changelog}"
+			outputfile="${liquibase.changelog.sync.outputfile}"
+			if:true="${liquibase.changelog.sync.tosql}" />
+		<echo message="Wrote changelog sync SQL to '${liquibase.changelog.sync.outputfile}'" if:true="${liquibase.changelog.sync.tosql}" />
+    </target>
+
+    <target name="liquibase.database.dropallobjects" description="Drops all database objects owned by the user" depends="liquibase.databases.reference">
+		<fail unless="liquibase.database" />
+		<liquibase:dropAllDatabaseObjects databaseref="liquibase.database.${liquibase.database}" />
+    </target>
+
+    <target name="liquibase.changeset.marknextran" description="Marks the next change as already ran" depends="liquibase.databases.reference">
+		<fail unless="liquibase.database" />
+		<fail unless="liquibase.changelog" />
+		<liquibase:markNextChangeSetRan
+			databaseref="liquibase.database.${liquibase.database}"
+			changelogfile="${liquibase.changelog}" />
+    </target>
+</project>
