@@ -1,4 +1,6 @@
-# Ananas Build Toolkit
+# Anananas
+
+Anananas makes it easy to configure, build and deploy applications to multiple environments
 
 ## Getting started
 

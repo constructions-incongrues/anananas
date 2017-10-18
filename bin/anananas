@@ -1,8 +1,6 @@
 
 #!/bin/bash
 
-# ant -emacs  $@
-
 # Prettify ant output
 #
 # Author: Björn Husberg (bjorn@husberg.se)

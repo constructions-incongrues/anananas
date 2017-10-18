@@ -22,7 +22,7 @@ database:
 
 Create a configuration profile by scanning application's dist files :
 ```
-$ ant configuration.update -Dconfiguration.profile=production
+$ ./vendor/bin/anananas configuration.update -Dconfiguration.profile=production
 
 # etc/profiles/production/configuration.properties
 database.host=
@@ -38,7 +38,7 @@ database.port=3306
 
 Apply configuration profile :
 ```
-$ ant configuration.apply -Dconfiguration.profile=production
+$ ./vendor/bin/anananas configuration.apply -Dconfiguration.profile=production
 
 # src/app/config/parameters.yml
 database:
