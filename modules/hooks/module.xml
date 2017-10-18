@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:if="ant:if" xmlns:unless="ant:unless" name="hooks" default="help">
+	<!-- Stages hooks -->
+	<target name="build" depends="hooks.build.execute" />
+	<target name="configure" depends="hooks.configure.execute" />
+	<target name="deploy"  depends="hooks.deploy.execute" />
+    <target name="init"  depends="hooks.init.execute" />
+	<target name="install" depends="hooks.install.execute" />
+	<target name="package"  depends="hooks.package.execute" />
+	<target name="upload"  depends="hooks.upload.execute" />
+
+    <target name="hooks.build.execute">
+        <propertyselector property="hooks.command.build" delimiter="," match="hooks\.command\.build\.([^\.]*)\.enabled" select="\1" />
+        <for list="${hooks.command.build}" param="command">
+            <sequential>
+                <echo
+                    message="Executing command '${hooks.command.build.@{command}.executable} ${hooks.command.build.@{command}.name} ${hooks.command.build.@{command}.parameters}'"
+                    level="info"
+                    if:true="${hooks.command.build.@{command}.enabled}" />
+                <exec
+                    executable="${hooks.command.build.@{command}.executable}"
+                    dir="${hooks.command.build.@{command}.dir}"
+                    failonerror="true"
+                    if:true="${hooks.command.build.@{command}.enabled}">
+                    <arg line="${hooks.command.build.@{command}.name}" unless:blank="${hooks.command.build.@{command}.name}" />
+                    <arg line="${hooks.command.build.@{command}.parameters}" unless:blank="${hooks.command.build.@{command}.parameters}" />
+                </exec>
+            </sequential>
+        </for>
+    </target>
+
+    <target name="hooks.configure.execute">
+        <propertyselector property="hooks.command.configure" delimiter="," match="hooks\.command\.configure\.([^\.]*)\.enabled" select="\1" />
+        <for list="${hooks.command.configure}" param="command">
+            <sequential>
+                <echo
+                    message="Executing command '${hooks.command.configure.@{command}.executable} ${hooks.command.configure.@{command}.name} ${hooks.command.configure.@{command}.parameters}'"
+                    level="info"
+                    if:true="${hooks.command.configure.@{command}.enabled}" />
+                <exec
+                    executable="${hooks.command.configure.@{command}.executable}"
+                    dir="${hooks.command.configure.@{command}.dir}"
+                    failonerror="true"
+                    if:true="${hooks.command.configure.@{command}.enabled}">
+                    <arg line="${hooks.command.configure.@{command}.name}" unless:blank="${hooks.command.configure.@{command}.name}" />
+                    <arg line="${hooks.command.configure.@{command}.parameters}" unless:blank="${hooks.command.configure.@{command}.parameters}" />
+                </exec>
+            </sequential>
+        </for>
+    </target>
+
+    <target name="hooks.deploy.execute">
+        <propertyselector property="hooks.command.deploy" delimiter="," match="hooks\.command\.deploy\.([^\.]*)\.enabled" select="\1" />
+        <for list="${hooks.command.deploy}" param="command">
+            <sequential>
+                <echo
+                    message="Executing command '${hooks.command.deploy.@{command}.executable} ${hooks.command.deploy.@{command}.name} ${hooks.command.deploy.@{command}.parameters}'"
+                    level="info"
+                    if:true="${hooks.command.deploy.@{command}.enabled}" />
+                <exec
+                    executable="${hooks.command.deploy.@{command}.executable}"
+                    dir="${hooks.command.deploy.@{command}.dir}"
+                    failonerror="true"
+                    if:true="${hooks.command.deploy.@{command}.enabled}">
+                    <arg line="${hooks.command.deploy.@{command}.name}" unless:blank="${hooks.command.deploy.@{command}.name}" />
+                    <arg line="${hooks.command.deploy.@{command}.parameters}" unless:blank="${hooks.command.deploy.@{command}.parameters}" />
+                </exec>
+            </sequential>
+        </for>
+    </target>
+
+    <target name="hooks.init.execute">
+        <propertyselector property="hooks.command.init" delimiter="," match="hooks\.command\.init\.([^\.]*)\.enabled" select="\1" />
+        <for list="${hooks.command.init}" param="command">
+            <sequential>
+                <echo
+                    message="Executing command '${hooks.command.init.@{command}.executable} ${hooks.command.init.@{command}.name} ${hooks.command.init.@{command}.parameters}'"
+                    level="info"
+                    if:true="${hooks.command.init.@{command}.enabled}" />
+                <exec
+                    executable="${hooks.command.init.@{command}.executable}"
+                    dir="${hooks.command.init.@{command}.dir}"
+                    failonerror="true"
+                    if:true="${hooks.command.init.@{command}.enabled}">
+                    <arg line="${hooks.command.init.@{command}.name}" unless:blank="${hooks.command.init.@{command}.name}" />
+                    <arg line="${hooks.command.init.@{command}.parameters}" unless:blank="${hooks.command.init.@{command}.parameters}" />
+                </exec>
+            </sequential>
+        </for>
+    </target>
+
+    <target name="hooks.install.execute">
+        <propertyselector property="hooks.command.install" delimiter="," match="hooks\.command\.install\.([^\.]*)\.enabled" select="\1" />
+        <for list="${hooks.command.install}" param="command">
+            <sequential>
+                <echo
+                    message="Executing command '${hooks.command.install.@{command}.executable} ${hooks.command.install.@{command}.name} ${hooks.command.install.@{command}.parameters}'"
+                    level="info"
+                    if:true="${hooks.command.install.@{command}.enabled}" />
+                <exec
+                    executable="${hooks.command.install.@{command}.executable}"
+                    dir="${hooks.command.install.@{command}.dir}"
+                    failonerror="true"
+                    if:true="${hooks.command.install.@{command}.enabled}">
+                    <arg line="${hooks.command.install.@{command}.name}" unless:blank="${hooks.command.install.@{command}.name}" />
+                    <arg line="${hooks.command.install.@{command}.parameters}" unless:blank="${hooks.command.install.@{command}.parameters}" />
+                </exec>
+            </sequential>
+        </for>
+    </target>
+
+    <target name="hooks.package.execute">
+        <propertyselector property="hooks.command.package" delimiter="," match="hooks\.command\.package\.([^\.]*)\.enabled" select="\1" />
+        <for list="${hooks.command.package}" param="command">
+            <sequential>
+                <echo
+                    message="Executing command '${hooks.command.package.@{command}.executable} ${hooks.command.package.@{command}.name} ${hooks.command.package.@{command}.parameters}'"
+                    level="info"
+                    if:true="${hooks.command.package.@{command}.enabled}" />
+                <exec
+                    executable="${hooks.command.package.@{command}.executable}"
+                    dir="${hooks.command.package.@{command}.dir}"
+                    failonerror="true"
+                    if:true="${hooks.command.package.@{command}.enabled}">
+                    <arg line="${hooks.command.package.@{command}.name}" unless:blank="${hooks.command.package.@{command}.name}" />
+                    <arg line="${hooks.command.package.@{command}.parameters}" unless:blank="${hooks.command.package.@{command}.parameters}" />
+                </exec>
+            </sequential>
+        </for>
+    </target>
+
+    <target name="hooks.upload.execute">
+        <propertyselector property="hooks.command.upload" delimiter="," match="hooks\.command\.upload\.([^\.]*)\.enabled" select="\1" />
+        <for list="${hooks.command.upload}" param="command">
+            <sequential>
+                <echo
+                    message="Executing command '${hooks.command.upload.@{command}.executable} ${hooks.command.upload.@{command}.name} ${hooks.command.upload.@{command}.parameters}'"
+                    level="info"
+                    if:true="${hooks.command.upload.@{command}.enabled}" />
+                <exec
+                    executable="${hooks.command.upload.@{command}.executable}"
+                    dir="${hooks.command.upload.@{command}.dir}"
+                    failonerror="true"
+                    if:true="${hooks.command.upload.@{command}.enabled}">
+                    <arg line="${hooks.command.upload.@{command}.name}" unless:blank="${hooks.command.upload.@{command}.name}" />
+                    <arg line="${hooks.command.upload.@{command}.parameters}" unless:blank="${hooks.command.upload.@{command}.parameters}" />
+                </exec>
+            </sequential>
+        </for>
+    </target>
+</project>
