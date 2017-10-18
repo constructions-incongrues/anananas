@@ -14,14 +14,15 @@
     <property file="${basedir}/toolkit.properties" />
 
     <!-- Load selected configuration profile properties -->
-    <echo message="Searching for configuration profiles in : ${configuration.dir.profiles}" />
-    <echo message="Using configuration profile : ${configuration.profile}" />
+    <echo message="Active configuration profile : ${configuration.profile}" taskname="anananas" />
     <property file="${configuration.dir.profiles}/${configuration.profile}/configuration.properties" />
+
+    <echo message="Importing modules :" taskname="anananas" />
 
     <!-- Load mandatory modules -->
     <for list="${toolkit.modules.mandatory}" param="module">
         <sequential>
-            <echo>Importing mandatory module : @{module}</echo>
+            <echo taskname="anananas">- @{module}</echo>
             <import file="${toolkit.dir.base}/modules/@{module}/module.xml" />
             <property file="${toolkit.dir.base}/modules/@{module}/configuration.properties" />
             <property name="toolkit.modules.@{module}" value="true" />
@@ -45,7 +46,7 @@
     <!-- Load native modules -->
     <for list="${toolkit.modules}" param="module">
         <sequential>
-            <echo>Importing profile module : @{module}</echo>
+            <echo taskname="anananas">- @{module}</echo>
             <import file="${toolkit.dir.base}/modules/@{module}/module.xml" />
             <property file="${toolkit.dir.base}/modules/@{module}/configuration.properties" />
             <property name="toolkit.modules.@{module}" value="true" />
@@ -55,7 +56,7 @@
     <!-- Load external modules -->
     <for list="${toolkit.modules.external}" param="module">
         <sequential>
-            <echo>Importing external module : @{module}</echo>
+            <echo taskname="anananas">- @{module}</echo>
             <import file="${application.dir.base}/@{module}/module.xml" />
             <property file="${application.dir.base}/@{module}/configuration.properties" />
         </sequential>
@@ -68,31 +69,38 @@
         external="${toolkit.modules.external}" />
 
     <!-- Stages -->
-    <target name="build" description="Builds application" depends="configure">
+    <target name="build" description="Builds application">
+        <echo message="Entering 'build' stage" taskname="anananas" />
         <iterate target="build" basedir="${application.dir.base}" paths="${toolkit.modules.paths}" />
     </target>
 
     <target name="configure" description="Configures application">
+        <echo message="Entering 'configure' stage" taskname="anananas" />
         <iterate target="configure" basedir="${application.dir.base}" paths="${toolkit.modules.paths}" />
     </target>
 
     <target name="init" description="Inits enabled modules">
+        <echo message="Entering 'init' stage" taskname="anananas" />
         <iterate target="init" basedir="${application.dir.base}" paths="${toolkit.modules.paths}" />
     </target>
 
     <target name="install" description="Installs application dependencies">
+        <echo message="Entering 'install' stage" taskname="anananas" />
         <iterate target="install" basedir="${application.dir.base}" paths="${toolkit.modules.paths}" />
     </target>
 
     <target name="package" description="Packages application sources into a build artifact">
+        <echo message="Entering 'package' stage" taskname="anananas" />
         <iterate target="package" basedir="${application.dir.base}" paths="${toolkit.modules.paths}" />
     </target>
 
     <target name="upload" description="Uploads build artifact to artifacts repositories">
+        <echo message="Entering 'upload' stage" taskname="anananas" />
         <iterate target="upload" basedir="${application.dir.base}" paths="${toolkit.modules.paths}" />
     </target>
 
-    <target name="deploy" description="Deploys application sources to remote environments" depends="configure, build">
+    <target name="deploy" description="Deploys application sources to remote environments">
+        <echo message="Entering 'deploy' stage" taskname="anananas" />
         <iterate target="deploy" basedir="${application.dir.base}" paths="${toolkit.modules.paths}" />
     </target>
 

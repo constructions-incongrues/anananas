@@ -23,8 +23,9 @@
                 <echo
                     message="Rsyncing over SSH to '@{server}' (${rsync.ssh.@{server}.user}@${rsync.ssh.@{server}.host}:${rsync.ssh.@{server}.port}:${rsync.ssh.@{server}.dir.remote})"
                     level="info"
+                    taskname="rsync"
                     if:true="${rsync.ssh.@{server}.enabled}" />
-                <exec executable="${rsync.executable}" failonerror="true" if:true="${rsync.ssh.@{server}.enabled}">
+                <exec executable="${rsync.executable}" failonerror="true" if:true="${rsync.ssh.@{server}.enabled}" taskname="rsync">
                     <arg line="${rsync.options.base}" />
                     <arg line="${rsync.options.additional}" />
                     <arg line="--dry-run" if:true="${rsync.ssh.@{server}.dryrun}" />

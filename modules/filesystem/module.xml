@@ -13,7 +13,7 @@
         <propertyselector property="filesystem.symlinks" delimiter="," match="filesystem\.symlink\.([^\.]*)\.resource" select="\1" />
         <for list="${filesystem.symlinks}" param="symlink">
             <sequential>
-                <symlink resource="${filesystem.symlink.@{symlink}.resource}" link="${filesystem.symlink.@{symlink}.link}" />
+                <symlink resource="${filesystem.symlink.@{symlink}.resource}" link="${filesystem.symlink.@{symlink}.link}" overwrite="true" taskname="filesystem" />
             </sequential>
         </for>
     </target>

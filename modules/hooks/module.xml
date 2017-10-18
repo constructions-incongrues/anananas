@@ -14,13 +14,14 @@
         <for list="${hooks.command.build}" param="command">
             <sequential>
                 <echo
-                    message="Executing command '${hooks.command.build.@{command}.executable} ${hooks.command.build.@{command}.name} ${hooks.command.build.@{command}.parameters}'"
-                    level="info"
+                    message="# Executing command '${hooks.command.build.@{command}.executable} ${hooks.command.build.@{command}.name} ${hooks.command.build.@{command}.parameters}'"
+                    taskname="hooks"
                     if:true="${hooks.command.build.@{command}.enabled}" />
                 <exec
                     executable="${hooks.command.build.@{command}.executable}"
                     dir="${hooks.command.build.@{command}.dir}"
                     failonerror="true"
+                    taskname="hooks"
                     if:true="${hooks.command.build.@{command}.enabled}">
                     <arg line="${hooks.command.build.@{command}.name}" unless:blank="${hooks.command.build.@{command}.name}" />
                     <arg line="${hooks.command.build.@{command}.parameters}" unless:blank="${hooks.command.build.@{command}.parameters}" />
@@ -34,13 +35,14 @@
         <for list="${hooks.command.configure}" param="command">
             <sequential>
                 <echo
-                    message="Executing command '${hooks.command.configure.@{command}.executable} ${hooks.command.configure.@{command}.name} ${hooks.command.configure.@{command}.parameters}'"
-                    level="info"
+                    message="# Executing command '${hooks.command.configure.@{command}.executable} ${hooks.command.configure.@{command}.name} ${hooks.command.configure.@{command}.parameters}'"
+                    taskname="hooks"
                     if:true="${hooks.command.configure.@{command}.enabled}" />
                 <exec
                     executable="${hooks.command.configure.@{command}.executable}"
                     dir="${hooks.command.configure.@{command}.dir}"
                     failonerror="true"
+                    taskname="hooks"
                     if:true="${hooks.command.configure.@{command}.enabled}">
                     <arg line="${hooks.command.configure.@{command}.name}" unless:blank="${hooks.command.configure.@{command}.name}" />
                     <arg line="${hooks.command.configure.@{command}.parameters}" unless:blank="${hooks.command.configure.@{command}.parameters}" />
@@ -55,12 +57,13 @@
             <sequential>
                 <echo
                     message="Executing command '${hooks.command.deploy.@{command}.executable} ${hooks.command.deploy.@{command}.name} ${hooks.command.deploy.@{command}.parameters}'"
-                    level="info"
+                    taskname="hooks"
                     if:true="${hooks.command.deploy.@{command}.enabled}" />
                 <exec
                     executable="${hooks.command.deploy.@{command}.executable}"
                     dir="${hooks.command.deploy.@{command}.dir}"
                     failonerror="true"
+                    taskname="hooks"
                     if:true="${hooks.command.deploy.@{command}.enabled}">
                     <arg line="${hooks.command.deploy.@{command}.name}" unless:blank="${hooks.command.deploy.@{command}.name}" />
                     <arg line="${hooks.command.deploy.@{command}.parameters}" unless:blank="${hooks.command.deploy.@{command}.parameters}" />
@@ -75,12 +78,13 @@
             <sequential>
                 <echo
                     message="Executing command '${hooks.command.init.@{command}.executable} ${hooks.command.init.@{command}.name} ${hooks.command.init.@{command}.parameters}'"
-                    level="info"
+                    taskname="hooks"
                     if:true="${hooks.command.init.@{command}.enabled}" />
                 <exec
                     executable="${hooks.command.init.@{command}.executable}"
                     dir="${hooks.command.init.@{command}.dir}"
                     failonerror="true"
+                    taskname="hooks"
                     if:true="${hooks.command.init.@{command}.enabled}">
                     <arg line="${hooks.command.init.@{command}.name}" unless:blank="${hooks.command.init.@{command}.name}" />
                     <arg line="${hooks.command.init.@{command}.parameters}" unless:blank="${hooks.command.init.@{command}.parameters}" />
@@ -95,12 +99,13 @@
             <sequential>
                 <echo
                     message="Executing command '${hooks.command.install.@{command}.executable} ${hooks.command.install.@{command}.name} ${hooks.command.install.@{command}.parameters}'"
-                    level="info"
+                    taskname="hooks"
                     if:true="${hooks.command.install.@{command}.enabled}" />
                 <exec
                     executable="${hooks.command.install.@{command}.executable}"
                     dir="${hooks.command.install.@{command}.dir}"
                     failonerror="true"
+                    taskname="hooks"
                     if:true="${hooks.command.install.@{command}.enabled}">
                     <arg line="${hooks.command.install.@{command}.name}" unless:blank="${hooks.command.install.@{command}.name}" />
                     <arg line="${hooks.command.install.@{command}.parameters}" unless:blank="${hooks.command.install.@{command}.parameters}" />
@@ -115,12 +120,13 @@
             <sequential>
                 <echo
                     message="Executing command '${hooks.command.package.@{command}.executable} ${hooks.command.package.@{command}.name} ${hooks.command.package.@{command}.parameters}'"
-                    level="info"
+                    taskname="hooks"
                     if:true="${hooks.command.package.@{command}.enabled}" />
                 <exec
                     executable="${hooks.command.package.@{command}.executable}"
                     dir="${hooks.command.package.@{command}.dir}"
                     failonerror="true"
+                    taskname="hooks"
                     if:true="${hooks.command.package.@{command}.enabled}">
                     <arg line="${hooks.command.package.@{command}.name}" unless:blank="${hooks.command.package.@{command}.name}" />
                     <arg line="${hooks.command.package.@{command}.parameters}" unless:blank="${hooks.command.package.@{command}.parameters}" />
@@ -135,12 +141,13 @@
             <sequential>
                 <echo
                     message="Executing command '${hooks.command.upload.@{command}.executable} ${hooks.command.upload.@{command}.name} ${hooks.command.upload.@{command}.parameters}'"
-                    level="info"
+                    taskname="hooks"
                     if:true="${hooks.command.upload.@{command}.enabled}" />
                 <exec
                     executable="${hooks.command.upload.@{command}.executable}"
                     dir="${hooks.command.upload.@{command}.dir}"
                     failonerror="true"
+                    taskname="hooks"
                     if:true="${hooks.command.upload.@{command}.enabled}">
                     <arg line="${hooks.command.upload.@{command}.name}" unless:blank="${hooks.command.upload.@{command}.name}" />
                     <arg line="${hooks.command.upload.@{command}.parameters}" unless:blank="${hooks.command.upload.@{command}.parameters}" />

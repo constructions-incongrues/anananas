@@ -40,15 +40,15 @@
     <target name="liquibase.databases.update" description="Roll all databases forward applying all change sets that have not been run" depends="liquibase.databases.reference">
 		<for list="${liquibase.databases}" param="liquibase.database">
 			<sequential>
-				<echo message="Connecting to database '@{liquibase.database}' : '${service.database.@{liquibase.database}.jdbc.url}' with user '${service.database.@{liquibase.database}.user}'" />
-        		<liquibase:updateDatabase databaseref="liquibase.database.@{liquibase.database}" changelogfile="${liquibase.dir.changelogs}/@{liquibase.database}.xml" />
+				<echo message="Connecting to database '@{liquibase.database}' : '${service.database.@{liquibase.database}.jdbc.url}' with user '${service.database.@{liquibase.database}.user}'" taskname="liquibase" />
+        <liquibase:updateDatabase databaseref="liquibase.database.@{liquibase.database}" changelogfile="${liquibase.dir.changelogs}/@{liquibase.database}.xml" taskname="liquibase" />
 			</sequential>
 		</for>
     </target>
 
     <target name="liquibase.database.update" description="Roll the database forward applying all change sets that have not been run" depends="liquibase.databases.reference">
 			<fail unless="liquibase.database" />
-			<liquibase:updateDatabase databaseref="liquibase.database.${liquibase.database}" changelogfile="${liquibase.dir.changelogs}/${liquibase.database}.xml" />
+			<liquibase:updateDatabase databaseref="liquibase.database.${liquibase.database}" changelogfile="${liquibase.dir.changelogs}/${liquibase.database}.xml" taskname="liquibase" />
     </target>
 
     <target name="liquibase.database.rollback.tag" description="Rollbacks database to tag" depends="liquibase.databases.reference">
@@ -57,7 +57,8 @@
 		<liquibase:rollbackDatabase
 			databaseref="liquibase.database.${liquibase.database}"
 			changelogfile="${liquibase.dir.changelogs}/${liquibase.database}.xml"
-			rollbackTag="${liquibase.rollback.tag}" />
+			rollbackTag="${liquibase.rollback.tag}"
+			taskname="liquibase" />
     </target>
 
     <target name="liquibase.database.rollback.date" description="Rollbacks database to date" depends="liquibase.databases.reference">
@@ -66,7 +67,8 @@
 		<liquibase:rollbackDatabase
 			databaseref="liquibase.database.${liquibase.database}"
 			changelogfile="${liquibase.dir.changelogs}/${liquibase.database}.xml"
-			rollbackDate="${liquibase.rollback.date}" />
+			rollbackDate="${liquibase.rollback.date}"
+			taskname="liquibase" />
     </target>
 
     <target name="liquibase.database.rollback.count" description="Rollbacks database to count" depends="liquibase.databases.reference">
@@ -75,7 +77,8 @@
 		<liquibase:rollbackDatabase
 			databaseref="liquibase.database.${liquibase.database}"
 			changelogfile="${liquibase.dir.changelogs}/${liquibase.database}.xml"
-			rollbackCount="${liquibase.rollback.count}" />
+			rollbackCount="${liquibase.rollback.count}"
+			taskname="liquibase" />
     </target>
 
     <target name="liquibase.database.rollback.future" description="Outputs SQL to un-run changes that have not yet been executed" depends="liquibase.databases.reference">
@@ -83,19 +86,20 @@
 		<liquibase:rollbackFutureDatabase
 			databaseref="liquibase.database.${liquibase.database}"
 			changelogfile="${liquibase.dir.changelogs}/${liquibase.database}.xml"
-			outputfile="${liquibase.rollback.future.outputfile}" />
+			outputfile="${liquibase.rollback.future.outputfile}"
+			taskname="liquibase" />
 		<echo message="Wrote SQL to ${liquibase.rollback.future.outputfile}" />
     </target>
 
     <target name="liquibase.database.tag" description="Tags the database for possible future rollback" depends="liquibase.databases.reference">
 		<fail unless="liquibase.database" />
 		<fail unless="liquibase.tag" />
-		<liquibase:tagDatabase databaseref="liquibase.database.${liquibase.database}" tag="${liquibase.tag}" />
+		<liquibase:tagDatabase databaseref="liquibase.database.${liquibase.database}" tag="${liquibase.tag}" taskname="liquibase" />
     </target>
 
     <target name="liquibase.database.changelog" description="Generates changelog to re-create an existing database" depends="liquibase.databases.reference">
 		<fail unless="liquibase.database" />
-		<liquibase:generateChangeLog databaseref="liquibase.database.${liquibase.database}">
+		<liquibase:generateChangeLog databaseref="liquibase.database.${liquibase.database}" taskname="liquibase">
 			<liquibase:xml outputfile="${liquibase.changelog.outputfile}.xml" encoding="UTF-8" />
 		</liquibase:generateChangeLog>
     </target>
@@ -107,7 +111,8 @@
 			databaseref="liquibase.database.${liquibase.database}"
 			referencedatabaseref="liquibase.database.${liquibase.referencedatabase}"
 			outputfile="${liquibase.diff.outputfile}"
-			difftypes="${liquibase.diff.types}" />
+			difftypes="${liquibase.diff.types}"
+			taskname="liquibase" />
     </target>
 
     <target name="liquibase.database.diff.changelog" description="Outputs a diff changelog of the difference between two databases" depends="liquibase.databases.reference">
@@ -116,7 +121,8 @@
 		<liquibase:diffDatabaseToChangeLog
 			databaseref="liquibase.database.${liquibase.database}"
 			referencedatabaseref="liquibase.database.${liquibase.referencedatabase}"
-			difftypes="${liquibase.diff.types}">
+			difftypes="${liquibase.diff.types}"
+			taskname="liquibase">
 			<liquibase:xml outputfile="${liquibase.diff.outputfile}.xml" encoding="UTF-8" />
 		</liquibase:diffDatabaseToChangeLog>
     </target>
@@ -126,7 +132,8 @@
 		<liquibase:dbDoc
 			databaseref="liquibase.database.${liquibase.database}"
 			changelogfile="${liquibase.dir.changelogs}/${liquibase.database}.xml"
-			outputdirectory="${liquibase.dbdoc.outputdirectory}" />
+			outputdirectory="${liquibase.dbdoc.outputdirectory}"
+			taskname="liquibase" />
 		<echo message="Generated '${liquibase.database}' documentation in '${liquibase.dbdoc.outputdirectory}'" />
     </target>
 
@@ -135,28 +142,31 @@
 		<liquibase:changeLogSync
 			databaseref="liquibase.database.${liquibase.database}"
 			changelogfile="${liquibase.dir.changelogs}/${liquibase.database}.xml"
-			unless:true="${liquibase.changelog.sync.tosql}" />
+			unless:true="${liquibase.changelog.sync.tosql}"
+			taskname="liquibase" />
 		<liquibase:changeLogSync
 			databaseref="liquibase.database.${liquibase.database}"
 			changelogfile="${liquibase.dir.changelogs}/${liquibase.database}.xml"
 			outputfile="${liquibase.changelog.sync.outputfile}"
-			if:true="${liquibase.changelog.sync.tosql}" />
+			if:true="${liquibase.changelog.sync.tosql}"
+			taskname="liquibase" />
 		<echo message="Wrote changelog sync SQL to '${liquibase.changelog.sync.outputfile}'" if:true="${liquibase.changelog.sync.tosql}" />
     </target>
 
     <target name="liquibase.database.dropallobjects" description="Drops all database objects owned by the user" depends="liquibase.databases.reference">
 		<fail unless="liquibase.database" />
-		<liquibase:dropAllDatabaseObjects databaseref="liquibase.database.${liquibase.database}" />
+		<liquibase:dropAllDatabaseObjects databaseref="liquibase.database.${liquibase.database}" taskname="liquibase" />
     </target>
 
     <target name="liquibase.changeset.marknextran" description="Marks the next change as already ran" depends="liquibase.databases.reference">
 		<fail unless="liquibase.database" />
 		<liquibase:markNextChangeSetRan
 			databaseref="liquibase.database.${liquibase.database}"
-			changelogfile="${liquibase.dir.changelogs}/${liquibase.database}.xml" />
+			changelogfile="${liquibase.dir.changelogs}/${liquibase.database}.xml"
+			taskname="liquibase" />
     </target>
 
 	<target name="liquibase.makedirs">
-		<mkdir dir="${liquibase.dir.changelogs}" />
+		<mkdir dir="${liquibase.dir.changelogs}" taskname="liquibase" />
 	</target>
 </project>

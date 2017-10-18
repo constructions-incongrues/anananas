@@ -23,6 +23,7 @@
             destfile="${application.dir.base}/dist/${tar.package.filename}"
             includesfile="${configuration.dir.profiles}/${configuration.profile}/modules/tar/includes"
             excludesfile="${configuration.dir.profiles}/${configuration.profile}/modules/tar/excludes"
-            longfile="posix" />
+            longfile="posix"
+            taskname="tar" />
     </target>
 </project>

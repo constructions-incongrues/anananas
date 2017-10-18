@@ -10,18 +10,18 @@
 	<target name="upload" />
 
     <target name="meteor.bundle" description="Builds Meteor application bundle">
-        <mkdir dir="${meteor.dir.src}" />
+        <mkdir dir="${meteor.dir.src}" taskname="meteor" />
         <mkdir dir="${meteor.dir.build}" />
-        <exec executable="${meteor.executable}" dir="${meteor.dir.src}">
+        <exec executable="${meteor.executable}" dir="${meteor.dir.src}" taskname="meteor">
             <arg line="npm install" />
         </exec>
-        <exec executable="${meteor.executable}" dir="${meteor.dir.src}">
+        <exec executable="${meteor.executable}" dir="${meteor.dir.src}" taskname="meteor">
             <arg line="build --directory ${meteor.dir.build} ${meteor.build.parameters}" />
         </exec>
-        <exec executable="${meteor.executable}" dir="${meteor.dir.src}">
+        <exec executable="${meteor.executable}" dir="${meteor.dir.src}" taskname="meteor">
             <arg line="build --directory ${meteor.dir.build} ${meteor.build.parameters}" />
         </exec>
-        <exec executable="${meteor.executable}" dir="${meteor.dir.build}/bundle/programs/server">
+        <exec executable="${meteor.executable}" dir="${meteor.dir.build}/bundle/programs/server" taskname="meteor">
             <arg line="npm install" />
         </exec>
     </target>
