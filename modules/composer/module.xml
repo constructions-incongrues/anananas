@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="composer" default="help">
+	<!-- Stages hooks -->
+	<target name="configure" />
+	<target name="init" />
+	<target name="install" depends="composer.command.install" />
+	<target name="build" />
+	<target name="package" />
+	<target name="upload" />
+
+    <target name="composer.command.install" description="Installs composer dependencies">
+        <!-- Run composer install in directories holding a composer.json file -->
+        <for param="composer.json">
+            <fileset dir="${application.dir.base}" includes="${composer.includes}" excludes="${composer.excludes}" />
+            <sequential>
+                <dirname file="@{composer.json}" property="composer.directory" />
+                <echo message="" level="info" />
+                <echo message="Executing 'composer install' in ${composer.directory}" level="info" />
+                <exec
+                    executable="${composer.executable}"
+                    dir="${composer.directory}"
+                    failonerror="true">
+                    <arg line="install ${composer.install.arguments} -v --working-dir=${composer.directory}" />
+                </exec>
+                <var name="composer.directory" unset="true" />
+            </sequential>
+        </for>
+    </target>
+</project>
