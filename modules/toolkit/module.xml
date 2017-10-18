@@ -6,7 +6,7 @@
     <!-- Enable ant-contrib (@see http://ant-contrib.sourceforge.net) -->
     <taskdef resource="net/sf/antcontrib/antlib.xml">
         <classpath>
-            <pathelement location="${toolkit.dir.base}/vendor/ant-contrib/ant-contrib-1.0b3.jar" />
+            <pathelement location="${toolkit.dir.base}/modules/toolkit/vendor/ant-contrib/ant-contrib-1.0b3.jar" />
         </classpath>
     </taskdef>
 
