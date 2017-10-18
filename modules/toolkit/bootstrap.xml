@@ -4,6 +4,13 @@
         <!-- Store toolkit base directory for later use -->
         <dirname property="toolkit.dir.base" file="${ant.file.bootstrap}/../.." />
 
+        <!-- Enable ant-contrib (@see http://ant-contrib.sourceforge.net) -->
+        <taskdef resource="net/sf/antcontrib/antlib.xml">
+            <classpath>
+                <pathelement location="${toolkit.dir.base}/vendor/ant-contrib/ant-contrib-1.0b3.jar" />
+            </classpath>
+        </taskdef>
+
         <!-- Default values -->
         <basename property="bootstrap.application.name" file="${basedir}" />
 
@@ -14,8 +21,17 @@
         <!-- Create application toolkit.properties file-->
         <copy file="${toolkit.dir.base}/modules/toolkit/templates/toolkit.properties" todir="${basedir}" overwrite="false" />
 
-        <!-- Load default application properties -->
+        <!-- Load default toolkit properties -->
+        <property file="${basedir}/toolkit.properties" />
+
+        <!-- Load default application module properties -->
         <property file="${toolkit.dir.base}/modules/application/configuration.properties" />
+
+        <!-- Load default configuration module properties -->
+        <property file="${toolkit.dir.base}/modules/configuration/configuration.properties" />
+
+        <!-- Create configuration profile -->
+        <ant antfile="${toolkit.dir.base}/modules/configuration/module.xml" target="configuration.update" />
 
         <!-- Create application sources directory -->
         <mkdir dir="${application.dir.src}" />
