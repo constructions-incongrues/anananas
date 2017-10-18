@@ -68,7 +68,7 @@
         external="${toolkit.modules.external}" />
 
     <!-- Stages -->
-    <target name="build" description="Builds application">
+    <target name="build" description="Builds application" depends="configure">
         <iterate target="build" basedir="${application.dir.base}" paths="${toolkit.modules.paths}" />
     </target>
 
@@ -92,7 +92,7 @@
         <iterate target="upload" basedir="${application.dir.base}" paths="${toolkit.modules.paths}" />
     </target>
 
-    <target name="deploy" description="Deploys application sources to remote environments">
+    <target name="deploy" description="Deploys application sources to remote environments" depends="configure, build">
         <iterate target="deploy" basedir="${application.dir.base}" paths="${toolkit.modules.paths}" />
     </target>
 
