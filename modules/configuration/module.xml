@@ -2,7 +2,7 @@
 <project name="configuration" default="help">
 	<!-- Stages hooks -->
 	<target name="configure" depends="configuration.apply" />
-	<target name="init" />
+	<target name="init" depends="configuration.update" />
 	<target name="install" />
 	<target name="build" />
 	<target name="package" />

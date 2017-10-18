@@ -61,22 +61,38 @@
         </sequential>
     </for>
 
-    <!-- Generate list of paths to modules project files -->
+    <!-- Generate list of paths to modules files -->
     <expandModulesPaths
         mandatory="${toolkit.modules.mandatory}"
         profile="${toolkit.modules}"
         external="${toolkit.modules.external}" />
 
+    <!-- Targets -->
+    <!-- CRAPPY, come back to this later -->
+    <!-- <target name="toolkit.module.enable" description="Enables toolkit module">
+        <fail unless="toolkit.module.name" />
+        <replace
+            file="${configuration.dir.profiles}/${configuration.profile}/configuration.properties"
+            token="toolkit.modules=${toolkit.modules}"
+            value="toolkit.modules=${toolkit.modules},${toolkit.module.name}" />
+        <replace
+            file="${configuration.dir.profiles}/${configuration.profile}/configuration.properties"
+            token="${toolkit.module.name},${toolkit.module.name}"
+            value="${toolkit.module.name}" />
+        <property file="${toolkit.dir.base}/modules/${toolkit.module.name}/configuration.properties" />
+        <ant antfile="${toolkit.dir.base}/modules/${toolkit.module.name}/module.xml" target="init"/>
+    </target> -->
+
     <!-- Stages -->
-    <target name="init" description="Inits modules">
+    <target name="init" description="Inits enabled modules">
         <iterate target="init" basedir="${application.dir.base}" paths="${toolkit.modules.paths}" />
     </target>
 
-    <target name="install" description="Installs project dependencies">
+    <target name="install" description="Installs application dependencies">
         <iterate target="install" basedir="${application.dir.base}" paths="${toolkit.modules.paths}" />
     </target>
 
-    <target name="build" description="Builds project">
+    <target name="build" description="Builds application">
         <iterate target="build" basedir="${application.dir.base}" paths="${toolkit.modules.paths}" />
     </target>
 
