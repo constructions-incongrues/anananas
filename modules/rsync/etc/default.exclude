@@ -1,0 +1,11 @@
+.git
+*-dist
+*.bak
+*.orig
+*.swo
+*.swp
+*~
+/composer.*
+/etc
+/vagrant
+/vendor/constructions-incongrues/ananas-build-toolkit

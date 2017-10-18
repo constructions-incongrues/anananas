@@ -3,6 +3,7 @@
 	<!-- Stages hooks -->
 	<target name="build" />
 	<target name="configure" />
+	<target name="deploy" />
 	<target name="init" />
 	<target name="install" />
 	<target name="package" />

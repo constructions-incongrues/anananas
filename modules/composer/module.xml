@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="composer" default="help">
 	<!-- Stages hooks -->
-	<target name="configure" />
-	<target name="init" />
-	<target name="install" depends="composer.command.install" />
 	<target name="build" />
+	<target name="configure" />
+	<target name="deploy" />
+    <target name="init" />
+	<target name="install" depends="composer.command.install" />
 	<target name="package" />
 	<target name="upload" />
 

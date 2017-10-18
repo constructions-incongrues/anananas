@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:if="ant:if" name="rsync" default="help">
+	<!-- Stages hooks -->
+	<target name="build" />
+	<target name="configure" />
+	<target name="deploy" depends="rsync.ssh" />
+    <target name="init">
+        <dirname file="${ant.file.toolkit}" property="toolkit.module.toolkitdir" />
+        <dirname file="${toolkit.module.toolkitdir}/tar" property="toolkit.module.basedir" />
+        <initConfiguration
+            configurationDir="${configuration.dir.profiles}/${configuration.profile}"
+            moduleDir="${toolkit.module.basedir}/.."
+            moduleName="rsync" />
+    </target>
+	<target name="install" />
+	<target name="package" />
+	<target name="upload" />
+
+    <target name="rsync.ssh" description="Rsyncs application files using SSH">
+        <propertyselector property="rsync.servers" delimiter="," match="rsync\.ssh\.([^\.]*)\.enabled" select="\1" />
+        <for list="${rsync.servers}" param="server">
+            <sequential>
+                <echo
+                    message="Rsyncing over SSH to '@{server}' (${rsync.ssh.@{server}.user}@${rsync.ssh.@{server}.host}:${rsync.ssh.@{server}.port}:${rsync.ssh.@{server}.dir.remote})"
+                    level="info"
+                    if:true="${rsync.ssh.@{server}.enabled}" />
+                <exec executable="${rsync.executable}" failonerror="true" if:true="${rsync.ssh.@{server}.enabled}">
+                    <arg line="${rsync.options.base}" />
+                    <arg line="${rsync.options.additional}" />
+                    <arg line="--dry-run" if:true="${rsync.ssh.@{server}.dryrun}" />
+                    <arg line="--verbose" if:true="${rsync.ssh.@{server}.verbose}" />
+                    <arg line="--include-from=${rsync.ssh.@{server}.include}" />
+                    <arg line="--exclude-from=${rsync.ssh.@{server}.exclude}" />
+                    <arg line="-e 'ssh -p ${rsync.ssh.@{server}.port}'" />
+                    <arg line="${rsync.ssh.@{server}.dir.local}" />
+                    <arg line="${rsync.ssh.@{server}.user}@${rsync.ssh.@{server}.host}:${rsync.ssh.@{server}.dir.remote}" />
+                </exec>
+            </sequential>
+        </for>
+    </target>
+</project>

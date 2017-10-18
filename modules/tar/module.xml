@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="tar">
     <!-- Stages hooks -->
+	<target name="build" />
+	<target name="configure" />
+    <target name="deploy" />
     <target name="init">
         <dirname file="${ant.file.toolkit}" property="toolkit.module.toolkitdir" />
         <dirname file="${toolkit.module.toolkitdir}/tar" property="toolkit.module.basedir" />
@@ -10,8 +13,6 @@
             moduleName="tar" />
     </target>
 	<target name="install" />
-	<target name="configure" />
-	<target name="build" />
 	<target name="package" depends="tar.archive" />
 	<target name="upload" />
 

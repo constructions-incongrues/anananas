@@ -93,7 +93,7 @@
     </target>
 
     <target name="deploy" description="Deploys application sources to remote environments">
-        <iterate target="upload" basedir="${application.dir.base}" paths="${toolkit.modules.paths}" />
+        <iterate target="deploy" basedir="${application.dir.base}" paths="${toolkit.modules.paths}" />
     </target>
 
     <target name="help" description="Displays project's help">

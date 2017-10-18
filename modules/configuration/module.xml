@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:if="ant:if" xmlns:unless="ant:unless" name="configuration" default="help">
 	<!-- Stages hooks -->
+	<target name="build" />
 	<target name="configure" depends="configuration.apply" />
+	<target name="deploy" />
 	<target name="init" depends="configuration.update" />
 	<target name="install" />
-	<target name="build" />
 	<target name="package" />
 	<target name="upload" />
 
