@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="filesystem" default="help">
+	<!-- Stages hooks -->
+	<target name="build" depends="filesystem.symlinks" />
+	<target name="configure" />
+	<target name="deploy" />
+    <target name="init" />
+	<target name="install" />
+	<target name="package" />
+	<target name="upload" />
+
+    <target name="filesystem.symlinks" description="Creates symlinks from configuration profile">
+        <propertyselector property="filesystem.symlinks" delimiter="," match="filesystem\.symlink\.([^\.]*)\.resource" select="\1" />
+        <for list="${filesystem.symlinks}" param="symlink">
+            <sequential>
+                <symlink resource="${filesystem.symlink.@{symlink}.resource}" link="${filesystem.symlink.@{symlink}.link}" />
+            </sequential>
+        </for>
+    </target>
+</project>
