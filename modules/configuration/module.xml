@@ -21,7 +21,7 @@
 
 		<!-- Replace tokens with values in dist files and copy them with the right name -->
 		<copy verbose="true" todir="${application.dir.base}" overwrite="true">
-			<fileset dir="${application.dir.base}" includes="**/*${configuration.suffix}" />
+			<fileset dir="${application.dir.base}" includes="${configuration.includes}" excludes="${configuration.excludes}" />
 			<mapper type="glob" from="*${configuration.suffix}" to="*" />
 			<filterset begintoken="${configuration.token}" endtoken="${configuration.token}" filtersfile="${configuration.loaded}" />
 		</copy>
@@ -31,7 +31,7 @@
 		<tempfile property="configuration.found.file" deleteonexit="true" />
 		<for param="file">
 			<path>
-				<fileset dir="${application.dir.base}" includes="**/*${configuration.suffix}" />
+				<fileset dir="${application.dir.base}" includes="${configuration.includes}" excludes="${configuration.excludes}" />
 			</path>
 			<sequential>
 				<var name="configuration.found" unset="true" />
