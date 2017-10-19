@@ -1,10 +1,10 @@
 {
-	"name": "constructions-incongrues/ananas-build-toolkit",
+	"name": "constructions-incongrues/anananas",
 	"description": "Anananas makes it easy to configure, build and deploy applications to multiple environments",
-	"homepage": "https://github.com/constructions-incongrues/ananas-build-toolkit",
+	"homepage": "https://github.com/constructions-incongrues/anananas",
 	"support": {
-      "issues": "https://github.com/constructions-incongrues/ananas-build-toolkit/issues",
-      "source": "https://github.com/constructions-incongrues/ananas-build-toolkit"
+      "issues": "https://github.com/constructions-incongrues/anananas/issues",
+      "source": "https://github.com/constructions-incongrues/anananas"
     },
     "authors": [
         {
