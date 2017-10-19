@@ -60,11 +60,11 @@
 		<!-- Merge found configuration with configuration already in configuration profile -->
 		<property prefix="configuration.merge" file="${configuration.dir.profiles}/${configuration.profile}/configuration.properties" />
 		<property prefix="configuration.merge" file="${configuration.found.file}" />
-		<touch file="${configuration.dir.profiles}/${configuration.profile}/configuration.properties" mkdirs="true" />
+		<touch file="${configuration.dir.profiles}/${configuration.profile}/configuration.properties" mkdirs="true" taskname="configuration" />
 		<echoproperties destfile="${configuration.dir.profiles}/${configuration.profile}/configuration.properties">
 			<propertyset>
 				<propertyref prefix="configuration.merge"/>
-				<mapper type="glob" from="configuration.merge.*" to="*"/>
+				<mapper type="glob" from="configuration.merge.*" to="*" />
 			</propertyset>
 		</echoproperties>
 
@@ -78,7 +78,7 @@
 		<echo message="Updated configuration profile in ${configuration.dir.profiles}/${configuration.profile}/configuration.properties" taskname="configuration" />
 	</target>
 
-	<target name="configuration.dotenv" description="Exports profile configuration to environment variables declarations in a file">
+	<target name="configuration.dotenv" description="Exports profile configuration to environment variables declarations in a file" depends="configuration.update">
 		<copy
 			file="${configuration.dir.profiles}/${configuration.profile}/configuration.properties"
 			tofile="${configuration.dotenv.tofile}"
