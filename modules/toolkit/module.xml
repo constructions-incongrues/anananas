@@ -10,11 +10,11 @@
         </classpath>
     </taskdef>
 
-    <!-- Load toolkit default properties -->
-    <property file="${basedir}/toolkit.properties" />
+    <!-- Load mandatory properties -->
+    <property file="${basedir}/anananas.properties" />
 
-
-    <echo message="Importing toolkit modules :" taskname="anananas" />
+    <!-- Import modules -->
+    <echo message="Importing mandatory modules :" taskname="anananas" />
 
     <!-- Load mandatory modules -->
     <for list="${toolkit.modules.mandatory}" param="module">
@@ -30,7 +30,7 @@
     <echo message="Active configuration profile : ${configuration.profile}" taskname="anananas" />
     <property file="${configuration.dir.profiles}/${configuration.profile}/configuration.properties" />
 
-    <!-- Toolkit default properties -->
+    <!-- Toolkit properties -->
     <property file="${toolkit.dir.base}/modules/toolkit/configuration.properties" />
 
     <!-- Import macros -->
@@ -44,7 +44,7 @@
         <format property="toolkit.timestamp" pattern="${toolkit.timestamp.format}" />
     </tstamp>
 
-    <!-- Load native modules -->
+    <!-- Load native modules enabled in configuration profile -->
     <echo message="Importing configuration profile modules :" taskname="anananas" />
     <for list="${toolkit.modules}" param="module">
         <sequential>
@@ -107,7 +107,7 @@
     </target>
 
     <target name="help" description="Displays project's help">
-        <echo taskname="help">Ananas Build Toolkit : Usage</echo>
+        <echo taskname="help">Anananas : Usage</echo>
         <java classname="org.apache.tools.ant.Main" taskname="help">
             <arg value="-buildfile" />
             <arg value="${ant.file}" />

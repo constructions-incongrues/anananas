@@ -18,11 +18,11 @@
         <copy file="${toolkit.dir.base}/modules/toolkit/templates/build.xml" todir="${basedir}" overwrite="false" />
         <replace file="${basedir}/build.xml" token="@application.name@" value="${bootstrap.application.name}" />
 
-        <!-- Create application toolkit.properties file-->
-        <copy file="${toolkit.dir.base}/modules/toolkit/templates/toolkit.properties" todir="${basedir}" overwrite="false" />
+        <!-- Create application anananas.properties file-->
+        <copy file="${toolkit.dir.base}/modules/toolkit/templates/anananas.properties" todir="${basedir}" overwrite="false" />
 
         <!-- Load default toolkit properties -->
-        <property file="${basedir}/toolkit.properties" />
+        <property file="${basedir}/anananas.properties" />
 
         <!-- Load default application module properties -->
         <property file="${toolkit.dir.base}/modules/application/configuration.properties" />
