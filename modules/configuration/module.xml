@@ -29,7 +29,7 @@
 	</target>
 
 	<target name="configuration.update" description="Searches for property tokens in dist files and adds missing configuration to common profile">
-		<tempfile property="configuration.found.file" deleteonexit="true" />
+		<tempfile property="configuration.found.file" prefix="found" deleteonexit="true" />
 		<for param="file">
 			<path>
 				<fileset dir="${application.dir.base}" includes="${configuration.includes}" excludes="${configuration.excludes}" />
@@ -57,16 +57,38 @@
 			</sequential>
 		</for>
 
-		<!-- Merge found configuration with configuration already in configuration profile -->
-		<property prefix="configuration.merge" file="${configuration.dir.profiles}/${configuration.profile}/configuration.properties" />
-		<property prefix="configuration.merge" file="${configuration.found.file}" />
-		<touch file="${configuration.dir.profiles}/${configuration.profile}/configuration.properties" mkdirs="true" taskname="configuration" />
-		<echoproperties destfile="${configuration.dir.profiles}/${configuration.profile}/configuration.properties">
-			<propertyset>
-				<propertyref prefix="configuration.merge"/>
-				<mapper type="glob" from="configuration.merge.*" to="*" />
-			</propertyset>
-		</echoproperties>
+		<!-- Reload selected configuration profile properties with a unique suffix so that we can easily compare them with the found ones -->
+		<property name="configuration.merge.prefix" value="${toolkit.timestamp}" />
+		<property file="${configuration.dir.profiles}/${configuration.profile}/configuration.properties" prefix="${configuration.merge.prefix}" />
+		<concat destfile="${configuration.dir.profiles}/${configuration.profile}/configuration.properties" append="true">
+			<fileset file="${configuration.found.file}" />
+			<!-- Add missing properties to configuration profile -->
+			<filterchain>
+				<scriptfilter language="javascript">
+					<![CDATA[
+					var prefix = project.getProperty('configuration.merge.prefix');
+					var line = self.getToken();
+
+					// Only handle lines with a property declaration
+					if (line.indexOf("=") != -1) {
+						var property = line.substr(0, line.indexOf('='));
+						if (project.getProperty(prefix + '.' + property) !== null) {
+							// Skip duplicates
+							self.setToken(null);
+						} else {
+							// Add missing properties
+							self.setToken(line);
+						}
+					}
+					]]>
+				</scriptfilter>
+
+				<!-- Remove duplicates -->
+				<tokenfilter>
+					<uniqfilter/>
+				</tokenfilter>
+			</filterchain>
+		</concat>
 
 		<!-- Fix echoproperties lame escaping -->
 		<replace file="${configuration.dir.profiles}/${configuration.profile}/configuration.properties" token="\:" value=":" />
@@ -79,9 +101,18 @@
 	</target>
 
 	<target name="configuration.dotenv" description="Exports profile configuration to environment variables declarations in a file" depends="configuration.update">
+		<!-- Dump all properties in a temporary file -->
+		<tempfile property="all.properties" prefix="all." suffix=".properties" deleteonexit="true" />
+		<echoproperties destfile="${all.properties}" />
+		<!-- Fix echoproperties lame escaping -->
+		<replace file="${all.properties}" token="\:" value=":" />
+		<replace file="${all.properties}" token="\#" value="#" />
+		<replace file="${all.properties}" token="\!" value="!" />
+		<replace file="${all.properties}" token="\=" value="=" />
+
 		<copy
-			file="${configuration.dir.profiles}/${configuration.profile}/configuration.properties"
-			tofile="${configuration.dotenv.tofile}"
+			file="${all.properties}"
+			tofile="${configuration.dotenv.outputfile}"
 			overwrite="true"
 			taskname="configuration">
 			<filterchain>
@@ -94,13 +125,13 @@
 				<tokenfilter>
 					<scriptfilter language="javascript">
 						var parts = self.getToken().split('=');
-						self.setToken(parts[0].replace(/\./g, '_').toUpperCase() + '="' + parts[1] + '"');
+						self.setToken(parts[0].replace(/\./g, '_').toUpperCase() + '="' + parts[1].replace(/"/g, '') + '"');
 					</scriptfilter>
 				</tokenfilter>
 			</filterchain>
 		</copy>
 
 		<!-- Log message -->
-		<echo message="Exported '${configuration.profile}' configuration profile to ${configuration.dotenv.tofile}" taskname="configuration" />
+		<echo message="Exported '${configuration.profile}' configuration profile to ${configuration.dotenv.outputfile}" taskname="configuration" />
 	</target>
 </project>

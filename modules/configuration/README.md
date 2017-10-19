@@ -49,7 +49,7 @@ database:
 ##### Attributes
 
 * **configuration.dir.profiles** (default : `${application.dir.base}/etc/profiles/etc/profiles`) : Directory holding configuration profiles.
-* **configuration.dotenv.tofile** (default: `${configuration.dir.profiles}/${configuration.profile}/configuration.env` : Destination file path when exporting configuration profile to dotenv format
+* **configuration.dotenv.outputfile** (default: `${configuration.dir.profiles}/${configuration.profile}/configuration.env` : Destination file path when exporting configuration profile to dotenv format
 * **configuration.suffix** (default : `-dist`) : files suffixed with this values are considered dist files
 * **configuration.token** (default : `@`) : char surrounding configuration tokens in dist files
 
