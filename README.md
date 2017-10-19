@@ -24,7 +24,7 @@ https://medium.com/@fabpot/symfony-4-a-quick-demo-da7d32be323
 ```sh
 mkdir demo-project
 cd demo-project
-# Install Ananas Build Toolkit
+# Install Anananas
 # cf. doc
 
 # Create new Symfony project
