@@ -13,11 +13,8 @@
     <!-- Load toolkit default properties -->
     <property file="${basedir}/toolkit.properties" />
 
-    <!-- Load selected configuration profile properties -->
-    <echo message="Active configuration profile : ${configuration.profile}" taskname="anananas" />
-    <property file="${configuration.dir.profiles}/${configuration.profile}/configuration.properties" />
 
-    <echo message="Importing modules :" taskname="anananas" />
+    <echo message="Importing toolkit modules :" taskname="anananas" />
 
     <!-- Load mandatory modules -->
     <for list="${toolkit.modules.mandatory}" param="module">
@@ -28,6 +25,10 @@
             <property name="toolkit.modules.@{module}" value="true" />
         </sequential>
     </for>
+
+    <!-- Load selected configuration profile properties -->
+    <echo message="Active configuration profile : ${configuration.profile}" taskname="anananas" />
+    <property file="${configuration.dir.profiles}/${configuration.profile}/configuration.properties" />
 
     <!-- Toolkit default properties -->
     <property file="${toolkit.dir.base}/modules/toolkit/configuration.properties" />
@@ -44,6 +45,7 @@
     </tstamp>
 
     <!-- Load native modules -->
+    <echo message="Importing configuration profile modules :" taskname="anananas" />
     <for list="${toolkit.modules}" param="module">
         <sequential>
             <echo taskname="anananas">- @{module}</echo>
