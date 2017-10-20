@@ -9,7 +9,7 @@ Anananas makes it easy to configure, build and deploy applications to multiple e
 At the root of your project sources :
 
 ```sh
-composer require constructions-incongrues/ananas-build-toolkit "2.0.0-alpha.2"
+composer require constructions-incongrues/ananas-build-toolkit "2.0.0-alpha.3"
 ant -f vendor/constructions-incongrues/ananas-build-toolkit/modules/toolkit/bootstrap.xml -Dbasedir=$PWD
 ```
 
