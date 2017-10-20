@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="blueprint">
+    <!-- Stages hooks -->
+	<target name="build" />
+	<target name="configure" />
+    <target name="deploy" />
+    <target name="init">
+        <!-- Compute some userful (?) paths -->
+        <dirname file="${ant.file.toolkit}" property="toolkit.module.toolkitdir" />
+        <dirname file="${toolkit.module.toolkitdir}/blueprint" property="toolkit.module.basedir" />
+
+        <propertyselector property="blueprints" delimiter="," match="blueprint\.([^\.]*)\.enabled" select="\1" />
+        <for list="${blueprints}" param="blueprint">
+            <sequential>
+                <!-- Load default properties from all blueprints -->
+                <property file="${toolkit.module.toolkitdir}/../blueprint/etc/@{blueprint}/blueprint.properties" />
+
+                <!-- Put blueprint properties in configuration module buffer -->
+                <concat destfile="${configuration.buffer.file}" overwrite="true" append="true" taskname="blueprint">
+                    <fileset file="${toolkit.module.toolkitdir}/../blueprint/etc/@{blueprint}/blueprint.properties" />
+                    <filterchain>
+                        <tokenfilter>
+                            <uniqfilter />
+                        </tokenfilter>
+                    </filterchain>
+                </concat>
+            </sequential>
+        </for>
+
+        <!-- Copy blueprints to selected configuration profile -->
+        <initConfiguration configurationDir="${configuration.dir.profiles}/${configuration.profile}" moduleDir="${toolkit.module.basedir}/.." moduleName="blueprint" />
+    </target>
+	<target name="install" depends="blueprint.makeinstall" />
+	<target name="package" />
+	<target name="upload" />
+
+    <target name="blueprint.makeinstall" description="Calls activated blueprint's installation script">
+        <ant antfile="${blueprint.dir}/${blueprint.install}/install.xml" target="install" />
+    </target>
+</project>

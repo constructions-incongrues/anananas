@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="blueprint.nginx_phpfpm" default="install">
+    <target name="install">
+        <symlink resource="${configuration.dir.profiles}/${configuration.profile}/modules/blueprint/${blueprint.install}/Dockerfile" link="${application.dir.base}/Dockerfile" overwrite="true" />
+        <symlink resource="${configuration.dir.profiles}/${configuration.profile}/modules/blueprint/${blueprint.install}/Vagrantfile" link="${application.dir.base}/Vagrantfile" overwrite="true" />
+        <symlink resource="${configuration.dir.profiles}/${configuration.profile}/modules/blueprint/${blueprint.install}/nginx.conf" link="${application.dir.base}/nginx.conf" overwrite="true" />
+    </target>
+</project>

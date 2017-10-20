@@ -1,0 +1,10 @@
+FROM @blueprint.nginx_phpfpm.docker.phpfpm.image@
+
+RUN apk update && apk add apache-ant
+
+COPY .@blueprint.nginx_phpfpm.docker.phpfpm.srcdir@ @blueprint.nginx_phpfpm.docker.phpfpm.destdir@
+WORKDIR @blueprint.nginx_phpfpm.docker.phpfpm.destdir@
+
+RUN ant install configure build
+
+ENV PATH="~/.composer/vendor/bin:./vendor/bin:${PATH}"

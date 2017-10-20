@@ -1,0 +1,21 @@
+Vagrant.configure('2') do |config|
+  config.vm.define 'phpfpm' do |phpfpm|
+    phpfpm.vm.synced_folder '.', '/vagrant', disabled: true
+    phpfpm.vm.provider 'docker' do |docker|
+      docker.name = '@blueprint.nginx_phpfpm.docker.prefix@phpfpm'
+      docker.ports = ['@blueprint.nginx_phpfpm.docker.phpfpm.ports@']
+      docker.build_dir = '.'
+    end
+  end
+
+  config.vm.define 'nginx' do |nginx|
+    nginx.vm.synced_folder '.', '/vagrant', disabled: true
+    nginx.vm.provider 'docker' do |docker|
+      docker.name = '@blueprint.nginx_phpfpm.docker.prefix@nginx'
+      docker.image = '@blueprint.nginx_phpfpm.docker.nginx.image@'
+      docker.ports = ['@blueprint.nginx_phpfpm.docker.nginx.ports@']
+      docker.volumes = ["#{ENV['PWD']}/nginx.conf:/etc/nginx/conf.d/application.conf", "#{ENV['PWD']}@blueprint.nginx_phpfpm.docker.phpfpm.srcdir@:@blueprint.nginx_phpfpm.docker.phpfpm.destdir@"]
+      docker.link '@blueprint.nginx_phpfpm.docker.prefix@phpfpm:@blueprint.nginx_phpfpm.docker.prefix@phpfpm'
+    end
+  end
+end
