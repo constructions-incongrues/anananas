@@ -9,9 +9,12 @@
 	<target name="package" />
 	<target name="upload" />
 
+	<!-- This file is used by other modules to communicate with this module -->
+	<tempfile property="configuration.buffer.file" prefix="buffer" suffix=".properties" deleteonexit="true" />
+
 	<target name="configuration.apply" description="Applies profile configuration">
 		<!-- Make all configuration available -->
-		<tempfile property="configuration.loaded" deleteonexit="true" />
+		<tempfile property="configuration.loaded" prefix="configuration.loaded." suffix=".properties" deleteonexit="true" />
 		<echoproperties destfile="${configuration.loaded}" />
 
 		<!-- Fix echoproperties lame escaping -->
@@ -28,7 +31,9 @@
 		</copy>
 	</target>
 
-	<target name="configuration.update" description="Searches for property tokens in dist files and adds missing configuration to common profile">
+	<target name="configuration.update" description="Searches for property tokens in dist files and adds missing configuration to profile">
+		<!-- Append new line to profile, just in case -->
+		<echo message="${line.separator}" file="${configuration.dir.profiles}/${configuration.profile}/configuration.properties" append="true" />
 		<tempfile property="configuration.found.file" prefix="found" deleteonexit="true" />
 		<for param="file">
 			<path>
@@ -57,17 +62,22 @@
 			</sequential>
 		</for>
 
-		<!-- Reload selected configuration profile properties with a unique suffix so that we can easily compare them with the found ones -->
+		<!-- Merge buffer and found files -->
+		<concat destfile="${configuration.found.file}" overwrite="true">
+			<fileset file="${configuration.buffer.file}" />
+		</concat>
+
+		<!-- Reload selected configuration profile properties with a unique suffix so that we can easily compare them with the fousnd ones -->
 		<property name="configuration.merge.prefix" value="${toolkit.timestamp}" />
 		<property file="${configuration.dir.profiles}/${configuration.profile}/configuration.properties" prefix="${configuration.merge.prefix}" />
-		<concat destfile="${configuration.dir.profiles}/${configuration.profile}/configuration.properties" append="true">
-			<fileset file="${configuration.found.file}" />
+		<concat destfile="${configuration.dir.profiles}/${configuration.profile}/configuration.properties" append="true" fixlastline="true">
+			<filelist dir="${application.dir.base}" files="${configuration.found.file}" />
 			<!-- Add missing properties to configuration profile -->
 			<filterchain>
 				<scriptfilter language="javascript">
 					<![CDATA[
-					var prefix = project.getProperty('configuration.merge.prefix');
 					var line = self.getToken();
+					var prefix = project.getProperty('configuration.merge.prefix');
 
 					// Only handle lines with a property declaration
 					if (line.indexOf("=") != -1) {
@@ -83,9 +93,18 @@
 					]]>
 				</scriptfilter>
 
-				<!-- Remove duplicates -->
+				<!-- Sort properties alphabeticaly -->
+				<sortfilter />
+
 				<tokenfilter>
-					<uniqfilter/>
+					<!-- Remove duplicates -->
+					<uniqfilter />
+
+					<!-- Remove surrounding spaces -->
+    				<trim />
+
+					<!-- Remove empty lines -->
+					<ignoreblank />
 				</tokenfilter>
 			</filterchain>
 		</concat>

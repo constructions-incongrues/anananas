@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="meteor">
-    <!-- Mandatory targets -->
+    <!-- Stages hooks -->
 	<target name="build" depends="meteor.bundle" />
 	<target name="configure" />
 	<target name="deploy" />

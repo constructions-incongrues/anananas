@@ -6,7 +6,7 @@
 	<target name="deploy" depends="rsync.ssh" />
     <target name="init">
         <dirname file="${ant.file.toolkit}" property="toolkit.module.toolkitdir" />
-        <dirname file="${toolkit.module.toolkitdir}/tar" property="toolkit.module.basedir" />
+        <dirname file="${toolkit.module.toolkitdir}/rsync" property="toolkit.module.basedir" />
         <initConfiguration
             configurationDir="${configuration.dir.profiles}/${configuration.profile}"
             moduleDir="${toolkit.module.basedir}/.."
