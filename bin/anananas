@@ -1,5 +1,7 @@
 
-#!/bin/bash
+#!/bin/sh
+
+set -e
 
 # Prettify ant output
 #
@@ -7,16 +9,16 @@
 # https://github.com/bjornhusberg/colorant
 
 # Ansi colors
-RESET=$(echo -en "\033[0m")
-BOLD=$(echo -en "\033[1m")
-RED=$(echo -en "\033[1;31m")
-YELLOW=$(echo -en "\033[1;33m")
-PURPLE=$(echo -en "\033[1;35m")
-CYAN=$(echo -en "\033[1;36m")
-GREEN=$(echo -en "\033[1;32m")
-BLUE=$(echo -en "\033[1;34m")
+RESET=$(echo "\033[0m")
+BOLD=$(echo "\033[1m")
+RED=$(echo "\033[1;31m")
+YELLOW=$(echo "\033[1;33m")
+PURPLE=$(echo "\033[1;35m")
+CYAN=$(echo "\033[1;36m")
+GREEN=$(echo "\033[1;32m")
+BLUE=$(echo "\033[1;34m")
 
-function addRegexp() {
+addRegexp () {
   if [ "$REGEXP" != "" ]; then
     REGEXP="$REGEXP;"
   fi
@@ -62,5 +64,3 @@ addRegexp "[Ff]ail\(ures\{0,1\}\)\{0,1\}" "$RED"
 addRegexp "[Ww]arn\(ings\{0,1\}\)\{0,1\}" "$YELLOW"
 
 ant -logger org.apache.tools.ant.listener.SimpleBigProjectLogger "$@" | sed -e "$REGEXP"
-
-exit ${PIPESTATUS[0]}
