@@ -25,10 +25,10 @@
         <property file="${basedir}/anananas.properties" />
 
         <!-- Load default application module properties -->
-        <property file="${toolkit.dir.base}/modules/application/configuration.properties" />
+        <property file="${toolkit.dir.base}/modules/application/module.properties" />
 
         <!-- Load default configuration module properties -->
-        <property file="${toolkit.dir.base}/modules/configuration/configuration.properties" />
+        <property file="${toolkit.dir.base}/modules/configuration/module.properties" />
 
         <!-- Create configuration profile -->
         <ant antfile="${toolkit.dir.base}/modules/configuration/module.xml" target="configuration.update" />

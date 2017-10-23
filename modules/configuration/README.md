@@ -24,14 +24,14 @@ Create a configuration profile by scanning application's dist files :
 ```
 $ ./vendor/bin/anananas configuration.update -Dconfiguration.profile=production
 
-# etc/profiles/production/configuration.properties
+# etc/profiles/production/profile.properties
 database.host=
 database.port=
 ```
 
 Define configuration values :
 ```
-# etc/profiles/production/configuration.properties
+# etc/profiles/production/profile.properties
 database.host=mysql_master
 database.port=3306
 ```

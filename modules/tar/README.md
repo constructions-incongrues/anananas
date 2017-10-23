@@ -13,7 +13,7 @@ Après l'import du module toolkit :
 
 Dans la *target* ```setprofile``` :
 ```xml
-<property file="${toolkit.dir.base}/modules/tar/configuration.properties" />
+<property file="${toolkit.dir.base}/modules/tar/profile.properties" />
 ```
 
 Si besoin, surchargez les directives de configuration par défaut du module dans votre profil de configuration.

@@ -33,7 +33,7 @@
 
 	<target name="configuration.update" description="Searches for property tokens in dist files and adds missing configuration to profile">
 		<!-- Append new line to profile, just in case -->
-		<echo message="${line.separator}" file="${configuration.dir.profiles}/${configuration.profile}/configuration.properties" append="true" />
+		<echo message="${line.separator}" file="${configuration.dir.profiles}/${configuration.profile}/profile.properties" append="true" />
 		<tempfile property="configuration.found.file" prefix="found" deleteonexit="true" />
 		<for param="file">
 			<path>
@@ -69,8 +69,8 @@
 
 		<!-- Reload selected configuration profile properties with a unique suffix so that we can easily compare them with the fousnd ones -->
 		<property name="configuration.merge.prefix" value="${toolkit.timestamp}" />
-		<property file="${configuration.dir.profiles}/${configuration.profile}/configuration.properties" prefix="${configuration.merge.prefix}" />
-		<concat destfile="${configuration.dir.profiles}/${configuration.profile}/configuration.properties" append="true" fixlastline="true">
+		<property file="${configuration.dir.profiles}/${configuration.profile}/profile.properties" prefix="${configuration.merge.prefix}" />
+		<concat destfile="${configuration.dir.profiles}/${configuration.profile}/profile.properties" append="true" fixlastline="true">
 			<filelist dir="${application.dir.base}" files="${configuration.found.file}" />
 			<!-- Add missing properties to configuration profile -->
 			<filterchain>
@@ -110,13 +110,13 @@
 		</concat>
 
 		<!-- Fix echoproperties lame escaping -->
-		<replace file="${configuration.dir.profiles}/${configuration.profile}/configuration.properties" token="\:" value=":" />
-		<replace file="${configuration.dir.profiles}/${configuration.profile}/configuration.properties" token="\#" value="#" />
-		<replace file="${configuration.dir.profiles}/${configuration.profile}/configuration.properties" token="\!" value="!" />
-		<replace file="${configuration.dir.profiles}/${configuration.profile}/configuration.properties" token="\=" value="=" />
+		<replace file="${configuration.dir.profiles}/${configuration.profile}/profile.properties" token="\:" value=":" />
+		<replace file="${configuration.dir.profiles}/${configuration.profile}/profile.properties" token="\#" value="#" />
+		<replace file="${configuration.dir.profiles}/${configuration.profile}/profile.properties" token="\!" value="!" />
+		<replace file="${configuration.dir.profiles}/${configuration.profile}/profile.properties" token="\=" value="=" />
 
 		<!-- Log message -->
-		<echo message="Updated configuration profile in ${configuration.dir.profiles}/${configuration.profile}/configuration.properties" taskname="configuration" />
+		<echo message="Updated configuration profile in ${configuration.dir.profiles}/${configuration.profile}/profile.properties" taskname="configuration" />
 	</target>
 
 	<target name="configuration.dotenv" description="Exports profile configuration to environment variables declarations in a file" depends="configuration.update">

@@ -21,17 +21,17 @@
         <sequential>
             <echo taskname="anananas">- @{module}</echo>
             <import file="${toolkit.dir.base}/modules/@{module}/module.xml" />
-            <property file="${toolkit.dir.base}/modules/@{module}/configuration.properties" />
+            <property file="${toolkit.dir.base}/modules/@{module}/module.properties" />
             <property name="toolkit.modules.@{module}" value="true" />
         </sequential>
     </for>
 
     <!-- Load selected configuration profile properties -->
     <echo message="Active configuration profile : ${configuration.profile}" taskname="anananas" />
-    <property file="${configuration.dir.profiles}/${configuration.profile}/configuration.properties" />
+    <property file="${configuration.dir.profiles}/${configuration.profile}/profile.properties" />
 
     <!-- Toolkit properties -->
-    <property file="${toolkit.dir.base}/modules/toolkit/configuration.properties" />
+    <property file="${toolkit.dir.base}/modules/toolkit/module.properties" />
 
     <!-- Import macros -->
     <import file="${toolkit.dir.base}/modules/toolkit/lib/ant/macro.xml" />
@@ -50,7 +50,7 @@
         <sequential>
             <echo taskname="anananas">- @{module}</echo>
             <import file="${toolkit.dir.base}/modules/@{module}/module.xml" />
-            <property file="${toolkit.dir.base}/modules/@{module}/configuration.properties" />
+            <property file="${toolkit.dir.base}/modules/@{module}/module.properties" />
             <property name="toolkit.modules.@{module}" value="true" />
         </sequential>
     </for>
@@ -60,7 +60,7 @@
         <sequential>
             <echo taskname="anananas">- @{module}</echo>
             <import file="${application.dir.base}/@{module}/module.xml" />
-            <property file="${application.dir.base}/@{module}/configuration.properties" />
+            <property file="${application.dir.base}/@{module}/module.properties" />
         </sequential>
     </for>
 
