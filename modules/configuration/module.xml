@@ -109,6 +109,9 @@
 			</filterchain>
 		</concat>
 
+		<!-- Remove remaining blank lines -->
+		<replaceregexp file="${configuration.dir.profiles}/${configuration.profile}/profile.properties" match="(\r?\n)\s*\r?\n" flags="g" replace="\1" />
+
 		<!-- Fix echoproperties lame escaping -->
 		<replace file="${configuration.dir.profiles}/${configuration.profile}/profile.properties" token="\:" value=":" />
 		<replace file="${configuration.dir.profiles}/${configuration.profile}/profile.properties" token="\#" value="#" />
