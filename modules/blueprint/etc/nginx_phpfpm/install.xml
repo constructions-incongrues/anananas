@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="blueprint.nginx_phpfpm" default="install">
     <target name="install">
-        <symlink resource="${configuration.dir.profiles}/${configuration.profile}/modules/blueprint/nginx_phpfpm/Dockerfile" link="${application.dir.base}/Dockerfile" overwrite="true" />
-        <symlink resource="${configuration.dir.profiles}/${configuration.profile}/modules/blueprint/nginx_phpfpm/Vagrantfile" link="${application.dir.base}/Vagrantfile" overwrite="true" />
-        <symlink resource="${configuration.dir.profiles}/${configuration.profile}/modules/blueprint/nginx_phpfpm/nginx.conf" link="${application.dir.base}/nginx.conf" overwrite="true" />
-        <symlink resource="${configuration.dir.profiles}/${configuration.profile}/modules/blueprint/nginx_phpfpm/.dockerignore" link="${application.dir.base}/.dockerignore" overwrite="true" />
+        <symlink resource="${application.dir.base}/etc/modules/blueprint/nginx_phpfpm/Dockerfile" link="${application.dir.base}/Dockerfile" overwrite="true" />
+        <symlink resource="${application.dir.base}/etc/modules/blueprint/nginx_phpfpm/Vagrantfile" link="${application.dir.base}/Vagrantfile" overwrite="true" />
+        <symlink resource="${application.dir.base}/etc/modules/blueprint/nginx_phpfpm/nginx.conf" link="${application.dir.base}/nginx.conf" overwrite="true" />
+        <symlink resource="${application.dir.base}/etc/modules/blueprint/nginx_phpfpm/.dockerignore" link="${application.dir.base}/.dockerignore" overwrite="true" />
     </target>
 </project>

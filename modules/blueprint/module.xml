@@ -10,7 +10,7 @@
 	<target name="upload" />
 
     <target name="blueprint.makeinstall" description="Calls activated blueprint's installation script">
-        <ant antfile="${configuration.dir.profiles}/modules/blueprint/${blueprint.enabled}/install.xml" target="install" />
+        <ant antfile="${application.dir.base}/etc/modules/blueprint/${blueprint.enabled}/install.xml" target="install" />
     </target>
 
     <target name="blueprint.create" description="Creates a new blueprint">
@@ -20,7 +20,7 @@
         <property name="blueprint.overwrite" value="false" />
 
         <!-- Copy blueprint files to configuration profile -->
-        <copy todir="${configuration.dir.profiles}/modules/blueprint/${blueprint.name}" overwrite="${blueprint.overwrite}" taskname="blueprint">
+        <copy todir="${application.dir.base}/etc/modules/blueprint/${blueprint.name}" overwrite="${blueprint.overwrite}" taskname="blueprint">
             <fileset dir="${blueprint.dir}/${blueprint.base}" includes="**" />
             <filterchain>
                 <tokenfilter>
@@ -30,11 +30,11 @@
         </copy>
 
         <!-- Load blueprint's default properties -->
-        <property file="${configuration.dir.profiles}/modules/blueprint/${blueprint.name}/blueprint.properties" />
+        <property file="${application.dir.base}/etc/modules/blueprint/${blueprint.name}/blueprint.properties" />
 
         <!-- Put blueprint properties in configuration module buffer -->
         <concat destfile="${configuration.buffer.file}" overwrite="true" append="true" taskname="blueprint">
-            <fileset file="${configuration.dir.profiles}/modules/blueprint/${blueprint.name}/blueprint.properties" />
+            <fileset file="${application.dir.base}/etc/modules/blueprint/${blueprint.name}/blueprint.properties" />
             <filterchain>
                 <tokenfilter>
                     <uniqfilter />
