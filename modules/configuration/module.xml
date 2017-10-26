@@ -147,7 +147,7 @@
 				<tokenfilter>
 					<scriptfilter language="javascript">
 						var parts = self.getToken().split('=');
-						self.setToken(parts[0].replace(/\./g, '_').toUpperCase() + '="' + parts[1].replace(/"/g, '') + '"');
+						self.setToken(parts[0].replace(/\./g, '_').toUpperCase() + '="' + parts[1].replace(/"/g, '').toUpperCase() + '"');
 					</scriptfilter>
 				</tokenfilter>
 			</filterchain>
