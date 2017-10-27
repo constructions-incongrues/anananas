@@ -128,7 +128,7 @@
 				<tokenfilter>
 					<scriptfilter language="javascript">
 						var parts = self.getToken().split('=');
-						self.setToken(parts[0].replace(/\./g, '_').toUpperCase() + '="' + parts[1].replace(/"/g, '').toUpperCase() + '"');
+						self.setToken(parts[0].replace(/\./g, '_').toUpperCase() + '=' + parts[1].replace(/"/g, ''));
 					</scriptfilter>
 				</tokenfilter>
 			</filterchain>
@@ -153,9 +153,8 @@
 		<concat destfile="${configuration.beautify.file}" fixlastline="true">
 			<fileset file="${configuration.dir.profiles}/${configuration.profile}/profile.properties" />
 			<filterchain>
-				<!-- Sort properties alphabeticaly -->
+				<!-- Sort properties alphabetically -->
 				<sortfilter />
-
 
 				<!-- Remove unnecessary whitespace, duplicate lines, fixes echoproperties escaping -->
 				<tokenfilter>
@@ -177,6 +176,7 @@
 				<tokenfilter>
 					<filetokenizer />
 					<scriptfilter language="javascript">
+						<![CDATA[
 						var token = self.getToken();
 						var lines = token.split("\n");
 						var properties = [];
@@ -190,6 +190,7 @@
 							properties.push(line);
 						});
 						self.setToken(properties.join("\n"));
+						]]>
 					</scriptfilter>
 				</tokenfilter>
 			</filterchain>
