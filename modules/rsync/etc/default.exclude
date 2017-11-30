@@ -7,5 +7,5 @@
 *~
 /composer.*
 /etc
-/vagrant
+/.vagrant
 /vendor/constructions-incongrues/ananas-build-toolkit
