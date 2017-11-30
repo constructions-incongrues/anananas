@@ -10,7 +10,7 @@
 	<target name="upload" />
 
     <target name="blueprint.makeinstall" description="Calls activated blueprint's installation script">
-        <ant antfile="${application.dir.base}/etc/modules/blueprint/${blueprint.enabled}/install.xml" target="install" />
+        <ant antfile="${configuration.dir.profiles}/${configuration.profile}/modules/blueprint/${blueprint.enabled}/install.xml" target="install" />
     </target>
 
     <target name="blueprint.create" description="Creates a new blueprint">
@@ -20,8 +20,9 @@
         <property name="blueprint.overwrite" value="false" />
 
         <!-- Copy blueprint files to configuration profile -->
-        <copy todir="${application.dir.base}/etc/modules/blueprint/${blueprint.name}" overwrite="${blueprint.overwrite}" taskname="blueprint">
-            <fileset dir="${blueprint.dir}/${blueprint.base}" includes="**" />
+        <dirname property="blueprint.dir" file="${ant.file.blueprint}" />
+        <copy todir="${configuration.dir.profiles}/${configuration.profile}/modules/blueprint/${blueprint.name}" overwrite="${blueprint.overwrite}" taskname="blueprint">
+            <fileset dir="${blueprint.dir}/etc/${blueprint.base}" includes="**" />
             <filterchain>
                 <tokenfilter>
                     <replacestring from="${blueprint.base}" to="${blueprint.name}" />
@@ -30,11 +31,11 @@
         </copy>
 
         <!-- Load blueprint's default properties -->
-        <property file="${application.dir.base}/etc/modules/blueprint/${blueprint.name}/blueprint.properties" />
+        <property file="${configuration.dir.profiles}/${configuration.profile}/modules/blueprint/${blueprint.name}/blueprint.properties" />
 
         <!-- Put blueprint properties in configuration module buffer -->
         <concat destfile="${configuration.buffer.file}" overwrite="true" append="true" taskname="blueprint">
-            <fileset file="${application.dir.base}/etc/modules/blueprint/${blueprint.name}/blueprint.properties" />
+            <fileset file="${configuration.dir.profiles}/${configuration.profile}/modules/blueprint/${blueprint.name}/blueprint.properties" />
             <filterchain>
                 <tokenfilter>
                     <uniqfilter />
