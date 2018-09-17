@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="symfony4">
+    <!-- Mandatory targets -->
+    <target name="bootstrap" />
+    <target name="update" />
+    <target name="configure" />
+    <target name="build" depends="symfony4.assets.install,symfony4.fos.jsrouting.dump,symfony4.cache.clear" />
+    <target name="review" />
+    <target name="migrate" />
+    <target name="sync" />
+
+    <target name="symfony4.assets.install" >
+        <!-- On installe les assets avec l'option symlink -->
+        <exec executable="php" dir="${project.dirs.base}/${symfony4.dirs.base}" failonerror="true">
+            <arg line="bin/console assets:install public --env=${symfony4.environment} --symlink --relative" />
+        </exec>
+    </target>
+
+    <target name="symfony4.fos.jsrouting.dump" if="${symfony4.fos.jsrouting.enabled}">
+        <!-- On installe les assets avec l'option symlink -->
+        <exec executable="php" dir="${project.dirs.base}/${symfony4.dirs.base}" failonerror="true">
+            <arg line="bin/console fos:js-routing:dump --no-debug --env=${symfony4.environment} --target=public/js/fos_js_routes.json" />
+        </exec>
+    </target>
+
+    <target name="symfony4.doctrine.cache.clear" if="${symfony4.doctrine.enabled}">
+        <!-- On vide le cache -->
+        <exec executable="php" dir="${project.dirs.base}/${symfony4.dirs.base}" failonerror="true">
+            <arg line="bin/console doctrine:cache:clear-metadata --env=${symfony4.environment}" />
+        </exec>
+    </target>
+
+    <target name="symfony4.cache.clear" depends="symfony4.doctrine.cache.clear">
+        <!-- On vide le cache -->
+        <exec executable="php" dir="${project.dirs.base}/${symfony4.dirs.base}" failonerror="true">
+            <arg line="bin/console cache:clear --env=${symfony4.environment}" />
+        </exec>
+    </target>
+
+</project>
